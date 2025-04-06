@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard | HondaCub Atheneum</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .nav-link {
+            font-weight: bold;
+        }
+
+        .navbar {
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+        .navbar-brand img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <!-- Logo and Brand Name -->
+        <a class="navbar-brand" href="customer-homepage.html">
+            <img src="images/14.jpg" alt="Logo"> <!-- Replace with actual logo URL -->
+            HondaCub Atheneum
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-homepage.html">Home <i class="bi bi-house-door ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-products.html">Products <i class="bi bi-box ms-2"></i></a></li>
+                <!--<li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-cart.html">Cart <i class="bi bi-cart ms-2"></i></a></li>-->
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="customer-cart.html">
+                        Cart <i class="bi bi-cart ms-2"></i>
+                        <span id="cart-count" class="badge bg-danger ms-1" style="display: none;">0</span>
+                    </a>
+                </li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-checkout-payment.html">Checkout <i class="bi bi-credit-card ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-order-history.html">Order History <i class="bi bi-box-seam ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-reviews.html">Reviews <i class="bi bi-star ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-cub-motions.html">Cub Motions <i class="bi bi-film ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-profile.html">Profile <i class="bi bi-person ms-2"></i></a></li>
+            </ul>
+
+            <button class="btn btn-danger" onclick="window.location.href='login.html'">
+                <i class="bi bi-box-arrow-right"></i> <span>Logout</span>
+            </button>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<!-- Hero Section - Carousel with Navigation Cards -->
+<header id="heroCarousel" class="carousel slide carousel-fade bg-primary text-white text-center" data-bs-ride="carousel" style="height: 60vh; overflow: hidden;">
+    <div class="carousel-inner" style="height: 60vh;">
+
+        <!-- Slide 1: Welcome Message -->
+        <div class="carousel-item active" style="height: 100%; background-image: url('images/10.jpg'); background-size: cover; background-position: center;">
+            <div style=" display: flex; justify-content: center; align-items: center; height: 100%;">
+                <div>
+                    <h1>Welcome to HondaCub Atheneum</h1>
+                    <p>Your one-stop shop for Honda Super Cub spare parts!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Orders -->
+        <div class="carousel-item" style="height: 100%; background-image: url('images/11.jpg'); background-size: cover; background-position: center;">
+            <div class="card position-absolute top-50 start-50 translate-middle" style="width: 80%; max-width: 500px; background-color: rgba(255, 255, 255, 0.6);">
+                <div class="card-body text-center">
+                    <i class="bi bi-box-seam text-primary fs-1"></i>
+                    <h5 class="mt-2">Orders</h5>
+                    <p>Track your order status and history</p>
+                    <a href="customer-order-history.html" class="btn btn-primary">View Orders</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Cart -->
+        <div class="carousel-item" style="height: 100%; background-image: url('images/12.jpg'); background-size: cover; background-position: center;">
+            <div class="card position-absolute top-50 start-50 translate-middle" style="width: 80%; max-width: 500px; background-color: rgba(255, 255, 255, 0.6);">
+                <div class="card-body text-center">
+                    <i class="bi bi-cart-check text-success fs-1"></i>
+                    <h5 class="mt-2">Shopping Cart</h5>
+                    <p>Manage your items before checkout</p>
+                    <a href="customer-cart.html" class="btn btn-success">Go to Cart</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Loyalty Points -->
+        <div class="carousel-item" style="height: 100%; background-image: url('images/13.jpg'); background-size: cover; background-position: center;">
+            <div class="card position-absolute top-50 start-50 translate-middle" style="width: 80%; max-width: 500px; background-color: rgba(255, 255, 255, 0.6);">
+                <div class="card-body text-center">
+                    <i class="bi bi-star text-warning fs-1"></i>
+                    <h5 class="mt-2">Loyalty Points</h5>
+                    <p>Earn rewards with every purchase</p>
+                    <a href="customer-rewards.html" class="btn btn-warning">Check Rewards</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Carousel Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</header>
+
+
+
+<!-- Featured Products Section -->
+<div class="container my-5">
+    <h3 class="text-center">Featured Products</h3>
+    <hr>
+
+    <div id="featuredProductsCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner" id="carousel-product-list">
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#featuredProductsCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#featuredProductsCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+
+
+
+<!-- Community Section -->
+<div class="container my-5">
+    <h3 class="text-center">Community & Blogs</h3>
+    <hr>
+    <div class="row">
+        <!-- Forum -->
+        <div class="col-md-6">
+            <div class="card p-3">
+                <i class="bi bi-chat-square-text text-info fs-1 text-center"></i>
+                <h5 class="text-center mt-2">Community Forum</h5>
+                <p class="text-center">Join discussions with other Honda Super Cub enthusiasts.</p>
+                <a href="customer-forum.html" class="btn btn-info w-100">Visit Forum</a>
+            </div>
+        </div>
+        <!-- Blogs -->
+        <div class="col-md-6">
+            <div class="card p-3">
+                <i class="bi bi-file-text text-secondary fs-1 text-center"></i>
+                <h5 class="text-center mt-2">Blogs</h5>
+                <p class="text-center">Read and share articles about Honda Super Cub.</p>
+                <a href="customer-blogs.html" class="btn btn-secondary w-100">Explore Blogs</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Honda Super Cub Archive -->
+<div class="container my-5">
+    <h3 class="text-center">Honda Super Cub Model Archive</h3>
+    <div class="row">
+        <!-- Archive Card -->
+        <div class="col-md-4 mx-auto">
+            <div class="card shadow-sm rounded" style="transition: transform 0.3s ease-in-out;">
+                <img src="images/15.jpg" class="card-img-top" alt="Honda Super Cub">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Honda Super Cub Archive</h5>
+                    <p class="card-text">Explore the history of Honda Super Cub models through our archive collection.</p>
+                    <a href="customer-supercub-archive.html" class="btn btn-danger">Browse Archive</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3 mt-5">
+    <p>&copy; 2025 HondaCub Atheneum | All rights reserved.</p>
+</footer>
+
+<!-- jQuery and Bootstrap Bundle JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        function loadFeaturedProducts() {
+            const token = localStorage.getItem('authToken'); // Get token from local storage
+
+            if (!token) {
+                console.error('No JWT token found.');
+                return; // Handle missing token appropriately
+            }
+
+            $.ajax({
+                url: 'http://localhost:8080/api/v1/customer/home/featured-products',
+                type: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                success: function (response) {
+                    if (response && response.data) {
+                        displayProducts(response.data);
+                    } else {
+                        console.error('Failed to load featured products:', response);
+                    }
+                },
+                error: function (error) {
+                    console.error('Error loading featured products:', error);
+                }
+            });
+        }
+
+        function displayProducts(products) {
+            const carouselInner = $('#carousel-product-list');
+            carouselInner.empty(); // Clear existing content
+            const baseUrl = 'http://localhost:8080/images/'; // Add base URL
+
+            let carouselItem = $('<div class="carousel-item active"></div>'); // Create initial active item
+            let cardRow = $('<div class="d-flex justify-content-around"></div>'); // Create card row
+
+            products.forEach((product, index) => {
+                let imagesHtml = '';
+                if (product.images && product.images.length > 0) {
+                    imagesHtml = `<img src="${baseUrl}${product.images[0].imageUrl}" class="card-img-top" alt="${product.partName}">`;
+                }
+
+                const cardHtml = `
+                    <div class="card shadow-sm rounded product-card">
+                        ${imagesHtml}
+                        <div class="card-body">
+                            <h5 class="card-title">${product.partName}</h5>
+                            <p class="card-text">Price: $${product.price}</p>
+                            <button class="btn btn-primary add-to-cart" data-partid="${product.partId}">Add to Cart</button>
+                        </div>
+                    </div>
+                `;
+
+                cardRow.append(cardHtml); // Add card to the row
+
+                if ((index + 1) % 4 === 0 || index === products.length - 1) { // 4 cards or last card
+                    carouselItem.append(cardRow);
+                    carouselInner.append(carouselItem);
+
+                    carouselItem = $('<div class="carousel-item"></div>'); // Create new item
+                    cardRow = $('<div class="d-flex justify-content-around"></div>'); // Create new row
+                }
+            });
+
+            // Event listener for "Add to Cart" buttons
+            $('.add-to-cart').click(function () {
+                const productId = $(this).data('partid');
+                addToCart(productId);
+            });
+        }
+
+        function addToCart(productId) {
+            const authToken = localStorage.getItem('authToken');
+
+            function getUserIdFromToken(token) {
+                try {
+                    const payload = JSON.parse(atob(token.split('.')[1]));
+                    return payload.userId;
+                } catch (e) {
+                    console.error("Error extracting userId from token:", e);
+                    return null;
+                }
+            }
+
+            const userId = getUserIdFromToken(authToken);
+
+            if (userId === null) {
+                alert('User ID not found. Please log in.');
+                return;
+            }
+
+            const addedAt = new Date().toISOString();
+
+            $.ajax({
+                url: `http://localhost:8080/api/v1/customer/products/cart/add`,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    sparePartId: productId,
+                    quantity: 1,
+                    userId: userId,
+                    addedAt: addedAt,
+                }),
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                },
+                success: function (response) {
+                    if (response.status === 201) {
+                        alert('Product added to cart.');
+
+                        // Update cart count immediately after adding to cart
+                        updateCartCount();
+
+                    } else {
+                        alert('Failed to add product to cart.');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error adding product to cart:", error);
+                    alert('An error occurred while adding to cart.');
+                }
+            });
+        }
+
+        // Function to update the cart count display
+        function updateCartCount() {
+            $.ajax({
+                url: `http://localhost:8080/api/v1/customer/cart/count`,
+                type: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                },
+                success: function (response) {
+                    if (response) {
+                        const cartCount = response; // Directly use the response as the count
+                        $('#cart-count').text(cartCount);
+                        if (cartCount > 0) {
+                            $('#cart-count').show();
+                        } else {
+                            $('#cart-count').hide();
+                        }
+                    } else {
+                        console.error("Failed to get cart count:", response);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error getting cart count:", error);
+                }
+            });
+        }
+
+        updateCartCount();
+
+        loadFeaturedProducts();
+    });
+</script>
+
+</body>
+</html>

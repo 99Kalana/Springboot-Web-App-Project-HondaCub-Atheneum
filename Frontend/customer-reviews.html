@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews & Ratings | HondaCub Atheneum</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        .navbar-brand img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .banner {
+            background-image: url('images/21.jpeg');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .banner h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        footer {
+            background-color: #343a40;
+            text-align: center;
+            padding: 20px 0;
+            color: #fff;
+            margin-top: auto;
+        }
+
+        .footer-text {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .reviews-container {
+            margin-top: 30px;
+        }
+
+        .review-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .review-item h5 {
+            margin: 0;
+        }
+
+        .review-item .rating {
+            color: #FFD700;
+        }
+
+        .review-form {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .review-form textarea {
+            width: 100%;
+            height: 100px;
+        }
+
+        .review-form button {
+            margin-top: 10px;
+        }
+
+        .search-part {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .search-part input {
+            width: 50%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="customer-homepage.html">
+            <img src="images/14.jpg" alt="Logo">
+            HondaCub Atheneum
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-homepage.html">Home <i class="bi bi-house-door ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-products.html">Products <i class="bi bi-box ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-cart.html">Cart <i class="bi bi-cart ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-checkout-payment.html">Checkout <i class="bi bi-credit-card ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-order-history.html">Order History <i class="bi bi-box-seam ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-reviews.html">Reviews <i class="bi bi-star ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-cub-motions.html">Cub Motions <i class="bi bi-film ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-profile.html">Profile <i class="bi bi-person ms-2"></i></a></li>
+            </ul>
+            <button class="btn btn-danger" onclick="window.location.href='login.html'">
+                <i class="bi bi-box-arrow-right"></i> <span>Logout</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="banner">
+    <h1>Leave a Review for the Product</h1>
+</div>
+
+<div class="container search-part">
+    <h4>Search for a Part by Name</h4>
+    <input type="text" id="part-name" placeholder="Enter part name">
+</div>
+
+<div class="container">
+    <div id="product-details" class="text-center my-5">
+        <div id="modalImages" class="carousel slide" data-bs-ride="carousel" style="display: none;">
+            <div class="carousel-inner" id="carouselImages">
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#modalImages" data-bs-slide="prev" style="background-color: rgba(0, 0, 0, 0.5); border: none;">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#modalImages" data-bs-slide="next" style="background-color: rgba(0, 0, 0, 0.5); border: none;">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="container reviews-container">
+    <h3 class="text-center">Product Reviews</h3>
+    <hr>
+
+    <div id="reviews-list"></div> <div class="review-form">
+    <h4>Leave Your Review</h4>
+    <div class="form-group">
+        <label for="rating">Rating</label>
+        <select id="rating" class="form-control">
+            <option value="1">1 Star</option>
+            <option value="2">2 Stars</option>
+            <option value="3">3 Stars</option>
+            <option value="4">4 Stars</option>
+            <option value="5">5 Stars</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="comment">Comment</label>
+        <textarea id="comment" class="form-control" placeholder="Write your comment here..."></textarea>
+    </div>
+    <button class="btn btn-primary" id="submit-review">Submit Review</button>
+</div>
+</div>
+
+<footer>
+    <p class="footer-text">&copy; 2025 HondaCub Atheneum | All rights reserved.</p>
+</footer>
+
+<script src="js/bootstrap.js"></script>
+<script src="JQuery/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        const authToken = localStorage.getItem('authToken');
+        let currentPartId = null;
+
+        // Function to display product details
+        function loadProductDetails(partId) {
+            $.ajax({
+                url: `http://localhost:8080/api/v1/customer/reviews/${partId}/details`,
+                type: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + authToken
+                },
+                success: function (response) {
+                    if (response.status === 200 && response.data) {
+                        const product = response.data;
+                        let images = product.images;
+
+                        if (images && images.length > 0) {
+                            $('#modalImages').show();
+                            let carouselItems = '';
+                            images.forEach((image, index) => {
+                                carouselItems += `
+                                <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                                    <img src="${image.imageUrl}" class="d-block w-100" alt="Product Image" style="max-height: 300px; object-fit: contain;">
+                                </div>
+                            `;
+                            });
+                            $('#carouselImages').html(carouselItems);
+
+                        } else {
+                            $('#modalImages').hide();
+                        }
+
+                        const productHtml = `
+                        <div class="product">
+                            <h2>${product.partName}</h2>
+                            <p><strong>Description:</strong> ${product.description}</p>
+                            <p><strong>Price:</strong> $${product.price}</p>
+                            <p><strong>Stock:</strong> ${product.stock} available</p>
+                        </div>
+                    `;
+                        $('#product-details').append(productHtml);
+                    } else {
+                        $('#product-details').html('<p>Product details not found.</p>');
+                    }
+                },
+                error: function () {
+                    $('#product-details').html('<p>Failed to load product details.</p>');
+                }
+            });
+        }
+
+        // Fetch existing reviews for the product
+        function loadReviews(partId) {
+            $.ajax({
+                url: `http://localhost:8080/api/v1/customer/reviews/${partId}/reviews`,
+                type: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + authToken
+                },
+                success: function (response) {
+                    if (response.status === 200 && response.data) {
+                        let reviewsHtml = '';
+                        response.data.forEach(review => {
+                            reviewsHtml += `
+                            <div class="review-item">
+                                <h5>User ${review.userId}</h5>
+                                <div class="rating">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
+                                <p>${review.comment}</p>
+                                <small>Reviewed on: ${review.reviewDate}</small>
+                            </div>
+                        `;
+                        });
+                        $('#reviews-list').html(reviewsHtml);
+                    } else {
+                        $('#reviews-list').html('<p>No reviews found.</p>');
+                    }
+                },
+                error: function () {
+                    $('#reviews-list').html('<p>Failed to load reviews.</p>');
+                }
+            });
+        }
+
+        // Submit new review
+        $('#submit-review').click(function () {
+            const rating = $('#rating').val();
+            const comment = $('#comment').val();
+
+            if (rating && comment && currentPartId) {
+                $.ajax({
+                    url: 'http://localhost:8080/api/v1/customer/reviews',
+                    type: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + authToken,
+                        'Content-Type': 'application/json'
+                    },
+                    data: JSON.stringify({
+                        sparePartId: currentPartId,
+                        rating: parseFloat(rating),
+                        comment: comment
+                    }),
+                    success: function (response) {
+                        if (response.status === 201) {
+                            alert('Review submitted successfully!');
+                            loadReviews(currentPartId);
+                            $('#comment').val(''); // Clear the comment input
+                        } else {
+                            alert('Failed to submit review.');
+                        }
+                    },
+                    error: function () {
+                        alert('Failed to submit review.');
+                    }
+                });
+            } else {
+                alert('Please fill in all fields and search for a product.');
+            }
+        });
+
+        // Search parts by name
+        $('#part-name').on('keypress', function (event) {
+            if (event.which === 13) { // 13 is the Enter key code
+                const partName = $(this).val().trim();
+                if (partName) {
+                    $.ajax({
+                        url: `http://localhost:8080/api/v1/customer/reviews/search?partName=${partName}`,
+                        type: 'GET',
+                        headers: {
+                            'Authorization': 'Bearer ' + authToken
+                        },
+                        success: function (response) {
+                            if (response.status === 200 && response.data && response.data.length > 0) {
+                                const firstPart = response.data[0];
+                                currentPartId = firstPart.partId;
+                                loadProductDetails(currentPartId);
+                                loadReviews(currentPartId);
+                            } else {
+                                $('#product-details').html('<p>No products found.</p>');
+                                $('#reviews-list').html('');
+                            }
+                        },
+                        error: function () {
+                            $('#product-details').html('<p>Failed to search products.</p>');
+                            $('#reviews-list').html('');
+                        }
+                    });
+                } else {
+                    alert('Please enter a part name.');
+                }
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

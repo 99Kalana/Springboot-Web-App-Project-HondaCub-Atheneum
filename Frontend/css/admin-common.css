@@ -1,0 +1,38 @@
+body {
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+.sidebar {
+    width: 250px;
+    min-height: 100vh;
+    background-color: #343a40;
+    background-image: url("images/6.jpg");
+}
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+.sidebar a:hover {
+    background-color: #b6d4fe;
+}
+
+.sidebar a.nav-link {
+    color: white !important;
+    background-color: transparent !important;
+}
+
+.sidebar a.nav-link:hover {
+    background-color: #b6d4fe !important;
+}
+
+.content {
+    padding: 20px;
+    background-image: url("images/8.jpeg");
+    background-repeat: no-repeat; /* Prevent image from repeating */
+    background-size: cover; /* Ensure the image covers the entire area */
+    background-position: center; /* Optional: Center the image */
+}

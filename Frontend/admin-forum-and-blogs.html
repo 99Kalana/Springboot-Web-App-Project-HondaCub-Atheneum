@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Forum & Blogs | Admin</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/admin-style.css">
+    <style>
+        .sidebar {
+            width: 250px;
+            min-height: 100vh;
+            background-color: #343a40;
+            background-image: url("images/6.jpg");
+            transition: width 0.3s;
+            position: relative;
+        }
+
+        .sidebar.collapsed {
+            width: 80px;
+        }
+
+        .toggle-btn {
+            position: absolute;
+            top: 10px;
+            right: 8px;
+            background-color: #fff;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar h3 {
+            display: block;
+            margin-top: 40px;
+            font-size: 1.5rem;
+            transition: opacity 0.3s;
+        }
+
+        .sidebar.collapsed h3 {
+            opacity: 0;
+            pointer-events: none; /* Prevents interaction when collapsed */
+        }
+
+        .sidebar ul {
+            padding-left: 0;
+            margin-top: 30px;
+        }
+
+        .sidebar li {
+            list-style: none;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: all 0.3s;
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed a {
+            justify-content: center;
+        }
+
+        .sidebar a:hover {
+            background-color: #b6d4fe;
+            color: #000;
+        }
+
+        .sidebar i {
+            margin-right: 10px;
+            transition: margin-right 0.3s;
+        }
+
+        .sidebar.collapsed i {
+            margin-right: 0;
+        }
+
+        .sidebar span {
+            transition: opacity 0.3s, width 0.3s;
+            white-space: nowrap; /* Prevents text from wrapping */
+        }
+
+        .sidebar.collapsed span {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+        }
+
+        .content {
+            padding: 20px;
+            background-image: url("images/8.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            width: calc(100% - 250px);
+            transition: width 0.3s;
+        }
+
+        .sidebar.collapsed ~ .content {
+            width: calc(100% - 80px);
+        }
+
+        .profile-logout {
+            margin-top: 30px;
+            padding: 10px;
+            transition: padding 0.3s;
+        }
+
+        .sidebar.collapsed .profile-logout {
+            padding: 10px 0; /* Reduce padding when collapsed */
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            margin-bottom: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .sidebar.collapsed .profile-btn {
+            justify-content: center;
+        }
+
+        .profile-btn i {
+            margin-right: 10px;
+            transition: margin-right 0.3s;
+        }
+
+        .sidebar.collapsed .profile-btn i {
+            margin-right: 0;
+        }
+
+        .profile-btn span {
+            transition: opacity 0.3s, width 0.3s;
+            white-space: nowrap;
+        }
+
+        .sidebar.collapsed .profile-btn span {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<!-- Sidebar & Main Content Wrapper -->
+<div class="d-flex">
+    <!-- Sidebar -->
+    <div class="sidebar p-3 text-white">
+        <!-- Toggle Button -->
+        <button class="btn btn-light toggle-btn" id="toggleBtn">
+            <i class="bi bi-list"></i>
+        </button>
+        <h3 class="text-center">HondaCub Admin</h3>
+        <hr>
+        <ul class="nav flex-column">
+            <li><a href="admin-dashboard.html" class="nav-link"><i class="bi bi-speedometer2"></i> <span>Dashboard</span></a></li>
+            <li><a href="admin-users.html" class="nav-link"><i class="bi bi-people"></i> <span>User Management</span></a></li>
+            <li><a href="admin-categories.html" class="nav-link"><i class="bi bi-list-task"></i> <span>Category Management</span></a></li>
+            <li><a href="admin-spare-parts.html" class="nav-link"><i class="bi bi-gear"></i> <span>Spare Parts Management</span></a></li>
+            <li><a href="admin-orders.html" class="nav-link"><i class="bi bi-cart3"></i> <span>Order Management</span></a></li>
+            <li><a href="admin-transaction.html" class="nav-link"><i class="bi bi-currency-dollar"></i> <span>Transactions & Payments</span></a></li>
+            <li><a href="admin-rewards.html" class="nav-link"><i class="bi bi-gift"></i> <span>Loyalty & Rewards</span></a></li>
+            <li><a href="admin-forum-and-blogs.html" class="nav-link"><i class="bi bi-chat-left-dots"></i> <span>Community Forum & Blogs</span></a></li>
+            <li><a href="admin-archive.html" class="nav-link"><i class="bi bi-archive"></i> <span>Honda Super Cub Archive</span></a></li>
+            <li><a href="admin-vin.html" class="nav-link"><i class="bi bi-tools"></i> <span>VIN Management</span></a></li>
+        </ul>
+        <hr>
+        <!-- Profile & Logout Buttons -->
+        <div class="profile-logout d-grid gap-2">
+            <button class="btn btn-secondary profile-btn" onclick="window.location.href='admin-profile.html'">
+                <i class="bi bi-person-circle"></i><span>Profile Management</span>
+            </button>
+            <button class="btn btn-danger profile-btn" onclick="window.location.href='login.html'">
+                <i class="bi bi-box-arrow-right"></i> <span>Logout</span>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Main Content -->
+    <main class="container-fluid p-3 content">
+        <!-- Header with Community Forum & Blogs -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2><i class="bi bi-chat-left-dots"></i> Community Forum & Blogs</h2>
+        </div>
+
+        <!-- Forum Search & Filter -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <input type="text" id="searchForum" class="form-control" placeholder="Search forums...">
+            </div>
+            <div class="col-md-3">
+                <select id="filterForumStatus" class="form-select">
+                    <option value="all">All Statuses</option>
+                    <option value="Active">Active</option>
+                    <option value="Closed">Closed</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Create Forum Button Above the Table -->
+        <div class="d-flex justify-content-between mb-4">
+            <button id="createForumBtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createForumModal">Create Forum</button>
+        </div>
+
+        <!-- Forums Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                <tr>
+                    <th>Forum ID</th>
+                    <th>Title</th>
+                    <th>Content</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                    <th>User ID</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="forumsTable">
+                <!-- Forum entries will be dynamically inserted here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Create Blog Button Above the Table -->
+        <div class="d-flex justify-content-between mb-4">
+            <button id="createBlogBtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createBlogModal">Create Blog</button>
+        </div>
+
+        <!-- Blogs Search & Filter -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <input type="text" id="searchBlog" class="form-control" placeholder="Search blogs...">
+            </div>
+            <div class="col-md-3">
+                <select id="filterBlogStatus" class="form-select">
+                    <option value="all">All Statuses</option>
+                    <option value="PUBLISHED">Published</option>
+                    <option value="DRAFT">Draft</option>
+                    <option value="ARCHIVED">Archived</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Blogs Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                <tr>
+                    <th>Blog ID</th>
+                    <th>Title</th>
+                    <th>Content</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                    <th>User ID</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="blogsTable">
+                <!-- Blog entries will be dynamically inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<!-- Create Forum Modal -->
+<div class="modal fade" id="createForumModal" tabindex="-1" aria-labelledby="createForumModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createForumModalLabel">Create Forum</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="createForumForm">
+                    <div class="mb-3">
+                        <label for="createForumTitle" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="createForumTitle" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="createForumContent" class="form-label">Content</label>
+                        <textarea class="form-control" id="createForumContent" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="createForumStatus" class="form-label">Status</label>
+                        <select class="form-select" id="createForumStatus" required>
+                            <option value="ACTIVE">Active</option>
+                            <option value="CLOSED">Closed</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Forum</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create Blog Modal -->
+<div class="modal fade" id="createBlogModal" tabindex="-1" aria-labelledby="createBlogModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createBlogModalLabel">Create Blog</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="createBlogForm">
+                    <div class="mb-3">
+                        <label for="createBlogTitle" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="createBlogTitle" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="createBlogContent" class="form-label">Content</label>
+                        <textarea class="form-control" id="createBlogContent" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="createBlogImage" class="form-label">Image URL</label>
+                        <input type="file" class="form-control" id="createBlogImage" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="createBlogStatus" class="form-label">Status</label>
+                        <select class="form-select" id="createBlogStatus" required>
+                            <option value="Published">Published</option>
+                            <option value="Draft">Draft</option>
+                            <option value="Archived">Archived</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Blog</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editForumModal" tabindex="-1" aria-labelledby="editForumModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editForumModalLabel">Edit Forum</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editForumForm">
+                    <div class="mb-3">
+                        <label for="editForumTitle" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="editForumTitle" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editForumContent" class="form-label">Content</label>
+                        <textarea class="form-control" id="editForumContent" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editForumStatus" class="form-label">Status</label>
+                        <select class="form-select" id="editForumStatus" required>
+                            <option value="ACTIVE">Active</option>
+                            <option value="CLOSED">Closed</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Forum</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editBlogModal" tabindex="-1" aria-labelledby="editBlogModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editBlogModalLabel">Edit Blog</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editBlogForm">
+                    <div class="mb-3">
+                        <label for="editBlogTitle" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="editBlogTitle" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editBlogContent" class="form-label">Content</label>
+                        <textarea class="form-control" id="editBlogContent" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editBlogImage" class="form-label">Image URL</label>
+                        <input type="file" class="form-control" id="editBlogImage" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editBlogStatus" class="form-label">Status</label>
+                        <select class="form-select" id="editBlogStatus" required>
+                            <option value="PUBLISHED">Published</option>
+                            <option value="DRAFT">Draft</option>
+                            <option value="ARCHIVED">Archived</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Blog</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/bootstrap.js"></script>
+<script src="JQuery/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function() {
+
+        // Toggle Sidebar Functionality
+        $("#toggleBtn").click(function() {
+            $(".sidebar").toggleClass("collapsed");
+        });
+
+        function renderForumsTable(forums) {
+            const tableBody = $('#forumsTable');
+            tableBody.empty();
+            if (forums && forums.length > 0) {
+                forums.forEach(forum => {
+                    const row = `
+                <tr>
+                    <td>${forum.forumId}</td>
+                    <td>${forum.title}</td>
+                    <td>${forum.content}</td>
+                    <td>${forum.status}</td>
+                    <td>${forum.createdAt}</td>
+                    <td>${forum.userId}</td>
+                    <td>
+                        <button class="btn btn-warning editForumBtn" data-forum-id="${forum.forumId}" data-user-id="${forum.userId}" data-bs-toggle="modal" data-bs-target="#editForumModal"><i class="bi bi-pencil-square"></i> Edit</button>
+                        <button class="btn btn-danger deleteForumBtn" data-forum-id="${forum.forumId}"><i class="bi bi-trash"></i> Delete</button>
+                    </td>
+                </tr>
+            `;
+                    tableBody.append(row);
+                });
+            } else {
+                tableBody.append('<tr><td colspan="7" class="text-center">No forums found.</td></tr>');
+            }
+        }
+
+        function renderBlogsTable(blogs) {
+            const tableBody = $('#blogsTable');
+            tableBody.empty();
+            if (blogs && blogs.length > 0) {
+                blogs.forEach(blog => {
+                    const row = `
+                <tr>
+                    <td>${blog.blogId}</td>
+                    <td>${blog.title}</td>
+                    <td>${blog.content}</td>
+                    <td>${blog.status}</td>
+                    <td>${blog.createdAt}</td>
+                    <td>${blog.userId}</td>
+                    <td>
+                        <button class="btn btn-warning editBlogBtn" data-blog-id="${blog.blogId}" data-user-id="${blog.userId}" data-bs-toggle="modal" data-bs-target="#editBlogModal"><i class="bi bi-pencil-square"></i> Edit</button>
+                        <button class="btn btn-danger deleteBlogBtn" data-blog-id="${blog.blogId}"><i class="bi bi-trash"></i> Delete</button>
+                    </td>
+                </tr>
+            `;
+                    tableBody.append(row);
+                });
+            } else {
+                tableBody.append('<tr><td colspan="7" class="text-center">No blogs found.</td></tr>');
+            }
+        }
+
+        // Function to load forums from the backend
+        function loadForums() {
+            $.ajax({
+                url: "http://localhost:8080/api/v1/adminforumblogs/forums/getAll",
+                method: "GET",
+                dataType: "json",
+                success: function(response) {
+                    if (response.status === 200 && response.data) {
+                        renderForumsTable(response.data);
+                    } else {
+                        console.error("Failed to load forums:", response);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching forums:", error);
+                    console.log("Response:", xhr.responseText);
+                }
+            });
+        }
+
+        // Function to load blogs from the backend
+        function loadBlogs() {
+            $.ajax({
+                url: "http://localhost:8080/api/v1/adminforumblogs/blogs/getAll",
+                method: "GET",
+                dataType: "json",
+                success: function(response) {
+                    if (response.status === 200 && response.data) {
+                        renderBlogsTable(response.data);
+                    } else {
+                        console.error("Failed to load blogs:", response);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching blogs:", error);
+                    console.log("Response:", xhr.responseText);
+                }
+            });
+        }
+
+        // Function to filter and display forums based on search and status
+        function filterAndRenderForums() {
+            const searchText = $('#searchForum').val().toLowerCase();
+            const selectedStatus = $('#filterForumStatus').val();
+            let url = `http://localhost:8080/api/v1/adminforumblogs/forums/search?status=${selectedStatus}`; // Changed to /search
+            if (searchText) {
+                url += `&query=${searchText}`;
+            }
+
+            $.ajax({
+                url: url,
+                method: "GET",
+                dataType: "json",
+                success: function(response) {
+                    if (response.status === 200 && response.data) {
+                        renderForumsTable(response.data);
+                    } else {
+                        console.error("Failed to filter forums:", response);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error filtering forums:", error);
+                    console.log("Response:", xhr.responseText);
+                }
+            });
+        }
+
+        // Function to filter and display blogs based on search and status
+        function filterAndRenderBlogs() {
+            const searchText = $('#searchBlog').val().toLowerCase();
+            const selectedStatus = $('#filterBlogStatus').val();
+            let url = `http://localhost:8080/api/v1/adminforumblogs/blogs/search?status=${selectedStatus}`; // Changed to /search
+            if (searchText) {
+                url += `&query=${searchText}`;
+            }
+
+            $.ajax({
+                url: url,
+                method: "GET",
+                dataType: "json",
+                success: function(response) {
+                    if (response.status === 200 && response.data) {
+                        renderBlogsTable(response.data);
+                    } else {
+                        console.error("Failed to filter blogs:", response);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error filtering blogs:", error);
+                    console.log("Response:", xhr.responseText);
+                }
+            });
+        }
+
+        // Event listeners
+        $('#searchForum').on('input', filterAndRenderForums);
+        $('#filterForumStatus').on('change', filterAndRenderForums);
+
+        $('#searchBlog').on('input', filterAndRenderBlogs);
+        $('#filterBlogStatus').on('change', filterAndRenderBlogs);
+
+        // Open the 'Create Forum' modal when the button is clicked
+        $('#createForumBtn').on('click', function() {
+            $('#createForumForm')[0].reset();
+            $('#createForumModal').modal('show');
+        });
+
+        // Open the 'Create Blog' modal when the button is clicked
+        $('#createBlogBtn').on('click', function() {
+            $('#createBlogForm')[0].reset();
+            $('#createBlogModal').modal('show');
+        });
+
+        // Handle 'Create Forum' form submission
+        $('#createForumForm').on('submit', function(event) {
+            event.preventDefault();
+            const forumData = {
+                title: $('#createForumTitle').val(),
+                content: $('#createForumContent').val(),
+                status: $('#createForumStatus').val(),
+                userId: 1, // Replace with actual userId logic
+            };
+
+            $.ajax({
+                url: "http://localhost:8080/api/v1/adminforumblogs/forums/create",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(forumData),
+                success: function(response) {
+                    if (response.status === 201) {
+                        loadForums();
+                        $('#createForumModal').modal('hide');
+                    } else {
+                        alert("Failed to create forum.");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error creating forum:", error);
+                    console.log("Response:", xhr.responseText);
+                    alert("Error creating forum.");
+                }
+            });
+        });
+
+        // Handle 'Create Blog' form submission
+        /*$('#createBlogForm').on('submit', function(event) {
+            event.preventDefault();
+            const blogData = {
+                title: $('#createBlogTitle').val(),
+                content: $('#createBlogContent').val(),
+                imageUrl: $('#createBlogImage').val(),
+                status: $('#createBlogStatus').val(),
+                userId: 1, // Replace with actual userId logic
+            };
+
+            $.ajax({
+                url: "http://localhost:8080/api/v1/adminforumblogs/blogs/create",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(blogData),
+                success: function(response) {
+                    if (response.status === 201) {
+                        loadBlogs();
+                        $('#createBlogModal').modal('hide');
+                    } else {
+                        alert("Failed to create blog.");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error creating blog:", error);
+                    console.log("Response:", xhr.responseText);
+                    alert("Error creating blog.");
+                }
+            });
+        });*/
+        // Handle 'Create Blog' form submission
+        $('#createBlogForm').on('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData();
+            formData.append('title', $('#createBlogTitle').val());
+            formData.append('content', $('#createBlogContent').val());
+            formData.append('status', $('#createBlogStatus').val());
+            formData.append('userId', 1); // Replace with actual userId logic
+
+            const imageFile = $('#createBlogImage')[0].files[0]; // Get the file from the input
+            if (imageFile) {
+                formData.append('image', imageFile); // Append the file to the FormData
+            }
+
+            $.ajax({
+                url: "http://localhost:8080/api/v1/adminforumblogs/blogs/create",
+                method: "POST",
+                processData: false, // Important for FormData
+                contentType: false, // Important for FormData
+                data: formData,
+                success: function(response) {
+                    if (response.status === 201) {
+                        loadBlogs();
+                        $('#createBlogModal').modal('hide');
+                    } else {
+                        alert("Failed to create blog.");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error creating blog:", error);
+                    console.log("Response:", xhr.responseText);
+                    alert("Error creating blog.");
+                }
+            });
+        });
+
+        // Open the 'Edit Forum' modal and populate it with selected forum data
+        $(document).on('click', '.editForumBtn', function() {
+            const forumId = $(this).data('forum-id');
+            $.ajax({
+                url: `http://localhost:8080/api/v1/adminforumblogs/forums/get/${forumId}`,
+                method: "GET",
+                dataType: "json",
+                success: function(response) {
+                    if (response.status === 200 && response.data) {
+                        $('#editForumTitle').val(response.data.title);
+                        $('#editForumContent').val(response.data.content);
+                        $('#editForumStatus').val(response.data.status);
+                        $('#editForumTitle').data('forum-id', forumId);
+                        $('#editForumTitle').data('user-id', response.data.userId); // Store userId
+                        $('#editForumModal').modal('show');
+                    } else {
+                        alert("Failed to load forum data.");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching forum data:", error);
+                    console.log("Response:", xhr.responseText);
+                    alert("Error fetching forum data.");
+                }
+            });
+        });
+
+        // Open the 'Edit Blog' modal and populate it with selected blog data
+        $(document).on('click', '.editBlogBtn', function() {
+            const blogId = $(this).data('blog-id'); // Get blog ID from the button
+            const userId = $(this).data('user-id'); // Get user ID from the button
+
+            console.log("Blog ID:", blogId); // Debugging
+            console.log("User  ID:", userId); // Debugging
+
+            $.ajax({
+                url: `http://localhost:8080/api/v1/adminforumblogs/blogs/get/${blogId}`,
+                method: "GET",
+                dataType: "json",
+                success: function(response) {
+                    if (response.status === 200 && response.data) {
+                        $('#editBlogTitle').val(response.data.title);
+                        $('#editBlogContent').val(response.data.content);
+                        $('#editBlogStatus').val(response.data.status);
+                        // Do not set the value of the file input directly
+                        // $('#editBlogImage').val(response.data.imageUrl); // Remove this line
+                        $('#editBlogTitle').data('blog-id', blogId); // Store blogId
+                        $('#editBlogTitle').data('user-id', userId); // Store userId
+                        $('#editBlogModal').modal('show');
+                    } else {
+                        alert("Failed to load blog data.");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching blog data:", error);
+                    console.log("Response:", xhr.responseText);
+                    alert("Error fetching blog data.");
+                }
+            });
+        });
+
+
+        // Handle 'Edit Forum' form submission
+        $('#editForumForm').on('submit', function(event) {
+            event.preventDefault();
+            const forumId = $('#editForumTitle').data('forum-id');
+            const userId = $('#editForumTitle').data('user-id');
+            const now = new Date();
+            const createdAt = now.toISOString().slice(0, 19).replace('T', ' ');
+            const updatedForum = {
+                forumId: forumId,
+                title: $('#editForumTitle').val(),
+                content: $('#editForumContent').val(),
+                status: $('#editForumStatus').val(),
+                createdAt: createdAt,
+                userId: userId, //add the userId.
+            };
+
+            $.ajax({
+                url: `http://localhost:8080/api/v1/adminforumblogs/forums/update/${forumId}`,
+                method: "PUT",
+                contentType: "application/json",
+                data: JSON.stringify(updatedForum),
+                success: function(response) {
+                    if (response.status === 200) {
+                        loadForums();
+                        $('#editForumModal').modal('hide');
+                    } else {
+                        alert("Failed to update forum.");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error updating forum:", error);
+                    console.log("Response:", xhr.responseText);
+                    alert("Error updating forum.");
+                }
+            });
+        });
+
+        // Handle 'Edit Blog' form submission
+        $('#editBlogForm').on('submit', function(event) {
+            event.preventDefault();
+            const blogId = $('#editBlogTitle').data('blog-id'); // Retrieve blogId from data attribute
+            const userId = $('#editBlogTitle').data('user-id'); // Retrieve userId from data attribute
+
+            console.log("Submitting Blog ID:", blogId); // Debugging
+            console.log("Submitting User ID:", userId); // Debugging
+
+            const formData = new FormData();
+            formData.append('title', $('#editBlogTitle').val());
+            formData.append('content', $('#editBlogContent').val());
+            formData.append('status', $('#editBlogStatus').val());
+            formData.append('userId', userId); // Use the userId from the modal
+
+            const imageFile = $('#editBlogImage')[0].files[0]; // Get the file from the input
+            if (imageFile) {
+                formData.append('image', imageFile); // Append the new file to the FormData
+            }
+
+            $.ajax({
+                url: `http://localhost:8080/api/v1/adminforumblogs/blogs/update/${blogId}`,
+                method: "PUT",
+                processData: false, // Important for FormData
+                contentType: false, // Important for FormData
+                data: formData,
+                success: function(response) {
+                    if (response.status === 200) {
+                        loadBlogs();
+                        $('#editBlogModal').modal('hide');
+                    } else {
+                        alert("Failed to update blog.");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error updating blog:", error);
+                    console.log("Response:", xhr.responseText);
+                    alert("Error updating blog.");
+                }
+            });
+        });
+
+        // Delete forum
+        $(document).on('click', '.deleteForumBtn', function() {
+            const forumId = $(this).data('forum-id');
+            if (confirm("Are you sure you want to delete this forum?")) {
+                $.ajax({
+                    url: `http://localhost:8080/api/v1/adminforumblogs/forums/delete/${forumId}`,
+                    method: "DELETE",
+                    success: function(response) {
+                        if (response.status === 200) {
+                            loadForums();
+                        } else {
+                            alert("Failed to delete forum.");
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error deleting forum:", error);
+                        console.log("Response:", xhr.responseText);
+                        alert("Error deleting forum.");
+                    }
+                });
+            }
+        });
+
+        // Delete blog
+        $(document).on('click', '.deleteBlogBtn', function() {
+            const blogId = $(this).data('blog-id');
+            if (confirm("Are you sure you want to delete this blog?")) {
+                $.ajax({
+                    url: `http://localhost:8080/api/v1/adminforumblogs/blogs/delete/${blogId}`,
+                    method: "DELETE",
+                    success: function(response) {
+                        if (response.status === 200) {
+                            loadBlogs();
+                        } else {
+                            alert("Failed to delete blog.");
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error deleting blog:", error);
+                        console.log("Response:", xhr.responseText);
+                        alert("Error deleting blog.");
+                    }
+                });
+            }
+        });
+
+        // Initial Load
+        loadForums();
+        loadBlogs();
+    });
+
+</script>
+
+</body>
+</html>

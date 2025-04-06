@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b0212092-f5c2-45d4-8064-67a74003fc17" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2uLBzPG9RBhOv0OnCBr7FApJUGH" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "JavaScript Debug.admin-users.html.executor": "Run",
+    "JavaScript Debug.login.html.executor": "Run",
+    "JavaScript Debug.signup.html.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.HondaSuperCubApplication.executor": "Run",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "17",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Karl/Documents/AAD/AAD - Spring/Honda-Super-Cub/Frontend/images",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "project.propVCSSupport.CommitDialog",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Karl\Documents\AAD\AAD - Spring\Honda-Super-Cub\Frontend\images" />
+      <recent name="C:\Users\Karl\Documents\AAD\AAD - Spring\Honda-Super-Cub\src\main\resources\images" />
+      <recent name="C:\Users\Karl\Documents\AAD\AAD - Spring\Honda-Super-Cub\src\main\java\org\example\hondasupercub\dto" />
+      <recent name="C:\Users\Karl\Documents\AAD\AAD - Spring\Honda-Super-Cub\Frontend" />
+      <recent name="C:\Users\Karl\Documents\AAD\AAD - Spring\Honda-Super-Cub\Frontend\css" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.example.hondasupercub.config" />
+      <recent name="org.example.hondasupercub.controller" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.HondaSuperCubApplication">
+    <configuration name="admin-users.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/Honda-Super-Cub/Frontend/admin-users.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="login.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/Honda-Super-Cub/Frontend/login.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="signup.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/Honda-Super-Cub/Frontend/signup.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="HondaSuperCubApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="Honda-Super-Cub" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.hondasupercub.HondaSuperCubApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.login.html" />
+        <item itemvalue="JavaScript Debug.signup.html" />
+        <item itemvalue="JavaScript Debug.admin-users.html" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-5cd809f4" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b0212092-f5c2-45d4-8064-67a74003fc17" name="Changes" comment="" />
+      <created>1742018237410</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1742018237410</updated>
+      <workItem from="1742018238547" duration="3143000" />
+      <workItem from="1742036683670" duration="3342000" />
+      <workItem from="1742100729847" duration="6822000" />
+      <workItem from="1742119730108" duration="3033000" />
+      <workItem from="1742143898649" duration="829000" />
+      <workItem from="1742190831823" duration="3146000" />
+      <workItem from="1742207673809" duration="5079000" />
+      <workItem from="1742268710617" duration="28256000" />
+      <workItem from="1742308684050" duration="6445000" />
+      <workItem from="1742344594702" duration="14359000" />
+      <workItem from="1742364343456" duration="9016000" />
+      <workItem from="1742375029496" duration="21599000" />
+      <workItem from="1742401819370" duration="8477000" />
+      <workItem from="1742434289839" duration="2723000" />
+      <workItem from="1742532765079" duration="7593000" />
+      <workItem from="1742584141284" duration="5323000" />
+      <workItem from="1742620457080" duration="2769000" />
+      <workItem from="1742640633305" duration="668000" />
+      <workItem from="1742703201169" duration="3286000" />
+      <workItem from="1742722343518" duration="5112000" />
+      <workItem from="1742789420343" duration="19519000" />
+      <workItem from="1742832906023" duration="12531000" />
+      <workItem from="1742846098021" duration="1913000" />
+      <workItem from="1742873370869" duration="6624000" />
+      <workItem from="1742895071120" duration="5425000" />
+      <workItem from="1742966727739" duration="18618000" />
+      <workItem from="1743007348054" duration="9007000" />
+      <workItem from="1743053639162" duration="16725000" />
+      <workItem from="1743090529849" duration="5562000" />
+      <workItem from="1743133306467" duration="30240000" />
+      <workItem from="1743168876446" duration="22376000" />
+      <workItem from="1743193817242" duration="421000" />
+      <workItem from="1743222882808" duration="23180000" />
+      <workItem from="1743249722826" duration="1145000" />
+      <workItem from="1743255485383" duration="14101000" />
+      <workItem from="1743306059840" duration="26555000" />
+      <workItem from="1743333126232" duration="189000" />
+      <workItem from="1743352484114" duration="2675000" />
+      <workItem from="1743393607546" duration="12224000" />
+      <workItem from="1743413792959" duration="5652000" />
+      <workItem from="1743436523022" duration="1577000" />
+      <workItem from="1743479558569" duration="5753000" />
+      <workItem from="1743491735640" duration="14237000" />
+      <workItem from="1743525491009" duration="1651000" />
+      <workItem from="1743529624065" duration="5598000" />
+      <workItem from="1743562604443" duration="1135000" />
+      <workItem from="1743572538569" duration="7728000" />
+      <workItem from="1743588915663" duration="530000" />
+      <workItem from="1743599143724" duration="10576000" />
+      <workItem from="1743611864132" duration="6117000" />
+      <workItem from="1743652289258" duration="1376000" />
+      <workItem from="1743655877207" duration="5657000" />
+      <workItem from="1743668866122" duration="6638000" />
+      <workItem from="1743697837292" duration="7807000" />
+      <workItem from="1743741357096" duration="13837000" />
+      <workItem from="1743767467185" duration="5862000" />
+      <workItem from="1743852851078" duration="15840000" />
+      <workItem from="1743911147007" duration="29224000" />
+      <workItem from="1743949918089" duration="5238000" />
+      <workItem from="1743956215690" duration="1296000" />
+      <workItem from="1743957528109" duration="855000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
+  </component>
+</project>

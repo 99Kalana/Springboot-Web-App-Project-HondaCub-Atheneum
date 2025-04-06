@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Management | Admin</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/normalize.css">
+    <style>
+        .sidebar {
+            width: 250px;
+            min-height: 100vh;
+            background-color: #343a40;
+            background-image: url("images/6.jpg");
+            transition: width 0.3s;
+            position: relative;
+        }
+
+        .sidebar.collapsed {
+            width: 80px;
+        }
+
+        .toggle-btn {
+            position: absolute;
+            top: 10px;
+            right: 8px;
+            background-color: #fff;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar h3 {
+            display: block;
+            margin-top: 40px;
+            font-size: 1.5rem;
+            transition: opacity 0.3s;
+        }
+
+        .sidebar.collapsed h3 {
+            opacity: 0;
+            pointer-events: none; /* Prevents interaction when collapsed */
+        }
+
+        .sidebar ul {
+            padding-left: 0;
+            margin-top: 30px;
+        }
+
+        .sidebar li {
+            list-style: none;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: all 0.3s;
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed a {
+            justify-content: center;
+        }
+
+        .sidebar a:hover {
+            background-color: #b6d4fe;
+            color: #000;
+        }
+
+        .sidebar i {
+            margin-right: 10px;
+            transition: margin-right 0.3s;
+        }
+
+        .sidebar.collapsed i {
+            margin-right: 0;
+        }
+
+        .sidebar span {
+            transition: opacity 0.3s, width 0.3s;
+            white-space: nowrap; /* Prevents text from wrapping */
+        }
+
+        .sidebar.collapsed span {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+        }
+
+        .content {
+            padding: 20px;
+            background-image: url("images/8.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            width: calc(100% - 250px);
+            transition: width 0.3s;
+        }
+
+        .sidebar.collapsed ~ .content {
+            width: calc(100% - 80px);
+        }
+
+        .profile-logout {
+            margin-top: 30px;
+            padding: 10px;
+            transition: padding 0.3s;
+        }
+
+        .sidebar.collapsed .profile-logout {
+            padding: 10px 0; /* Reduce padding when collapsed */
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            margin-bottom: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .sidebar.collapsed .profile-btn {
+            justify-content: center;
+        }
+
+        .profile-btn i {
+            margin-right: 10px;
+            transition: margin-right 0.3s;
+        }
+
+        .sidebar.collapsed .profile-btn i {
+            margin-right: 0;
+        }
+
+        .profile-btn span {
+            transition: opacity 0.3s, width 0.3s;
+            white-space: nowrap;
+        }
+
+        .sidebar.collapsed .profile-btn span {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<!-- Sidebar & Main Content Wrapper -->
+<div class="d-flex">
+    <!-- Sidebar -->
+    <div class="sidebar p-3 text-white">
+        <!-- Toggle Button -->
+        <button class="btn btn-light toggle-btn" id="toggleBtn">
+            <i class="bi bi-list"></i>
+        </button>
+        <h3 class="text-center">HondaCub Admin</h3>
+        <hr>
+        <ul class="nav flex-column">
+            <li><a href="admin-dashboard.html" class="nav-link"><i class="bi bi-speedometer2"></i> <span>Dashboard</span></a></li>
+            <li><a href="admin-users.html" class="nav-link"><i class="bi bi-people"></i> <span>User Management</span></a></li>
+            <li><a href="admin-categories.html" class="nav-link"><i class="bi bi-list-task"></i> <span>Category Management</span></a></li>
+            <li><a href="admin-spare-parts.html" class="nav-link"><i class="bi bi-gear"></i> <span>Spare Parts Management</span></a></li>
+            <li><a href="admin-orders.html" class="nav-link"><i class="bi bi-cart3"></i> <span>Order Management</span></a></li>
+            <li><a href="admin-transaction.html" class="nav-link"><i class="bi bi-currency-dollar"></i> <span>Transactions & Payments</span></a></li>
+            <li><a href="admin-rewards.html" class="nav-link"><i class="bi bi-gift"></i> <span>Loyalty & Rewards</span></a></li>
+            <li><a href="admin-forum-and-blogs.html" class="nav-link"><i class="bi bi-chat-left-dots"></i> <span>Community Forum & Blogs</span></a></li>
+            <li><a href="admin-archive.html" class="nav-link"><i class="bi bi-archive"></i> <span>Honda Super Cub Archive</span></a></li>
+            <li><a href="admin-vin.html" class="nav-link"><i class="bi bi-tools"></i> <span>VIN Management</span></a></li>
+        </ul>
+        <hr>
+        <!-- Profile & Logout Buttons -->
+        <div class="profile-logout d-grid gap-2">
+            <button class="btn btn-secondary profile-btn" onclick="window.location.href='admin-profile.html'">
+                <i class="bi bi-person-circle"></i><span>Profile Management</span>
+            </button>
+            <button class="btn btn-danger profile-btn" onclick="window.location.href='login.html'">
+                <i class="bi bi-box-arrow-right"></i> <span>Logout</span>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Main Content -->
+    <main class="container-fluid p-3 content">
+        <!-- Header with Transaction Management -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2><i class="bi bi-currency-dollar"></i> Transaction Management</h2>
+        </div>
+
+        <!-- Filters Section -->
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <input type="text" id="searchTransaction" class="form-control" placeholder="Search by Order ID">
+            </div>
+            <div class="col-md-4">
+                <select id="filterPaymentStatus" class="form-select">
+                    <option value="all">All Payment Statuses</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Failed">Failed</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select id="filterRefundStatus" class="form-select">
+                    <option value="all">All Refund Statuses</option>
+                    <option value="None">None</option>
+                    <option value="Partial">Partial</option>
+                    <option value="Full">Full</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Transactions Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Order ID</th>
+                    <th>User ID</th>
+                    <th>Payment Method</th>
+                    <th>Payment Status</th>
+                    <th>Refund Status</th>
+                    <th>Paid Amount</th>
+                    <th>Transaction Date</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="transactionTable">
+                <!-- Data will be dynamically inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<!-- Transaction Detail Modal -->
+<div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="transactionModalLabel">Transaction Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Transaction ID:</strong> <span id="modalTransactionId"></span></p>
+                <p><strong>Order ID:</strong> <span id="modalOrderId"></span></p>
+                <p><strong>User ID:</strong> <span id="modalUserId"></span></p>
+                <p><strong>Payment Method:</strong> <span id="modalPaymentMethod"></span></p>
+                <p><strong>Payment Status:</strong> <span id="modalPaymentStatus"></span></p>
+                <p><strong>Refund Status:</strong> <span id="modalRefundStatus"></span></p>
+                <p><strong>Paid Amount:</strong> $<span id="modalPaidAmount"></span></p>
+                <p><strong>Transaction Date:</strong> <span id="modalTransactionDate"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="js/bootstrap.js"></script>
+<script src="JQuery/jquery-3.7.1.min.js"></script>
+<script>
+
+    $(document).ready(function() {
+
+        // Toggle Sidebar Functionality
+        $("#toggleBtn").click(function() {
+            $(".sidebar").toggleClass("collapsed");
+        });
+
+        // Populate Table
+        function populateTable(transactions) {
+            const tableBody = $('#transactionTable');
+            tableBody.empty();
+            if (transactions && transactions.length > 0) {
+                transactions.forEach(transaction => {
+                    const row = `
+                <tr>
+                    <td>${transaction.transactionId}</td>
+                    <td>${transaction.orderId}</td>
+                    <td>${transaction.userId}</td>
+                    <td>${transaction.paymentMethod}</td>
+                    <td>${transaction.paymentStatus}</td>
+                    <td>${transaction.refundStatus}</td>
+                    <td>$${transaction.paidAmount.toFixed(2)}</td>
+                    <td>${transaction.transactionDate}</td>
+                    <td>
+                        <button class="btn btn-info btn-sm view-btn" data-id="${transaction.transactionId}" data-bs-toggle="modal" data-bs-target="#transactionModal"><i class="bi bi-eye"></i> View</button>
+                    </td>
+                </tr>`;
+                    tableBody.append(row);
+                });
+            } else {
+                tableBody.append('<tr><td colspan="9" class="text-center">No transactions found.</td></tr>');
+            }
+        }
+
+        // View Transaction
+        $(document).on("click", ".view-btn", function() {
+            const transactionId = $(this).data("id");
+            $.ajax({
+                url: `http://localhost:8080/api/v1/admintransactions/get/${transactionId}`,
+                method: "GET",
+                dataType: "json",
+                success: function(response) {
+                    if (response.status === 200 && response.data) {
+                        const transaction = response.data;
+                        $('#modalTransactionId').text(transaction.transactionId);
+                        $('#modalOrderId').text(transaction.orderId);
+                        $('#modalUserId').text(transaction.userId);
+                        $('#modalPaymentMethod').text(transaction.paymentMethod);
+                        $('#modalPaymentStatus').text(transaction.paymentStatus);
+                        $('#modalRefundStatus').text(transaction.refundStatus);
+                        $('#modalPaidAmount').text(transaction.paidAmount.toFixed(2));
+                        $('#modalTransactionDate').text(transaction.transactionDate);
+                        $('#transactionModal').modal('show');
+                    } else {
+                        console.error("Failed to load transaction:", response);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching transaction:", error);
+                    console.log("Response:", xhr.responseText);
+                }
+            });
+        });
+
+        // Load Transactions from Backend
+        function loadTransactions() {
+            $.ajax({
+                url: "http://localhost:8080/api/v1/admintransactions/getAll",
+                method: "GET",
+                dataType: "json",
+                success: function(response) {
+                    if (response.status === 200 && response.data) {
+                        populateTable(response.data);
+                    } else {
+                        console.error("Failed to load transactions:", response);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching transactions:", error);
+                    console.log("Response:", xhr.responseText);
+                }
+            });
+        }
+
+        // Filter Transactions by Order ID
+        $('#searchTransaction').keyup(function() {
+            const query = $(this).val();
+            if(query){
+                $.ajax({
+                    url: `http://localhost:8080/api/v1/admintransactions/byOrder/${query}`,
+                    method: "GET",
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.status === 200 && response.data) {
+                            populateTable(response.data);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error filtering transactions by order ID:", error);
+                        console.log("Response:", xhr.responseText);
+                    }
+                });
+            }else{
+                loadTransactions();
+            }
+        });
+
+        // Filter Transactions by Payment Status
+        $('#filterPaymentStatus').change(function() {
+            const status = $(this).val();
+            if (status !== "all") {
+                $.ajax({
+                    url: `http://localhost:8080/api/v1/admintransactions/byPaymentStatus/${status}`,
+                    method: "GET",
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.status === 200 && response.data) {
+                            populateTable(response.data);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error filtering transactions by payment status:", error);
+                        console.log("Response:", xhr.responseText);
+                    }
+                });
+            } else {
+                loadTransactions();
+            }
+        });
+
+        // Filter Transactions by Refund Status
+        $('#filterRefundStatus').change(function() {
+            const status = $(this).val();
+            if (status !== "all") {
+                $.ajax({
+                    url: `http://localhost:8080/api/v1/admintransactions/byRefundStatus/${status}`,
+                    method: "GET",
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.status === 200 && response.data) {
+                            populateTable(response.data);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error filtering transactions by refund status:", error);
+                        console.log("Response:", xhr.responseText);
+                    }
+                });
+            } else {
+                loadTransactions();
+            }
+        });
+
+        // Initial Load
+        loadTransactions();
+    });
+
+</script>
+
+</body>
+</html>

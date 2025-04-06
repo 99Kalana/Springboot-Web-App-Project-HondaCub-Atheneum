@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Honda Super Cub Videos | HondaCub Atheneum</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        .navbar-brand img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .banner {
+            background-image: url('images/22.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .banner h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        footer {
+            background-color: #343a40;
+            text-align: center;
+            padding: 20px 0;
+            color: #fff;
+            margin-top: auto;
+        }
+
+        .footer-text {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .video-collection {
+            margin-top: 30px;
+
+            background-image: url('images/27.jpg'); /* Replace with your background image path */
+            background-size: cover; /* Cover the entire container */
+            background-position: center; /* Center the background image */
+            padding: 20px; /* Add some padding */
+            border-radius: 8px; /* Optional: Add rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Add a shadow effect */
+            color: #fff; /* Change text color to white for better contrast */
+
+        }
+
+        .video-row {
+            margin-bottom: 20px;
+        }
+
+        .video-card {
+            cursor: pointer;
+        }
+
+        .video-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .video-modal .modal-dialog {
+            max-width: 80%;
+        }
+
+        .video-modal iframe {
+            width: 100%;
+            height: 500px;
+        }
+
+        /* Loading overlay styles */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; /* Ensure it is on top of other elements */
+            backdrop-filter: blur(5px); /* Apply blur effect to the background */
+        }
+
+        .loading-overlay img {
+            width: 150px; /* Adjust the size of the logo */
+            height: auto;
+        }
+
+    </style>
+</head>
+<body>
+
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+    <img src="images/14.jpg" alt="Logo"> <!-- Replace with your logo image path -->
+    <i class="bi bi-film ms-2"></i>
+    <h3>Let's explore Cub Video Archives</h3>
+    <i class="bi bi-film ms-2"></i>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="customer-homepage.html">
+            <img src="images/14.jpg" alt="Logo">
+            HondaCub Atheneum
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-homepage.html">Home <i class="bi bi-house-door ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-products.html">Products <i class="bi bi-box ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-cart.html">Cart <i class="bi bi-cart ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-checkout-payment.html">Checkout <i class="bi bi-credit-card ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-order-history.html">Order History <i class="bi bi-box-seam ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-reviews.html">Reviews <i class="bi bi-star ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-cub-motions.html">Cub Motions <i class="bi bi-film ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-profile.html">Profile <i class="bi bi-person ms-2"></i></a></li>
+            </ul>
+            <button class="btn btn-danger" onclick="window.location.href='login.html'">
+                <i class="bi bi-box-arrow-right"></i> <span>Logout</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="banner">
+    <h1>Honda Super Cub Video Collection</h1>
+</div>
+
+<div class="container video-collection">
+    <h3 class="text-center">Explore Honda Super Cub Videos</h3>
+    <hr>
+
+    <div class="video-row">
+        <h4>Honda Collection Hall</h4>
+        <div id="hondaCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card video-card" data-video-id="VIDEO_ID_1">
+                                <div class="card-body">
+                                    <h5 class="card-title">Video 1 Title</h5>
+                                    <iframe width="100%" height="200" src="https://www.youtube-nocookie.com/embed/L464gSNAY2Y?si=6OpymfkodCkzrMIT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card video-card" data-video-id="VIDEO_ID_2">
+                                <div class="card-body">
+                                    <h5 class="card-title">Video 2 Title</h5>
+                                    <iframe width="100%" height="200" src="https://www.youtube-nocookie.com/embed/D0AgaOle2O0?si=Ew5uoTpUIeoqhFJl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card video-card" data-video-id="VIDEO_ID_3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Video 3 Title</h5>
+                                    <iframe width="100%" height="200" src="https://www.youtube-nocookie.com/embed/iIU4GW8K7Gc?si=9gCSXK4aDf2-3Uxa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card video-card" data-video-id="VIDEO_ID_10">
+                                <div class="card-body">
+                                    <h5 class="card-title">Video 10 Title</h5>
+                                    <iframe width="100%" height="200" src="https://www.youtube-nocookie.com/embed/hliMY4d5fvI?si=kC5qEyepArybWgSx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card video-card" data-video-id="VIDEO_ID_11">
+                                <div class="card-body">
+                                    <h5 class="card-title">Video 11 Title</h5>
+                                    <iframe width="100%" height="200" src="https://www.youtube-nocookie.com/embed/NljLevVY41I?si=ER8PRRbdXTCIkw2M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card video-card" data-video-id="VIDEO_ID_11">
+                                <div class="card-body">
+                                    <h5 class="card-title">Video 11 Title</h5>
+                                    <iframe width="100%" height="200" src="https://www.youtube-nocookie.com/embed/vQipxZd9bDY?si=8eZUtGEhCjFBUcl7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card video-card" data-video-id="VIDEO_ID_10">
+                                <div class="card-body">
+                                    <h5 class="card-title">Video 10 Title</h5>
+                                    <iframe width="100%" height="200" src="https://www.youtube-nocookie.com/embed/g5IHdIbJ-pU?si=ImayZe-7LGYbclVH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card video-card" data-video-id="VIDEO_ID_11">
+                                <div class="card-body">
+                                    <h5 class="card-title">Video 11 Title</h5>
+                                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/GVOYaG-JSJQ?si=21zRv1D9dlWc51sd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                               </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card video-card" data-video-id="VIDEO_ID_11">
+                                <div class="card-body">
+                                    <h5 class="card-title">Video 11 Title</h5>
+                                    <iframe width="100%" height="200" src="https://www.youtube-nocookie.com/embed/pnMWZYPsy50?si=l4kazssKLLuQk6zT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#hondaCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#hondaCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="video-row">
+        <h4>Restorations</h4>
+        <div id="restorationCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card video-card" data-video-id="VIDEO_ID_4">
+                                <div class="card-body">
+                                    <h5 class="card-title">Video 4 Title</h5>
+                                    <iframe  width="100%" height="200" src="https://www.youtube.com/embed/k3s5nuri1AU?si=UT0tGxltDHmVm9Y1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card video-card" data-video-id="VIDEO_ID_5">
+                                <div class="card-body">
+                                    <h5 class="card-title">Video 5 Title</h5>
+                                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/LMFrLIFlmTU?si=YdzdEsxlbb9Wxeqb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card video-card" data-video-id="VIDEO_ID_6">
+                                <div class="card-body">
+                                    <h5 class="card-title">Video 6 Title</h5>
+                                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/Xdj-P-IIo1o?si=zuhtNImvFVdAP2Bm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card video-card" data-video-id="VIDEO_ID_12">
+                                <div class="card-body">
+                                    <h5 class="card-title">Video 12 Title</h5>
+                                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/O8dIEFqTA14?si=pXnLba3w3UXnyNUK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card video-card" data-video-id="VIDEO_ID_13">
+                                <div class="card-body">
+                                    <h5 class="card-title">Video 13 Title</h5>
+                                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/9jY8ocvRj8o?si=uLf0F4VyAyxB4DP_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#restorationCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#restorationCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="video-row">
+        <h4>Tours with Super Cub</h4>
+        <div id="toursCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card video-card" data-video-id="VIDEO_ID_7">
+                                <div class="card-body">
+                                    <h5 class="card-title">Video 7 Title</h5>
+                                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/7bOtVx7aSx8?si=kGL8FJSHvZlk7MZo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card video-card" data-video-id="VIDEO_ID_8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Video 8 Title</h5>
+                                    <iframe width="100%" height="200" src="https://www.youtube-nocookie.com/embed/oh-wMM6hHnM?si=J4KxAcs7_n-7-_Gd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card video-card" data-video-id="VIDEO_ID_9">
+                                <div class="card-body">
+                                    <h5 class="card-title">Video 9 Title</h5>
+                                    <iframe width="100%" height="200" src="https://www.youtube-nocookie.com/embed/1nB4mEf_R-s?si=yTAPCPT9nb0DZPsH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card video-card" data-video-id="VIDEO_ID_14">
+                                <div class="card-body">
+                                    <h5 class="card-title">Video 14 Title</h5>
+                                    <iframe width="100%" height="200" src="https://www.youtube-nocookie.com/embed/jSX0rLW-YgU?si=r_jK0r63uuzrbuPi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card video-card" data-video-id="VIDEO_ID_15">
+                                <div class="card-body">
+                                    <h5 class="card-title">Video 15 Title</h5>
+                                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/vmUzVRL24zo?si=jfcgFAOzKjP16gvP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#toursCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#toursCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade video-modal" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="videoModalLabel">Video</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="videoFrame" width="100%" height="500" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p class="footer-text">© 2025 HondaCub Atheneum | All rights reserved.</p>
+</footer>
+
+<script src="js/bootstrap.js"></script>
+<script src="JQuery/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.video-card').click(function () {
+            const videoSrc = $(this).find('iframe').attr('src');
+            $('#videoFrame').attr('src', videoSrc);
+            $('#videoModal').modal('show');
+        });
+
+        $('#videoModal').on('hidden.bs.modal', function () {
+            $('#videoFrame').attr('src', '');
+        });
+        // Loading overlay functionality
+        setTimeout(function() {
+            $('#loadingOverlay').fadeOut(); // Hide the loading overlay after 5 seconds
+        }, 5000);
+
+    });
+</script>
+
+</body>
+</html>

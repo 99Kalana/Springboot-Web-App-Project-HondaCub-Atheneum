@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Management - HondaCub Atheneum</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/normalize.css">
+    <style>
+        .sidebar {
+            width: 250px;
+            min-height: 100vh;
+            background-color: #343a40;
+            background-image: url("images/6.jpg");
+            transition: width 0.3s;
+            position: relative;
+        }
+
+        .sidebar.collapsed {
+            width: 80px;
+        }
+
+        .toggle-btn {
+            position: absolute;
+            top: 10px;
+            right: 8px;
+            background-color: #fff;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar h3 {
+            display: block;
+            margin-top: 40px;
+            font-size: 1.5rem;
+            transition: opacity 0.3s;
+        }
+
+        .sidebar.collapsed h3 {
+            opacity: 0;
+            pointer-events: none; /* Prevents interaction when collapsed */
+        }
+
+        .sidebar ul {
+            padding-left: 0;
+            margin-top: 30px;
+        }
+
+        .sidebar li {
+            list-style: none;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: all 0.3s;
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed a {
+            justify-content: center;
+        }
+
+        .sidebar a:hover {
+            background-color: #b6d4fe;
+            color: #000;
+        }
+
+        .sidebar i {
+            margin-right: 10px;
+            transition: margin-right 0.3s;
+        }
+
+        .sidebar.collapsed i {
+            margin-right: 0;
+        }
+
+        .sidebar span {
+            transition: opacity 0.3s, width 0.3s;
+            white-space: nowrap; /* Prevents text from wrapping */
+        }
+
+        .sidebar.collapsed span {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+        }
+
+        .content {
+            padding: 20px;
+            background-image: url("images/8.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            width: calc(100% - 250px);
+            transition: width 0.3s;
+        }
+
+        .sidebar.collapsed ~ .content {
+            width: calc(100% - 80px);
+        }
+
+        .profile-logout {
+            margin-top: 30px;
+            padding: 10px;
+            transition: padding 0.3s;
+        }
+
+        .sidebar.collapsed .profile-logout {
+            padding: 10px 0; /* Reduce padding when collapsed */
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            margin-bottom: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .sidebar.collapsed .profile-btn {
+            justify-content: center;
+        }
+
+        .profile-btn i {
+            margin-right: 10px;
+            transition: margin-right 0.3s;
+        }
+
+        .sidebar.collapsed .profile-btn i {
+            margin-right: 0;
+        }
+
+        .profile-btn span {
+            transition: opacity 0.3s, width 0.3s;
+            white-space: nowrap;
+        }
+
+        .sidebar.collapsed .profile-btn span {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="d-flex">
+    <!-- Sidebar -->
+    <div class="sidebar p-3 text-white">
+        <!-- Toggle Button -->
+        <button class="btn btn-light toggle-btn" id="toggleBtn">
+            <i class="bi bi-list"></i>
+        </button>
+        <h3 class="text-center">HondaCub Admin</h3>
+        <hr>
+        <ul class="nav flex-column">
+            <li><a href="admin-dashboard.html" class="nav-link"><i class="bi bi-speedometer2"></i> <span>Dashboard</span></a></li>
+            <li><a href="admin-users.html" class="nav-link"><i class="bi bi-people"></i> <span>User Management</span></a></li>
+            <li><a href="admin-categories.html" class="nav-link"><i class="bi bi-list-task"></i> <span>Category Management</span></a></li>
+            <li><a href="admin-spare-parts.html" class="nav-link"><i class="bi bi-gear"></i> <span>Spare Parts Management</span></a></li>
+            <li><a href="admin-orders.html" class="nav-link"><i class="bi bi-cart3"></i> <span>Order Management</span></a></li>
+            <li><a href="admin-transaction.html" class="nav-link"><i class="bi bi-currency-dollar"></i> <span>Transactions & Payments</span></a></li>
+            <li><a href="admin-rewards.html" class="nav-link"><i class="bi bi-gift"></i> <span>Loyalty & Rewards</span></a></li>
+            <li><a href="admin-forum-and-blogs.html" class="nav-link"><i class="bi bi-chat-left-dots"></i> <span>Community Forum & Blogs</span></a></li>
+            <li><a href="admin-archive.html" class="nav-link"><i class="bi bi-archive"></i> <span>Honda Super Cub Archive</span></a></li>
+            <li><a href="admin-vin.html" class="nav-link"><i class="bi bi-tools"></i> <span>VIN Management</span></a></li>
+        </ul>
+        <hr>
+        <!-- Profile & Logout Buttons -->
+        <div class="profile-logout d-grid gap-2">
+            <button class="btn btn-secondary profile-btn" onclick="window.location.href='admin-profile.html'">
+                <i class="bi bi-person-circle"></i><span>Profile Management</span>
+            </button>
+            <button class="btn btn-danger profile-btn" onclick="window.location.href='login.html'">
+                <i class="bi bi-box-arrow-right"></i> <span>Logout</span>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-grow-1 content">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2><i class="bi bi-list-task"></i> Category Management</h2>
+        </div>
+
+        <!-- Add New Category -->
+        <div class="mb-4">
+            <h5>Add New Category</h5>
+            <form id="categoryForm" class="row g-3">
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="categoryName" placeholder="Category Name" required>
+                </div>
+                <div class="col-md-4">
+                    <textarea class="form-control" id="categoryDescription" placeholder="Category Description" required></textarea>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Add Category</button>
+                </div>
+            </form>
+        </div>
+
+        <!--Search Category -->
+        <div class="mb-4">
+            <input type="text" id="searchCategory" class="form-control" placeholder="Search Categories..." />
+        </div>
+
+
+        <!-- Category List -->
+        <div>
+            <h5>Category List</h5>
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                <tr >
+                    <th>ID</th>
+                    <th>Category Name</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="categoryTable">
+                <!-- Categories will be dynamically inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Category Modal -->
+<div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCategoryModalLabel">Edit Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editCategoryForm">
+                    <input type="hidden" id="editCategoryId">
+                    <div class="mb-3">
+                        <label for="editCategoryName" class="form-label">Category Name</label>
+                        <input type="text" class="form-control" id="editCategoryName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editCategoryDescription" class="form-label">Category Description</label>
+                        <textarea class="form-control" id="editCategoryDescription" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="JQuery/jquery-3.7.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/admin-categories.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Profile | HondaCub Atheneum</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        .navbar-brand img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .banner {
+            background-image: url('images/23.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100%; /* Make banner take full height of container */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            width: 50%; /* Adjust width to fit on the left side */
+            float: left;
+            min-height: 400px; /* Ensures minimum height if content is smaller */
+        }
+
+        .banner h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        footer {
+            background-color: #343a40;
+            text-align: center;
+            padding: 20px 0;
+            color: #fff;
+            margin-top: auto;
+        }
+
+        .footer-text {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .profile-container {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap; /* Ensure responsiveness */
+            align-items: stretch; /* Ensures both sides stretch to equal height */
+        }
+
+        .profile-image {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .profile-image img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+        }
+
+        .profile-details {
+            flex: 2;
+            padding: 15px;
+            width: 45%; /* Adjust width for form area */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Ensures that the form stretches vertically */
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .card-title {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            margin-right: 10px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="customer-homepage.html">
+            <img src="images/14.jpg" alt="Logo">
+            HondaCub Atheneum
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-homepage.html">Home <i class="bi bi-house-door ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-products.html">Products <i class="bi bi-box ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-cart.html">Cart <i class="bi bi-cart ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-checkout-payment.html">Checkout <i class="bi bi-credit-card ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-order-history.html">Order History <i class="bi bi-box-seam ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-reviews.html">Reviews <i class="bi bi-star ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-cub-motions.html">Cub Motions <i class="bi bi-film ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-profile.html">Profile <i class="bi bi-person ms-2"></i></a></li>
+            </ul>
+            <button class="btn btn-danger" onclick="window.location.href='login.html'">
+                <i class="bi bi-box-arrow-right"></i> <span>Logout</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Profile Section -->
+<div class="container profile-container">
+    <!-- Left Side: Banner -->
+    <div class="banner">
+        <h1>Manage Your Profile</h1>
+    </div>
+
+
+    <!-- Right Side: Profile Details Form -->
+    <div class="profile-details">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Profile Details</h5>
+                <form id="customerProfileForm">
+                    <div class="mb-3">
+                        <label for="customerName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="customerName" value="Customer Name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="customerEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="customerEmail" value="customer@example.com" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="customerPhone" class="form-label">Phone</label>
+                        <input type="text" class="form-control" id="customerPhone" value="123-456-7890">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Role</label>
+                        <input type="text" class="form-control" value="CUSTOMER" disabled>
+                    </div>
+
+                    <hr>
+
+                    <!-- Change Password Section -->
+                    <h5>Change Password</h5>
+                    <div class="mb-3">
+                        <label for="currentPassword" class="form-label">Current Password</label>
+                        <input type="password" class="form-control" id="currentPassword">
+                    </div>
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label">New Password</label>
+                        <input type="password" class="form-control" id="newPassword">
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                        <input type="password" class="form-control" id="confirmPassword">
+                    </div>
+                    <!-- Checkbox to toggle visibility of passwords -->
+                    <div class="mb-3">
+                        <input type="checkbox" id="showPassword" class="form-check-input">
+                        <label for="showPassword" class="form-check-label">Show Password</label>
+                    </div>
+
+                    <!-- Save & Cancel Buttons -->
+                    <button type="button" class="btn btn-primary" id="saveProfileBtn"><i class="bi bi-save"></i> Save Changes</button>
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='customer-homepage.html'"><i class="bi bi-arrow-left"></i> Cancel</button>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <p class="footer-text">&copy; 2025 HondaCub Atheneum | All rights reserved.</p>
+</footer>
+
+<!-- QR Code Modal -->
+<div class="modal" id="qrCodeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content text-center">
+            <div class="modal-header">
+                <h5 class="modal-title">Your QR Code</h5>
+                <!-- Close button -->
+                <button type="button" class="btn-close" id="closeQRCodeModal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Scan this QR code to log in quickly.</p>
+                <div id="qrCode"></div>
+                <!-- QR Code Download Button -->
+                <button class="btn btn-primary mt-3" id="downloadQR">Download QR Code</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script src="js/bootstrap.js"></script>
+<script src="JQuery/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function() {
+
+        loadCustomerProfile();
+
+        function loadCustomerProfile() {
+            const token = localStorage.getItem('authToken');
+
+            $.ajax({
+                url: 'http://localhost:8080/api/v1/customer/profile',
+                type: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                success: function (response) {
+                    if (response.status === 200) {
+                        const userData = response.data;
+                        $('#customerName').val(userData.fullName);
+                        $('#customerEmail').val(userData.email);
+                        $('#customerPhone').val(userData.phone);
+                    } else {
+                        alert('Failed to load profile.');
+                    }
+                },
+                error: function (error) {
+                    console.error('Error loading profile:', error);
+                    alert('An error occurred while loading profile.');
+                }
+            });
+        }
+
+        $('#saveProfileBtn').click(function () {
+            const token = localStorage.getItem('authToken');
+            const newPassword = $('#newPassword').val();
+            const confirmPassword = $('#confirmPassword').val();
+            const currentPassword = $('#currentPassword').val();
+
+            if (newPassword && newPassword !== confirmPassword) {
+                alert("New passwords do not match.");
+                return;
+            }
+
+            const userData = {
+                fullName: $('#customerName').val(),
+                email: $('#customerEmail').val(),
+                phone: $('#customerPhone').val(),
+                role: 'CUSTOMER',
+                currentPassword: currentPassword,
+                password: newPassword
+            };
+
+            $.ajax({
+                url: 'http://localhost:8080/api/v1/customer/profile/update',
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify(userData),
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                success: function (response) {
+                    if (response.status === 200) {
+                        alert('Profile updated successfully.');
+                        generateAndShowQRCode(userData.email, userData.password); // Call the QR code generation function
+                        $('#currentPassword').val('');
+                        $('#newPassword').val('');
+                        $('#confirmPassword').val('');
+                        $('#customerName').val(userData.fullName);
+                        $('#customerEmail').val(userData.email);
+                        $('#customerPhone').val(userData.phone);
+                    } else if (response.status === 409) {
+                        alert('Email already exists.');
+                    } else if (response.status === 401){
+                        alert('Incorrect current password.');
+                    } else {
+                        alert('Failed to update profile.');
+                    }
+                },
+                error: function (error) {
+                    console.error('Error updating profile:', error);
+                    alert('An error occurred while updating profile.');
+                }
+            });
+        });
+
+        function generateAndShowQRCode(email, password) {
+            const qrCodeData = JSON.stringify({ email: email, password: password });
+
+            $('#qrCode').empty();
+            new QRCode(document.getElementById("qrCode"), {
+                text: qrCodeData,
+                width: 128,
+                height: 128,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            $('#qrCodeModal').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+            $('#qrCodeModal').modal('show');
+        }
+
+        $('#closeQRCodeModal').click(function () {
+            $('#qrCodeModal').modal('hide');
+            window.location.href = 'login.html';
+        });
+
+        $('#downloadQR').click(function () {
+            const canvas = $('#qrCode canvas')[0];
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL("image/png");
+            link.download = 'qrcode.png';
+            link.click();
+        });
+
+        $("#showPassword").on("change", function() {
+            let currentPasswordField = $("#currentPassword");
+            let passwordField = $("#newPassword");
+            let confirmPasswordField = $("#confirmPassword");
+
+            if ($(this).prop("checked")) {
+                currentPasswordField.attr("type", "text");
+                passwordField.attr("type", "text");
+                confirmPasswordField.attr("type", "text");
+            } else {
+                currentPasswordField.attr("type", "password");
+                passwordField.attr("type", "password");
+                confirmPasswordField.attr("type", "password");
+            }
+        });
+
+    });
+</script>
+
+</body>
+</html>

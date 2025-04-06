@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Listings | HondaCub Atheneum</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .nav-link {
+            font-weight: bold;
+        }
+
+        .navbar {
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+        .navbar-brand img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .card {
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+            box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .filter-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+        }
+
+        .filter-section h5 {
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .container {
+            flex-grow: 1;
+        }
+
+        footer {
+            background-color: #343a40;
+            text-align: center;
+            padding: 20px 0;
+            color: #fff;
+            margin-top: auto;
+        }
+
+        .footer-text {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .banner {
+            background-image: url('images/17.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .banner h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #modalImages {
+            max-width: 100%;
+            height: 200px;
+            margin-bottom: 15px;
+        }
+
+        #productInfo h5 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        #productInfo p {
+            margin-bottom: 8px;
+        }
+
+        #carouselImages img {
+            max-height: 230px; /* Adjust this value as needed */
+            object-fit: contain; /* Maintain aspect ratio */
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="customer-homepage.html">
+            <img src="images/14.jpg" alt="Logo"> <!-- Replace with actual logo URL -->
+            HondaCub Atheneum
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-homepage.html">Home <i class="bi bi-house-door ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-products.html">Products <i class="bi bi-box ms-2"></i></a></li>
+                <!--<li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-cart.html">Cart <i class="bi bi-cart ms-2"></i></a></li>-->
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="customer-cart.html">
+                        Cart <i class="bi bi-cart ms-2"></i>
+                        <span id="cart-count" class="badge bg-danger ms-1" style="display: none;">0</span>
+                    </a>
+                </li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-checkout-payment.html">Checkout <i class="bi bi-credit-card ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-order-history.html">Order History <i class="bi bi-box-seam ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-reviews.html">Reviews <i class="bi bi-star ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-cub-motions.html">Cub Motions <i class="bi bi-film ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-profile.html">Profile <i class="bi bi-person ms-2"></i></a></li>
+            </ul>
+            <button class="btn btn-danger" onclick="window.location.href='login.html'">
+                <i class="bi bi-box-arrow-right"></i> <span>Logout</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Banner Section -->
+<div class="banner">
+    <h1>Find Your Perfect Honda Cub Spare Parts</h1>
+</div>
+
+
+<!--Search and Filter-->
+<div class="container my-5">
+    <div class="row">
+        <!-- Filters Sidebar -->
+        <div class="col-md-3">
+            <div class="filter-section">
+                <h5>Filters</h5>
+
+                <!-- Price Range Filter -->
+                <label for="priceRange">Price</label>
+                <input type="range" id="priceRange" class="form-range" min="0" max="10000" step="1" value="10000">
+                <p id="priceLabel"></p>
+
+                <!-- Category Filter -->
+                <label for="categorySelect">Category</label>
+                <select id="categorySelect" class="form-select">
+                    <option value="">All Categories</option>
+
+                </select>
+
+                <!-- Seller Filter -->
+                <label for="sellerSelect">Seller</label>
+                <select id="sellerSelect" class="form-select">
+                    <option value="">All Sellers</option>
+
+                </select>
+
+                <!-- Search Filter -->
+                <label for="searchInput">Search</label>
+                <input type="text" id="searchInput" class="form-control" placeholder="Search by name">
+
+                <!-- Apply Filters Button -->
+                <button class="btn btn-primary w-100 mt-3">Apply Filters</button>
+            </div>
+        </div>
+
+        <!-- Product Listings -->
+        <div class="col-md-9">
+            <h3 class="text-center">Available Spare Parts</h3>
+            <hr>
+            <div class="row g-3" id="product-list">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal for Viewing Product Details -->
+<!--<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productModalLabel">Product Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                &lt;!&ndash; Carousel for Images &ndash;&gt;
+                <div id="modalImages" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner" id="carouselImages">
+                        &lt;!&ndash; Images will be dynamically added here &ndash;&gt;
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#modalImages" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#modalImages" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
+                &lt;!&ndash; Product Info Section &ndash;&gt;
+                <div id="productInfo" class="mt-3 text-center">
+                    <h5 id="productName"></h5>
+                    <p id="productPrice" class="text-success font-weight-bold"></p>
+                    <p id="productDescription" class="text-muted"></p>
+                    <p id="productCategory" class="text-secondary"></p>
+                    <button id="addToCart" class="btn btn-primary">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productModalLabel">Product Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="modalImages" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner" id="carouselImages">
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#modalImages" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#modalImages" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
+                <div id="productInfo" class="mt-3 text-center">
+                    <h5 id="productName"></h5>
+                    <p id="productPrice" class="text-success font-weight-bold"></p>
+                    <p id="productDescription" class="text-muted"></p>
+                    <p id="productCategory" class="text-secondary"></p>
+                    <button id="addToCart" class="btn btn-primary">Add to Cart</button>
+                </div>
+
+                <div id="productReviews" class="mt-4">
+                    <h5>Reviews</h5>
+                    <div id="reviewsList">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Footer -->
+<footer>
+    <p class="footer-text">&copy; 2025 HondaCub Atheneum | All rights reserved.</p>
+</footer>
+
+<script src="js/bootstrap.js"></script>
+<script src="JQuery/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        const authToken = localStorage.getItem('authToken');
+
+        function loadProducts() {
+            const priceFilter = $('#priceRange').val();
+            const categoryFilter = $('#categorySelect').val();
+            const sellerFilter = $('#sellerSelect').val();
+            const searchFilter = $('#searchInput').val().toLowerCase();
+
+            $('#priceLabel').text('$' + priceFilter);
+            $('#product-list').empty();
+
+            let url = `http://localhost:8080/api/v1/customer/products/filter?price=${priceFilter}`;
+            if (categoryFilter) url += `&category=${categoryFilter}`;
+            if (sellerFilter) url += `&sellerId=${sellerFilter}`;
+            if (searchFilter) url += `&query=${searchFilter}`;
+
+            if (searchFilter) {
+                url = `http://localhost:8080/api/v1/customer/products/search?query=${searchFilter}`;
+            }
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                },
+                success: function (response) {
+                    if (response.status === 200 && response.data) {
+                        const products = response.data;
+                        products.forEach(function (product) {
+                            const imageUrl = product.images && product.images.length > 0 ? `/images/${product.images[0].imageUrl.split('/').pop()}` : 'images/default-image.jpg';
+
+                            const productCard = `
+                            <div class="col-md-4">
+                                <div class="card" data-product-id="${product.partId}">
+                                    <img src="${imageUrl}" class="card-img-top" alt="${product.partName}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${product.partName}</h5>
+                                        <p class="card-text">$${product.price}</p>
+                                        <p class="card-text">${product.categoryName}</p>
+                                        <button class="btn btn-primary add-to-cart" data-product-id="${product.partId}">Add to Cart</button>
+                                        <button class="btn btn-info view-details" data-product-id="${product.partId}">View Details</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                            $('#product-list').append(productCard);
+                        });
+                    } else {
+                        console.error("Failed to load products:", response);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error loading products:", error);
+                }
+            });
+        }
+
+        function loadFiltersData() {
+            $.ajax({
+                url: `http://localhost:8080/api/v1/customer/products/categories`,
+                type: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                },
+                success: function (response) {
+                    if (response.status === 200 && response.data) {
+                        const categories = response.data;
+                        categories.forEach(category => {
+                            $('#categorySelect').append(`<option value="${category}">${category}</option>`);
+                        });
+                    } else {
+                        console.error("Failed to load categories:", response);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error loading categories:", error);
+                }
+            });
+
+            $.ajax({
+                url: `http://localhost:8080/api/v1/customer/products/sellers`,
+                type: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                },
+                success: function (response) {
+                    if (response.status === 200 && response.data) {
+                        const sellers = response.data;
+                        sellers.forEach(seller => {
+                            $('#sellerSelect').append(`<option value="${seller.userId}">${seller.fullName}</option>`);
+                        });
+                    } else {
+                        console.error("Failed to load sellers:", response);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error loading sellers:", error);
+                }
+            });
+        }
+
+        $(document).on('click', '.view-details', function () {
+            const productId = $(this).data('product-id');
+
+            $.ajax({
+                url: `http://localhost:8080/api/v1/customer/products/${productId}`,
+                type: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                },
+                success: function (response) {
+                    if (response.status === 200 && response.data) {
+                        const product = response.data;
+
+                        $('#productName').text(product.partName);
+                        $('#productPrice').text(`$${product.price}`);
+                        $('#productDescription').text(product.description);
+                        $('#productCategory').text(product.categoryName);
+
+                        $('#carouselImages').empty();
+                        product.images.forEach((image, index) => {
+                            const isActive = index === 0 ? 'active' : '';
+                            const imageUrl = `/images/${image.imageUrl.split('/').pop()}`;
+
+                            const imageSlide = `
+                            <div class="carousel-item ${isActive}">
+                                <img src="${imageUrl}" class="d-block w-100" alt="Image ${index + 1}">
+                            </div>
+                        `;
+                            $('#carouselImages').append(imageSlide);
+                        });
+
+                        $('#addToCart').data('product-id', productId);
+                        $('#productModal').modal('show');
+
+                        // Load and display reviews
+                        loadAndDisplayReviews(productId);
+
+                    } else {
+                        console.error("Failed to load product details:", response);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error loading product details:", error);
+                }
+            });
+        });
+
+        function loadAndDisplayReviews(productId) {
+            $.ajax({
+                url: `http://localhost:8080/api/v1/customer/reviews/${productId}/reviews`,
+                type: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                },
+                success: function (response) {
+                    if (response.status === 200 && response.data) {
+                        $('#reviewsList').empty();
+                        response.data.forEach(review => {
+                            const reviewItem = `
+                        <div class="review-item">
+                            <h5>User ${review.userId}</h5>
+                            <div class="rating" style="color: gold;">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
+                            <p>${review.comment}</p>
+                            <small>Reviewed on: ${review.reviewDate}</small>
+                        </div>
+                    `;
+                            $('#reviewsList').append(reviewItem);
+                        });
+                        $('#productReviews').find('h5:first').css('text-align', 'center'); // Selects the first h5 inside productReviews
+                    } else {
+                        $('#reviewsList').html('<p>No reviews found.</p>');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error loading reviews:", error);
+                    $('#reviewsList').html('<p>Failed to load reviews.</p>');
+                }
+            });
+        }
+
+        $(document).on('click', '.add-to-cart', function () {
+            const productId = $(this).data('product-id');
+            addToCart(productId);
+        });
+
+        $(document).on('click', '#addToCart', function () {
+            const productId = $(this).data('product-id');
+            addToCart(productId);
+        });
+
+
+        function addToCart(productId) {
+            const authToken = localStorage.getItem('authToken');
+
+            function getUserIdFromToken(token) {
+                try {
+                    const payload = JSON.parse(atob(token.split('.')[1]));
+                    return payload.userId;
+                } catch (e) {
+                    console.error("Error extracting userId from token:", e);
+                    return null;
+                }
+            }
+
+            const userId = getUserIdFromToken(authToken);
+
+            if (userId === null) {
+                alert('User ID not found. Please log in.');
+                return;
+            }
+
+            const addedAt = new Date().toISOString();
+
+            $.ajax({
+                url: `http://localhost:8080/api/v1/customer/products/cart/add`,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    sparePartId: productId,
+                    quantity: 1,
+                    userId: userId,
+                    addedAt: addedAt,
+                }),
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                },
+                success: function (response) {
+                    if (response.status === 201) {
+                        alert('Product added to cart.');
+
+                        // Update cart count immediately after adding to cart
+                        updateCartCount();
+
+                    } else {
+                        alert('Failed to add product to cart.');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error adding product to cart:", error);
+                    alert('An error occurred while adding to cart.');
+                }
+            });
+        }
+
+        // Function to update the cart count display
+        function updateCartCount() {
+            $.ajax({
+                url: `http://localhost:8080/api/v1/customer/cart/count`,
+                type: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                },
+                success: function (response) {
+                    if (response) {
+                        const cartCount = response; // Directly use the response as the count
+                        $('#cart-count').text(cartCount);
+                        if (cartCount > 0) {
+                            $('#cart-count').show();
+                        } else {
+                            $('#cart-count').hide();
+                        }
+                    } else {
+                        console.error("Failed to get cart count:", response);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error getting cart count:", error);
+                }
+            });
+        }
+
+
+        $('.btn-primary').click(function () {
+            loadProducts();
+        });
+
+        $('#priceRange').on('input', function () {
+            loadProducts();
+        });
+
+        $('#categorySelect').change(function () {
+            loadProducts();
+        });
+
+        $('#sellerSelect').change(function () {
+            loadProducts();
+        });
+
+        $('#searchInput').keyup(function () {
+            loadProducts();
+        });
+
+        updateCartCount();
+        loadProducts();
+        loadFiltersData();
+    });
+</script>
+
+</body>
+</html>

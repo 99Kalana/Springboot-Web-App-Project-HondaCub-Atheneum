@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart | HondaCub Atheneum</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        .navbar-brand img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .banner {
+            background-image: url('images/18.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .banner h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        footer {
+            background-color: #343a40;
+            text-align: center;
+            padding: 20px 0;
+            color: #fff;
+            margin-top: auto;
+        }
+
+        .footer-text {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .cart-container {
+            margin-top: 30px;
+        }
+
+        .table th, .table td {
+            vertical-align: middle;
+        }
+
+        .total-section {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .btn-update, .btn-remove {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="customer-homepage.html">
+            <img src="images/14.jpg" alt="Logo">
+            HondaCub Atheneum
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-homepage.html">Home <i class="bi bi-house-door ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-products.html">Products <i class="bi bi-box ms-2"></i></a></li>
+                <!--<li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-cart.html">Cart <i class="bi bi-cart ms-2"></i></a></li>-->
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="customer-cart.html">
+                        Cart <i class="bi bi-cart ms-2"></i>
+                        <span id="cart-count" class="badge bg-danger ms-1" style="display: none;">0</span>
+                    </a>
+                </li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-checkout-payment.html">Checkout <i class="bi bi-credit-card ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-order-history.html">Order History <i class="bi bi-box-seam ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-reviews.html">Reviews <i class="bi bi-star ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-cub-motions.html">Cub Motions <i class="bi bi-film ms-2"></i></a></li>
+                <li class="nav-item"><a class="nav-link d-flex align-items-center" href="customer-profile.html">Profile <i class="bi bi-person ms-2"></i></a></li>
+            </ul>
+            <button class="btn btn-danger" onclick="window.location.href='login.html'">
+                <i class="bi bi-box-arrow-right"></i> <span>Logout</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Banner -->
+<div class="banner">
+    <h1>Your Shopping Cart</h1>
+</div>
+
+<!-- Cart Section -->
+<div class="container cart-container">
+    <h3 class="text-center">Shopping Cart</h3>
+    <hr>
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>Part ID</th>
+            <th>Part Name</th>
+            <th>Unit Price</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="cart-items">
+        <!-- Cart items will be dynamically added here -->
+        </tbody>
+    </table>
+
+    <div class="total-section">
+        <h5 id="total-amount">Total: $0.00</h5>
+        <button class="btn btn-success">Proceed to Checkout</button>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <p class="footer-text">&copy; 2025 HondaCub Atheneum | All rights reserved.</p>
+</footer>
+
+<script src="js/bootstrap.js"></script>
+<script src="JQuery/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        const authToken = localStorage.getItem('authToken');
+
+        // Function to load cart data from the backend
+        function loadCart() {
+            $.ajax({
+                url: `http://localhost:8080/api/v1/customer/cart`,
+                type: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                },
+                success: function (response) {
+                    if (response.status === 200 && response.data) {
+                        const cartItems = response.data;
+                        let cartTableRows = "";
+                        let totalAmount = 0;
+
+                        cartItems.forEach(item => {
+                            const totalPrice = item.sparePart.price * item.quantity;
+                            totalAmount += totalPrice;
+
+                            cartTableRows += `
+                            <tr>
+                                <td>${item.sparePart.partId}</td>
+                                <td>${item.sparePart.partName}</td>
+                                <td>$${item.sparePart.price.toFixed(2)}</td>
+                                <td>
+                                    <input type="number" class="quantity-input" min="1" value="${item.quantity}" data-cart-id="${item.cartId}">
+                                </td>
+                                <td>$${totalPrice.toFixed(2)}</td>
+                                <td>
+                                    <button class="btn btn-info btn-sm btn-update" data-cart-id="${item.cartId}">Update</button>
+                                    <button class="btn btn-danger btn-sm btn-remove" data-cart-id="${item.cartId}">Remove</button>
+                                </td>
+                            </tr>
+                        `;
+                        });
+
+                        $("#cart-items").html(cartTableRows);
+                        $("#total-amount").text(`Total: $${totalAmount.toFixed(2)}`);
+                    } else {
+                        console.error("Failed to load cart:", response);
+                        $("#cart-items").html("<tr><td colspan='6' class='text-center'>Your cart is empty.</td></tr>");
+                        $("#total-amount").text("Total: $0.00");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error loading cart:", error);
+                    $("#cart-items").html("<tr><td colspan='6' class='text-center'>Failed to load cart.</td></tr>");
+                    $("#total-amount").text("Total: $0.00");
+                }
+            });
+        }
+
+        // Update item quantity in the backend
+        $(document).on("click", ".btn-update", function () {
+            const cartId = $(this).data("cart-id");
+            const newQuantity = $(`input[data-cart-id=${cartId}]`).val();
+
+            $.ajax({
+                url: `http://localhost:8080/api/v1/customer/cart/${cartId}`,
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    quantity: parseInt(newQuantity)
+                }),
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                },
+                success: function (response) {
+                    if (response.status === 200) {
+                        loadCart(); // Reload cart after update
+                    } else {
+                        alert("Failed to update cart item.");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error updating cart item:", error);
+                    alert("An error occurred while updating the cart item.");
+                }
+            });
+        });
+
+        // Remove item from cart in the backend
+        $(document).on("click", ".btn-remove", function () {
+            const cartId = $(this).data("cart-id");
+
+            $.ajax({
+                url: `http://localhost:8080/api/v1/customer/cart/${cartId}`,
+                type: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                },
+                success: function (response) {
+                    if (response.status === 200) {
+                        loadCart(); // Reload cart after removal
+                        currentCartCount();
+                    } else {
+                        alert("Failed to remove cart item.");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error removing cart item:", error);
+                    alert("An error occurred while removing the cart item.");
+                }
+            });
+        });
+
+        //Current Cart Count
+        function currentCartCount() {
+            $.ajax({
+                url: `http://localhost:8080/api/v1/customer/cart/count`,
+                type: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                },
+                success: function (response) {
+                    if (response) {
+                        const cartCount = response; // Directly use the response as the count
+                        $('#cart-count').text(cartCount);
+                        if (cartCount > 0) {
+                            $('#cart-count').show();
+                        } else {
+                            $('#cart-count').hide();
+                        }
+                    } else {
+                        console.error("Failed to get cart count:", response);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error getting cart count:", error);
+                }
+            });
+        }
+
+        // Proceed to Checkout button click handler
+        $(".btn-success").click(function () {
+            if ($("#cart-items tr").length === 0 || ($("#cart-items tr").text().trim() === 'Your cart is empty.')) {
+                alert("Your cart is empty.");
+            } else {
+                window.location.href = "customer-checkout-payment.html";
+            }
+        });
+
+        // Initial load
+        currentCartCount();
+        loadCart();
+
+    });
+</script>
+
+</body>
+</html>

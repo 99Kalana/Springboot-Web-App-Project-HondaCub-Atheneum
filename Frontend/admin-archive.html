@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - HondaCub Atheneum</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/normalize.css">
+    <style>
+        .sidebar {
+            width: 250px;
+            min-height: 100vh;
+            background-color: #343a40;
+            background-image: url("images/6.jpg");
+            transition: width 0.3s;
+            position: relative;
+        }
+
+        .sidebar.collapsed {
+            width: 80px;
+        }
+
+        .toggle-btn {
+            position: absolute;
+            top: 10px;
+            right: 8px;
+            background-color: #fff;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar h3 {
+            display: block;
+            margin-top: 40px;
+            font-size: 1.5rem;
+            transition: opacity 0.3s;
+        }
+
+        .sidebar.collapsed h3 {
+            opacity: 0;
+            pointer-events: none; /* Prevents interaction when collapsed */
+        }
+
+        .sidebar ul {
+            padding-left: 0;
+            margin-top: 30px;
+        }
+
+        .sidebar li {
+            list-style: none;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: all 0.3s;
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed a {
+            justify-content: center;
+        }
+
+        .sidebar a:hover {
+            background-color: #b6d4fe;
+            color: #000;
+        }
+
+        .sidebar i {
+            margin-right: 10px;
+            transition: margin-right 0.3s;
+        }
+
+        .sidebar.collapsed i {
+            margin-right: 0;
+        }
+
+        .sidebar span {
+            transition: opacity 0.3s, width 0.3s;
+            white-space: nowrap; /* Prevents text from wrapping */
+        }
+
+        .sidebar.collapsed span {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+        }
+
+        .content {
+            padding: 20px;
+            background-image: url("images/8.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            width: calc(100% - 250px);
+            transition: width 0.3s;
+        }
+
+        .sidebar.collapsed ~ .content {
+            width: calc(100% - 80px);
+        }
+
+        .profile-logout {
+            margin-top: 30px;
+            padding: 10px;
+            transition: padding 0.3s;
+        }
+
+        .sidebar.collapsed .profile-logout {
+            padding: 10px 0; /* Reduce padding when collapsed */
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            margin-bottom: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .sidebar.collapsed .profile-btn {
+            justify-content: center;
+        }
+
+        .profile-btn i {
+            margin-right: 10px;
+            transition: margin-right 0.3s;
+        }
+
+        .sidebar.collapsed .profile-btn i {
+            margin-right: 0;
+        }
+
+        .profile-btn span {
+            transition: opacity 0.3s, width 0.3s;
+            white-space: nowrap;
+        }
+
+        .sidebar.collapsed .profile-btn span {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+        }
+
+
+    </style>
+</head>
+<body>
+<!-- Sidebar -->
+<div class="d-flex">
+    <!-- Sidebar -->
+    <div class="sidebar p-3 text-white">
+        <!-- Toggle Button -->
+        <button class="btn btn-light toggle-btn" id="toggleBtn">
+            <i class="bi bi-list"></i>
+        </button>
+        <h3 class="text-center">HondaCub Admin</h3>
+        <hr>
+        <ul class="nav flex-column">
+            <li><a href="admin-dashboard.html" class="nav-link"><i class="bi bi-speedometer2"></i> <span>Dashboard</span></a></li>
+            <li><a href="admin-users.html" class="nav-link"><i class="bi bi-people"></i> <span>User Management</span></a></li>
+            <li><a href="admin-categories.html" class="nav-link"><i class="bi bi-list-task"></i> <span>Category Management</span></a></li>
+            <li><a href="admin-spare-parts.html" class="nav-link"><i class="bi bi-gear"></i> <span>Spare Parts Management</span></a></li>
+            <li><a href="admin-orders.html" class="nav-link"><i class="bi bi-cart3"></i> <span>Order Management</span></a></li>
+            <li><a href="admin-transaction.html" class="nav-link"><i class="bi bi-currency-dollar"></i> <span>Transactions & Payments</span></a></li>
+            <li><a href="admin-rewards.html" class="nav-link"><i class="bi bi-gift"></i> <span>Loyalty & Rewards</span></a></li>
+            <li><a href="admin-forum-and-blogs.html" class="nav-link"><i class="bi bi-chat-left-dots"></i> <span>Community Forum & Blogs</span></a></li>
+            <li><a href="admin-archive.html" class="nav-link"><i class="bi bi-archive"></i> <span>Honda Super Cub Archive</span></a></li>
+            <li><a href="admin-vin.html" class="nav-link"><i class="bi bi-tools"></i> <span>VIN Management</span></a></li>
+        </ul>
+        <hr>
+        <!-- Profile & Logout Buttons -->
+        <div class="profile-logout d-grid gap-2">
+            <button class="btn btn-secondary profile-btn" onclick="window.location.href='admin-profile.html'">
+                <i class="bi bi-person-circle"></i><span>Profile Management</span>
+            </button>
+            <button class="btn btn-danger profile-btn" onclick="window.location.href='login.html'">
+                <i class="bi bi-box-arrow-right"></i> <span>Logout</span>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Dashboard Content -->
+    <div class="flex-grow-1 content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2><i class="bi bi-archive"></i> Honda Super Cub Archive</h2>
+            <button class="btn btn-primary" id="add-model-btn"><i class="bi bi-plus-circle"></i> Add New Model</button>
+        </div>
+
+        <!--Search By Model Name-->
+        <div class="mb-3">
+            <div class="input-group">
+                <input type="text" id="search-model" class="form-control" placeholder="Search by Model Name">
+            </div>
+        </div>
+
+        <!-- Table for Honda Super Cub Models -->
+        <h4>Honda Super Cub Models</h4>
+        <table class="table table-hover" id="model-table">
+            <thead class="table-dark">
+            <tr>
+                <th>Model Name</th>
+                <th>Year</th>
+                <th>Engine Capacity</th>
+                <th>Top Speed</th>
+                <th>Fuel Consumption</th>
+                <th>Production Years</th>
+                <th>Description</th>
+                <th>Images</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Data will be populated here using jQuery -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Add/Edit Model Modal -->
+<div class="modal fade" id="modelModal" tabindex="-1" aria-labelledby="modelModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modelModalLabel">Add/Edit Model</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="model-name">Model Name</label>
+                    <input type="text" id="model-name" class="form-control" placeholder="Model Name">
+                </div>
+                <div class="form-group">
+                    <label for="model-year">Year</label>
+                    <input type="number" id="model-year" class="form-control" placeholder="Year">
+                </div>
+                <div class="form-group">
+                    <label for="engine-capacity">Engine Capacity</label>
+                    <input type="text" id="engine-capacity" class="form-control" placeholder="Engine Capacity">
+                </div>
+                <div class="form-group">
+                    <label for="top-speed">Top Speed</label>
+                    <input type="text" id="top-speed" class="form-control" placeholder="Top Speed">
+                </div>
+                <div class="form-group">
+                    <label for="fuel-consumption">Fuel Consumption</label>
+                    <input type="text" id="fuel-consumption" class="form-control" placeholder="Fuel Consumption">
+                </div>
+                <div class="form-group">
+                    <label for="production-years">Production Years</label>
+                    <input type="text" id="production-years" class="form-control" placeholder="Production Years">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" class="form-control" placeholder="Description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="modelImage">Images (URLs)</label>
+                    <input type="file" class="form-control" id="modelImage" multiple>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="save-model-btn">Save Model</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="JQuery/jquery-3.7.1.min.js"></script>
+<script src="js/bootstrap.bundle.js"></script>
+
+<script>
+    $(document).ready(function() {
+        let models = []; // Store models from the backend
+
+        // Function to populate table with models data
+        function populateTable() {
+            $("#model-table tbody").empty();
+            models.forEach((model, index) => {
+                let imagesHtml = '';
+                if (model.modelImageIds && model.modelImageIds.length > 0) {
+                    let imagePromises = model.modelImageIds.map(imageId => {
+                        return new Promise((resolve, reject) => {
+                            $.ajax({
+                                url: `http://localhost:8080/api/v1/adminarchive/image/${imageId}`,
+                                method: "GET",
+                                success: function(response) {
+                                    if (response.status === 200 && response.data) {
+                                        resolve(`<img src="http://localhost:8080/images/${response.data.imageUrl}" alt="${model.modelName}" class="img-thumbnail" style="width: 50px; margin-right: 5px;">`); // Modified URL
+                                    } else {
+                                        resolve('');
+                                    }
+                                },
+                                error: function() {
+                                    resolve('');
+                                }
+                            });
+                        });
+                    });
+
+                    // Wait for all image fetches to complete
+                    Promise.all(imagePromises).then(imageTags => {
+                        imagesHtml = imageTags.join("");
+                        const rowHtml = `
+                        <tr>
+                            <td>${model.modelName}</td>
+                            <td>${model.modelYear}</td>
+                            <td>${model.engineCapacity}</td>
+                            <td>${model.topSpeed}</td>
+                            <td>${model.fuelConsumption}</td>
+                            <td>${model.productionYears}</td>
+                            <td>${model.description}</td>
+                            <td>${imagesHtml}</td>
+                            <td>
+                                <button class="btn btn-warning btn-sm edit-btn" data-id="${model.modelId}"><i class="bi bi-pencil"></i> Edit</button>
+                                <button class="btn btn-danger btn-sm delete-btn" data-id="${model.modelId}"><i class="bi bi-trash"></i> Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                        $("#model-table tbody").append(rowHtml);
+                    });
+                } else {
+                    const rowHtml = `
+                        <tr>
+                            <td>${model.modelName}</td>
+                            <td>${model.modelYear}</td>
+                            <td>${model.engineCapacity}</td>
+                            <td>${model.topSpeed}</td>
+                            <td>${model.fuelConsumption}</td>
+                            <td>${model.productionYears}</td>
+                            <td>${model.description}</td>
+                            <td></td>
+                            <td>
+                                <button class="btn btn-warning btn-sm edit-btn" data-id="${model.modelId}"><i class="bi bi-pencil"></i> Edit</button>
+                                <button class="btn btn-danger btn-sm delete-btn" data-id="${model.modelId}"><i class="bi bi-trash"></i> Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                    $("#model-table tbody").append(rowHtml);
+                }
+            });
+        }
+
+
+        // Load Models from Backend (with optional search query)
+        function loadModels(searchQuery) {
+            let url = "http://localhost:8080/api/v1/adminarchive/getAll";
+            if (searchQuery) {
+                url = `http://localhost:8080/api/v1/adminarchive/search?modelName=${searchQuery}`;
+            }
+
+            $.ajax({
+                url: url,
+                method: "GET",
+                dataType: "json",
+                success: function(response) {
+                    if (response.status === 200 && response.data) {
+                        models = response.data;
+                        populateTable();
+                    } else {
+                        console.error("Failed to load models:", response);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching models:", error);
+                    console.log("Response:", xhr.responseText);
+                }
+            });
+        }
+
+        // Search button event listener
+        $("#search-model").on('input', function() {
+            const searchQuery = $(this).val();
+            loadModels(searchQuery); // Repopulate table with search results
+        });
+
+
+
+        // Show Add/Edit model modal (using event delegation)
+        $(document).on("click", "#add-model-btn, .edit-btn", function() {
+            const modelId = $(this).data("id");
+            if (modelId !== undefined) {
+                // Edit mode: populate fields with model data
+                $.ajax({
+                    url: `http://localhost:8080/api/v1/adminarchive/get/${modelId}`,
+                    method: "GET",
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.status === 200 && response.data) {
+                            const model = response.data;
+                            $("#model-name").val(model.modelName);
+                            $("#model-year").val(model.modelYear);
+                            $("#engine-capacity").val(model.engineCapacity);
+                            $("#top-speed").val(model.topSpeed);
+                            $("#fuel-consumption").val(model.fuelConsumption);
+                            $("#production-years").val(model.productionYears);
+                            $("#description").val(model.description);
+                            $("#save-model-btn").data("id", model.modelId).text("Save Changes");
+                        } else {
+                            console.error("Failed to load model:", response);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error fetching model:", error);
+                        console.log("Response:", xhr.responseText);
+                    }
+                });
+            } else {
+                // Add mode: clear fields
+                $("#model-name").val("");
+                $("#model-year").val("");
+                $("#engine-capacity").val("");
+                $("#top-speed").val("");
+                $("#fuel-consumption").val("");
+                $("#production-years").val("");
+                $("#description").val("");
+                $("#save-model-btn").removeData("id").text("Save Model");
+            }
+            $("#modelModal").modal("show");
+        });
+
+        // Save or Update model
+        $("#save-model-btn").click(function() {
+            const modelId = $(this).data("id");
+            const formData = new FormData();
+            formData.append("modelArchive", new Blob([JSON.stringify({
+                modelId: modelId,
+                modelName: $("#model-name").val(),
+                modelYear: $("#model-year").val(),
+                engineCapacity: $("#engine-capacity").val(),
+                topSpeed: $("#top-speed").val(),
+                fuelConsumption: $("#fuel-consumption").val(),
+                productionYears: $("#production-years").val(),
+                description: $("#description").val()
+            })], {
+                type: "application/json"
+            }));
+
+            const files = $("#modelImage")[0].files;
+            for (let i = 0; i < files.length; i++) {
+                formData.append("images", files[i]);
+            }
+
+            const method = modelId !== undefined ? "PUT" : "POST";
+            const url = modelId !== undefined ? "http://localhost:8080/api/v1/adminarchive/update" : "http://localhost:8080/api/v1/adminarchive/save";
+
+            $.ajax({
+                url: url,
+                method: method,
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    if (response.status === 200 || response.status === 201) {
+                        $("#modelModal").modal("hide");
+                        loadModels();
+                    } else {
+                        alert("Failed to save/update model.");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error saving/updating model:", error);
+                    console.log("Response:", xhr.responseText);
+                    alert("Error saving/updating model.");
+                }
+            });
+        });
+
+        // Delete model
+        $(document).on("click", ".delete-btn", function() {
+            const modelId = $(this).data("id");
+            if (confirm("Are you sure you want to delete this model?")) {
+                $.ajax({
+                    url: `http://localhost:8080/api/v1/adminarchive/delete/${modelId}`,
+                    method: "DELETE",
+                    success: function(response) {
+                        if (response.status === 200) {
+                            loadModels();
+                        } else {
+                            alert("Failed to delete model.");
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error deleting model:", error);
+                        console.log("Response:", xhr.responseText);
+                        alert("Error deleting model.");
+                    }
+                });
+            }
+        });
+
+        // Initial Load
+        loadModels();
+    });
+</script>
+</body>
+</html>
