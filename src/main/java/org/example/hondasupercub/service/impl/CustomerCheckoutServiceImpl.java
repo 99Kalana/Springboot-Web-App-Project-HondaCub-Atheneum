@@ -2,15 +2,19 @@ package org.example.hondasupercub.service.impl;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import jakarta.mail.internet.MimeMessage;
 import org.example.hondasupercub.dto.TransactionDTO;
 import org.example.hondasupercub.entity.*;
 import org.example.hondasupercub.repo.*;
 import org.example.hondasupercub.service.CustomerCheckoutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 @Service
@@ -33,6 +37,9 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService {
 
     @Autowired
     private CustomerCheckoutTransactionRepo transactionRepo;
+
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     @Value("${jwt.secret}")
     private String secretKey;
@@ -70,6 +77,7 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService {
         orderRepo.save(order);
 
         double totalAmount = 0;
+        StringBuilder orderDetailsTable = new StringBuilder();
 
         for (Cart cartItem : cartItems) {
             SparePart sparePart = cartItem.getSparePart();
@@ -89,7 +97,14 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService {
             sparePart.setStock(sparePart.getStock() - quantity);
             sparePartRepo.save(sparePart);
 
-            totalAmount += sparePart.getPrice() * quantity;
+            double itemTotal = sparePart.getPrice() * quantity;
+            totalAmount += itemTotal;
+            orderDetailsTable.append("<tr>")
+                    .append("<td style=\"padding: 8px; border-bottom: 1px solid #ddd;\">").append(sparePart.getPartName()).append("</td>")
+                    .append("<td style=\"padding: 8px; border-bottom: 1px solid #ddd;\">$").append(String.format("%.2f", sparePart.getPrice())).append("</td>")
+                    .append("<td style=\"padding: 8px; border-bottom: 1px solid #ddd;\">").append(quantity).append("</td>")
+                    .append("<td style=\"padding: 8px; border-bottom: 1px solid #ddd;\">$").append(String.format("%.2f", itemTotal)).append("</td>")
+                    .append("</tr>");
         }
 
         Transaction transaction = new Transaction();
@@ -106,6 +121,9 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService {
 
         cartRepo.deleteByUser(user);
         System.out.println("Cart cleared.");
+
+        // Send styled email
+        sendStyledOrderConfirmationEmail(user.getEmail(), orderDetailsTable.toString(), totalAmount, transactionDTO.getShippingAddress(), transactionDTO.getContactNumber());
     }
 
     // Method to extract email from Authorization header
@@ -119,6 +137,53 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService {
             return null; // Handle null or invalid format
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    private void sendStyledOrderConfirmationEmail(String toEmail, String orderDetailsTableRows, double totalAmount, String shippingAddress, String contactNumber) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setTo(toEmail);
+            helper.setSubject("HondaCub Atheneum - Order Confirmation");
+
+            String emailContent = "<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;\">\n" +
+                    "    <h2 style=\"color: #007bff; text-align: center; margin-bottom: 20px;\">Thank you for your order!</h2>\n" +
+                    "    <p style=\"margin-bottom: 10px;\">Dear Customer,</p>\n" +
+                    "    <p style=\"margin-bottom: 10px;\">Your order has been placed successfully. Here are the details:</p>\n" +
+                    "    <h3 style=\"color: #343a40; margin-bottom: 10px;\">Order Details:</h3>\n" +
+                    "    <table style=\"width: 100%; border-collapse: collapse; margin-bottom: 15px;\">\n" +
+                    "        <thead>\n" +
+                    "            <tr>\n" +
+                    "                <th style=\"padding: 8px; border-bottom: 2px solid #343a40; text-align: left;\">Part Name</th>\n" +
+                    "                <th style=\"padding: 8px; border-bottom: 2px solid #343a40; text-align: left;\">Unit Price</th>\n" +
+                    "                <th style=\"padding: 8px; border-bottom: 2px solid #343a40; text-align: left;\">Quantity</th>\n" +
+                    "                <th style=\"padding: 8px; border-bottom: 2px solid #343a40; text-align: left;\">Total Price</th>\n" +
+                    "            </tr>\n" +
+                    "        </thead>\n" +
+                    "        <tbody>\n" +
+                    orderDetailsTableRows +
+                    "        </tbody>\n" +
+                    "        <tfoot>\n" +
+                    "            <tr>\n" +
+                    "                <td colspan=\"3\" style=\"padding: 8px; font-weight: bold; text-align: right;\">Total Amount:</td>\n" +
+                    "                <td style=\"padding: 8px; font-weight: bold; color: #28a745;\">$" + String.format("%.2f", totalAmount) + "</td>\n" +
+                    "            </tr>\n" +
+                    "        </tfoot>\n" +
+                    "    </table>\n" +
+                    "    <h3 style=\"color: #343a40; margin-bottom: 10px;\">Shipping Information:</h3>\n" +
+                    "    <p style=\"margin-left: 20px; margin-bottom: 10px;\"><strong>Shipping Address:</strong> " + shippingAddress + "</p>\n" +
+                    "    <p style=\"margin-left: 20px; margin-bottom: 15px;\"><strong>Contact Number:</strong> " + contactNumber + "</p>\n" +
+                    "    <p style=\"margin-bottom: 10px;\">We are currently processing your order and will notify you via order history when it ships.</p>\n" +
+                    "    <p style=\"margin-top: 20px;\">Sincerely,<br>The HondaCub Atheneum Team</p>\n" +
+                    "</div>";
+
+            helper.setText(emailContent, true); // Set the content as HTML
+
+            javaMailSender.send(message);
+
+        } catch (jakarta.mail.MessagingException e) {
+            throw new RuntimeException(e);
         }
     }
 }

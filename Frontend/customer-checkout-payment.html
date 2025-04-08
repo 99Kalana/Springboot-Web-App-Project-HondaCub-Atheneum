@@ -367,6 +367,7 @@
 
                     if (jqXHR.status === 201) { // Check HTTP status code
                         alert("Payment Successful! Your order has been placed.");
+                        alert("A bill with your order details has been sent to your email address.");
                         window.location.href = "customer-order-history.html";
                     } else {
                         alert("Payment Failed. Please try again.");

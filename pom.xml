@@ -143,6 +143,20 @@
             <version>3.5.0</version>
         </dependency>
 
+        <!--Java Mail API-->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>javax.mail-api</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+            <version>3.4.4</version>
+        </dependency>
+
 
     </dependencies>
 
