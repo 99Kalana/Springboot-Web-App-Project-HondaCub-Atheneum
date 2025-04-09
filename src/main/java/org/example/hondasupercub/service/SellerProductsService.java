@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface SellerProductsService {
 
-    List<SparePartDTO> getSparePartsBySellerId(String authorizationHeader);
+    // List<SparePartDTO> getSparePartsBySellerId(String authorizationHeader);
 
     SparePartDTO getSparePartById(int partId, String authorizationHeader);
 
@@ -20,4 +20,7 @@ public interface SellerProductsService {
     SparePartDTO updateSparePart(int partId, String sparePartJson, MultipartFile[] files, int sellerId, String authorizationHeader) throws IOException;
 
     void deleteSparePart(int partId, String authorizationHeader);
+
+    List<SparePartDTO> getSparePartsBySellerId(String authorizationHeader, String search, Integer categoryId);
+
 }

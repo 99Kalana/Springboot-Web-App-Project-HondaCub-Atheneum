@@ -56,18 +56,36 @@ public class SellerProductsServiceImpl implements SellerProductsService {
         this.imageStorageLocation = Paths.get(uploadDirectory);
     }
 
-    @Override
+    /*@Override
     public List<SparePartDTO> getSparePartsBySellerId(String authorizationHeader) {
         int sellerId = extractSellerIdFromToken(authorizationHeader);
         List<SparePart> spareParts = sparePartRepo.findBySeller_UserId(sellerId);
         return spareParts.stream().map(sparePart -> modelMapper.map(sparePart, SparePartDTO.class)).collect(Collectors.toList());
-    }
+    }*/
 
     @Override
     public SparePartDTO getSparePartById(int partId, String authorizationHeader) {
         int sellerId = extractSellerIdFromToken(authorizationHeader);
         SparePart sparePart = sparePartRepo.findByPartIdAndSeller_UserId(partId, sellerId);
         return modelMapper.map(sparePart, SparePartDTO.class);
+    }
+
+    @Override
+    public List<SparePartDTO> getSparePartsBySellerId(String authorizationHeader, String search, Integer categoryId) {
+        int sellerId = extractSellerIdFromToken(authorizationHeader);
+        List<SparePart> spareParts;
+
+        if (search != null && !search.trim().isEmpty() && categoryId != null) {
+            spareParts = sparePartRepo.findBySeller_UserIdAndCategory_CategoryIdAndPartNameOrPartId(sellerId, categoryId, search);
+        } else if (search != null && !search.trim().isEmpty()) {
+            spareParts = sparePartRepo.findBySeller_UserIdAndPartNameOrPartId(sellerId, search);
+        } else if (categoryId != null) {
+            spareParts = sparePartRepo.findBySeller_UserIdAndCategory_CategoryId(sellerId, categoryId);
+        } else {
+            spareParts = sparePartRepo.findBySeller_UserId(sellerId);
+        }
+
+        return spareParts.stream().map(sparePart -> modelMapper.map(sparePart, SparePartDTO.class)).collect(Collectors.toList());
     }
 
     @Override

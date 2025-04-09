@@ -22,9 +22,19 @@ public class SellerProductsController {
     private SellerProductsService sellerProductsService;
 
 
-    @GetMapping
+    /*@GetMapping
     public ResponseEntity<ResponseDTO> getSparePartsBySellerId(@RequestHeader("Authorization") String authorizationHeader) {
         List<SparePartDTO> spareParts = sellerProductsService.getSparePartsBySellerId(authorizationHeader);
+        ResponseDTO responseDTO = new ResponseDTO(HttpStatus.OK.value(), "Spare parts fetched successfully", spareParts);
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }*/
+
+    @GetMapping
+    public ResponseEntity<ResponseDTO> getSparePartsBySellerId(
+            @RequestHeader("Authorization") String authorizationHeader,
+            @RequestParam(value = "search", required = false) String search,
+            @RequestParam(value = "category", required = false) Integer categoryId) {
+        List<SparePartDTO> spareParts = sellerProductsService.getSparePartsBySellerId(authorizationHeader, search, categoryId);
         ResponseDTO responseDTO = new ResponseDTO(HttpStatus.OK.value(), "Spare parts fetched successfully", spareParts);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
