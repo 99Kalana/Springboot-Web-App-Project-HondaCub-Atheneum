@@ -80,11 +80,16 @@ public class CustomerRewardServiceImpl implements CustomerRewardService {
             earnedPoints = 0;
         }
 
-        customerReward.setPoints(earnedPoints);
+        customerReward.setPoints(earnedPoints); // Store the total earned points
         customerReward.setRewardLevel(rewardLevel);
         customerReward.setLastUpdated(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         rewardRepo.save(customerReward);
 
-        return modelMapper.map(customerReward, RewardDTO.class);
+        RewardDTO rewardDTO = modelMapper.map(customerReward, RewardDTO.class);
+        rewardDTO.setUserId(customer.getUserId());
+        rewardDTO.setFullName(customer.getFullName());
+        rewardDTO.setPoints(customerReward.getPoints() - customerReward.getRedeemedPoints()); // Calculate remaining points here
+
+        return rewardDTO;
     }
 }
