@@ -26,10 +26,24 @@ public class SellerReviewServiceImpl implements SellerReviewService {
     @Value("${jwt.secret}")
     private String secretKey;
 
+    private int extractSellerIdFromToken(String authorizationHeader) {
+        Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authorizationHeader.substring(7)).getBody();
+        return (Integer) claims.get("userId");
+    }
+
     @Override
     public List<ReviewDTO> getReviewsBySeller(String authorizationHeader) {
         int sellerId = extractSellerIdFromToken(authorizationHeader);
         List<Review> reviews = reviewRepo.findReviewsBySellerId(sellerId);
+        return reviews.stream()
+                .map(review -> modelMapper.map(review, ReviewDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ReviewDTO> getReviewsBySellerAndPartId(String authorizationHeader, Integer partId) {
+        int sellerId = extractSellerIdFromToken(authorizationHeader);
+        List<Review> reviews = reviewRepo.findReviewsBySellerIdAndSparePart_PartId(sellerId, partId);
         return reviews.stream()
                 .map(review -> modelMapper.map(review, ReviewDTO.class))
                 .collect(Collectors.toList());
@@ -46,10 +60,5 @@ public class SellerReviewServiceImpl implements SellerReviewService {
             return modelMapper.map(updatedReview, ReviewDTO.class);
         }
         return null;
-    }
-
-    private int extractSellerIdFromToken(String authorizationHeader) {
-        Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authorizationHeader.substring(7)).getBody();
-        return (Integer) claims.get("userId");
     }
 }

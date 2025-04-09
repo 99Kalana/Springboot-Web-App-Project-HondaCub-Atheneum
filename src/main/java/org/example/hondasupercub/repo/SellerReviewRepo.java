@@ -14,5 +14,8 @@ public interface SellerReviewRepo extends JpaRepository<Review, Integer> {
     @Query("SELECT r FROM Review r JOIN r.sparePart sp JOIN sp.seller s WHERE s.userId = :sellerId")
     List<Review> findReviewsBySellerId(@Param("sellerId") int sellerId);
 
+    @Query("SELECT r FROM Review r JOIN r.sparePart sp JOIN sp.seller s WHERE s.userId = :sellerId AND sp.partId = :partId")
+    List<Review> findReviewsBySellerIdAndSparePart_PartId(@Param("sellerId") int sellerId, @Param("partId") Integer partId);
+
     Review findByReviewId(int reviewId);
 }

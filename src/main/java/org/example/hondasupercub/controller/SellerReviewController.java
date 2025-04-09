@@ -18,8 +18,19 @@ public class SellerReviewController {
     private SellerReviewService sellerReviewService;
 
     @GetMapping
-    public ResponseEntity<ResponseDTO> getSellerReviews(@RequestHeader("Authorization") String authorizationHeader) {
-        List<ReviewDTO> reviews = sellerReviewService.getReviewsBySeller(authorizationHeader);
+    public ResponseEntity<ResponseDTO> getSellerReviews(
+            @RequestHeader("Authorization") String authorizationHeader,
+            @RequestParam(value = "partId", required = false) Integer partId) {
+
+        List<ReviewDTO> reviews;
+        if (partId != null) {
+            reviews = sellerReviewService.getReviewsBySellerAndPartId(authorizationHeader, partId);
+            if (reviews.isEmpty()) {
+                return new ResponseEntity<>(new ResponseDTO(HttpStatus.NOT_FOUND.value(), "No reviews found for the specified part ID", null), HttpStatus.NOT_FOUND);
+            }
+        } else {
+            reviews = sellerReviewService.getReviewsBySeller(authorizationHeader);
+        }
         return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(), "Reviews fetched successfully", reviews), HttpStatus.OK);
     }
 

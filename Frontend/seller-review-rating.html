@@ -246,6 +246,16 @@
             <h2><i class="bi bi-chat-left-dots"></i> Reviews & Ratings</h2>
         </div>
 
+        <div class="mb-3">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="text" id="partIdSearch" class="form-control" placeholder="Search by Part ID">
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Reviews Table -->
         <table id="reviewsTable" class="table table-bordered table-hover">
             <thead class="table-dark">
@@ -293,11 +303,17 @@
 <script>
     $(document).ready(function () {
         const baseUrl = 'http://localhost:8080/api/v1'; // Define the base URL
+        let searchTimeout; // Debounce timer for live search
 
         // Function to load reviews from the backend
-        function loadReviews() {
+        function loadReviews(partId = '') {
+            let url = `${baseUrl}/seller/reviews`;
+            if (partId) {
+                url += `?partId=${partId}`;
+            }
+
             $.ajax({
-                url: `${baseUrl}/seller/reviews`, // Construct the URL
+                url: url,
                 type: 'GET',
                 headers: { 'Authorization': 'Bearer ' + localStorage.getItem('authToken') },
                 success: function (response) {
@@ -336,24 +352,19 @@
         // Event listener for the reply button
         $(document).on('click', '.reply-btn', function () {
             const reviewId = $(this).data('review-id');
-
-            // Pre-fill the modal with information for the review being replied to (for now, just the reviewId)
             $('#replyModalLabel').text(`Reply to Review #${reviewId}`);
             $('#replyForm').off('submit').on('submit', function (e) {
                 e.preventDefault();
-
                 const replyText = $('#replyComment').val();
-
-                // Make an AJAX call to save the reply in the database
                 $.ajax({
-                    url: `${baseUrl}/seller/reviews/${reviewId}/reply?replyComment=${encodeURIComponent(replyText)}`, // Construct the URL
+                    url: `${baseUrl}/seller/reviews/${reviewId}/reply?replyComment=${encodeURIComponent(replyText)}`,
                     type: 'PUT',
                     headers: { 'Authorization': 'Bearer ' + localStorage.getItem('authToken') },
                     success: function (response) {
                         if (response.status === 200) {
                             alert('Reply submitted successfully!');
                             $('#replyModal').modal('hide');
-                            loadReviews(); // Reload reviews to show the updated comment
+                            loadReviews($('#partIdSearch').val()); // Reload with current search
                         } else {
                             alert('Failed to submit reply.');
                         }
@@ -364,12 +375,31 @@
                     }
                 });
             });
-
-            // Open the reply modal
             $('#replyModal').modal('show');
         });
 
-        // Load reviews when the page is ready
+        // Event listener for Part ID search input
+        $('#partIdSearch').on('input', function () {
+            const partId = $(this).val();
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(function () {
+                loadReviews(partId);
+            }, 300);
+
+            if (partId.trim() === '') {
+                loadReviews(); // Load all if search is empty
+            }
+        });
+
+        // Event listener for Part ID search input (Enter key)
+        $('#partIdSearch').keypress(function (event) {
+            if (event.which === 13) { // Enter key pressed
+                clearTimeout(searchTimeout);
+                loadReviews($(this).val());
+            }
+        });
+
+        // Load all reviews on page load
         loadReviews();
 
         // Sidebar Toggle Functionality
