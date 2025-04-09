@@ -136,7 +136,47 @@
 
 <script src="js/bootstrap.js"></script>
 <script src="JQuery/jquery-3.7.1.min.js"></script>
-<script src="js/customer-rewards.js"></script>
+<script>
+    $(document).ready(function () {
+        const baseUrl = 'http://localhost:8080/api/v1/customer/rewards';
+
+        function fetchCustomerRewards() {
+            $.ajax({
+                url: baseUrl,
+                type: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('authToken') // Assuming you store the token
+                },
+                success: function (response) {
+                    if (response.status === 200 && response.data) {
+                        const rewardData = response.data;
+                        let rewardClass = rewardData.rewardLevel ? rewardData.rewardLevel.toLowerCase() : '';
+
+                        $("#reward-items").empty().append(`
+                            <tr>
+                                <td class="reward-level ${rewardClass}">${rewardData.rewardLevel || ''}</td>
+                                <td>${rewardData.points || 0}</td>
+                                <td>${rewardData.redeemedPoints || 0}</td>
+                                <td>${rewardData.lastUpdated || ''}</td>
+                            </tr>
+                        `);
+                    } else {
+                        console.error('Failed to fetch customer rewards:', response);
+                        alert('Failed to fetch reward details.');
+                    }
+                },
+                error: function (error) {
+                    console.error('Error fetching customer rewards:', error);
+                    alert('An error occurred while fetching reward details.');
+                }
+            });
+        }
+
+        // Fetch customer rewards when the page loads
+        fetchCustomerRewards();
+    });
+
+</script>
 
 </body>
 </html>
