@@ -12,6 +12,6 @@ public interface SellerRewardService {
 
     RewardDTO redeemPoints(int rewardId, int pointsToRedeem, String authorizationHeader);
 
-    // Corrected method to calculate reward level and points
+    // Corrected method to calculate reward level and points...
     RewardDTO calculateReward(long sparePartCount, int sellerId);
 }
