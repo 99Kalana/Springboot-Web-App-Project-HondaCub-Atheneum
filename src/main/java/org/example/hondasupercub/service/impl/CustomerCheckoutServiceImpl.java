@@ -39,6 +39,9 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService {
     private CustomerCheckoutTransactionRepo transactionRepo;
 
     @Autowired
+    private CustomerRewardRepo rewardRepo; // Need Reward Repo
+
+    @Autowired
     private JavaMailSender javaMailSender;
 
     @Value("${jwt.secret}")
@@ -51,7 +54,6 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService {
         System.out.println("Authorization Header: " + transactionDTO.getAuthorizationHeader());
 
         String email = extractEmailFromToken(transactionDTO.getAuthorizationHeader());
-
         System.out.println("Extracted Email: " + email);
 
         if (email == null) {
@@ -63,6 +65,19 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService {
             throw new RuntimeException("User not found");
         }
         System.out.println("User ID: " + user.getUserId());
+
+        Reward customerReward = rewardRepo.findByUser_UserId(user.getUserId()).orElse(new Reward());
+        int availablePoints = customerReward.getPoints();
+        int redeemedPoints = transactionDTO.getRedeemedPoints();
+
+        if (redeemedPoints > 0) {
+            if (redeemedPoints < 50) {
+                throw new RuntimeException("Minimum points to redeem is 50.");
+            }
+            if (redeemedPoints > availablePoints) {
+                throw new RuntimeException("Cannot redeem more points than available.");
+            }
+        }
 
         List<Cart> cartItems = cartRepo.findByUser(user);
         System.out.println("Cart Items Size before clear: " + cartItems.size());
@@ -76,7 +91,7 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService {
         order.setPlacedAt(transactionDTO.getTransactionDate());
         orderRepo.save(order);
 
-        double totalAmount = 0;
+        double totalAmountBeforeDiscount = 0;
         StringBuilder orderDetailsTable = new StringBuilder();
 
         for (Cart cartItem : cartItems) {
@@ -98,7 +113,7 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService {
             sparePartRepo.save(sparePart);
 
             double itemTotal = sparePart.getPrice() * quantity;
-            totalAmount += itemTotal;
+            totalAmountBeforeDiscount += itemTotal;
             orderDetailsTable.append("<tr>")
                     .append("<td style=\"padding: 8px; border-bottom: 1px solid #ddd;\">").append(sparePart.getPartName()).append("</td>")
                     .append("<td style=\"padding: 8px; border-bottom: 1px solid #ddd;\">$").append(String.format("%.2f", sparePart.getPrice())).append("</td>")
@@ -107,26 +122,37 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService {
                     .append("</tr>");
         }
 
+        double discountPercentage = (redeemedPoints / 50.0) * 0.02; // Calculate discount
+        double discountAmount = totalAmountBeforeDiscount * discountPercentage;
+        double finalAmount = totalAmountBeforeDiscount - discountAmount;
+
         Transaction transaction = new Transaction();
         transaction.setOrder(order);
         transaction.setUser(user);
         transaction.setPaymentMethod(Transaction.PaymentMethod.valueOf(transactionDTO.getPaymentMethod()));
         transaction.setPaymentStatus(Transaction.PaymentStatus.COMPLETED);
         transaction.setRefundStatus(Transaction.RefundStatus.NONE);
-        transaction.setPaidAmount(transactionDTO.getPaidAmount());
+        transaction.setPaidAmount(finalAmount);
         transaction.setTransactionDate(transactionDTO.getTransactionDate());
         transaction.setShippingAddress(transactionDTO.getShippingAddress());
         transaction.setContactNumber(transactionDTO.getContactNumber());
+        transaction.setRedeemedPoints(redeemedPoints); // Save redeemed points
         transactionRepo.save(transaction);
+
+        if (redeemedPoints > 0) {
+            customerReward.setPoints(availablePoints - redeemedPoints);
+            customerReward.setRedeemedPoints(customerReward.getRedeemedPoints() + redeemedPoints);
+            rewardRepo.save(customerReward);
+        }
 
         cartRepo.deleteByUser(user);
         System.out.println("Cart cleared.");
 
-        // Send styled email
-        sendStyledOrderConfirmationEmail(user.getEmail(), orderDetailsTable.toString(), totalAmount, transactionDTO.getShippingAddress(), transactionDTO.getContactNumber());
+        // Send styled email with discount info
+        sendStyledOrderConfirmationEmail(user.getEmail(), orderDetailsTable.toString(), totalAmountBeforeDiscount, discountAmount, finalAmount, transactionDTO.getShippingAddress(), transactionDTO.getContactNumber());
     }
 
-    // Method to extract email from Authorization header
+    // Method to extract email from Authorization header (remains the same)
     private String extractEmailFromToken(String authorizationHeader) {
         try {
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
@@ -140,7 +166,7 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService {
         }
     }
 
-    private void sendStyledOrderConfirmationEmail(String toEmail, String orderDetailsTableRows, double totalAmount, String shippingAddress, String contactNumber) {
+    private void sendStyledOrderConfirmationEmail(String toEmail, String orderDetailsTableRows, double totalAmountBeforeDiscount, double discountAmount, double finalAmount, String shippingAddress, String contactNumber) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -166,8 +192,16 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService {
                     "        </tbody>\n" +
                     "        <tfoot>\n" +
                     "            <tr>\n" +
+                    "                <td colspan=\"3\" style=\"padding: 8px; font-weight: bold; text-align: right;\">Subtotal:</td>\n" +
+                    "                <td style=\"padding: 8px; text-align: right;\">$" + String.format("%.2f", totalAmountBeforeDiscount) + "</td>\n" +
+                    "            </tr>\n" +
+                    "            <tr>\n" +
+                    "                <td colspan=\"3\" style=\"padding: 8px; font-weight: bold; text-align: right;\">Discount Applied:</td>\n" +
+                    "                <td style=\"padding: 8px; text-align: right; color: green;\">-$" + String.format("%.2f", discountAmount) + "</td>\n" +
+                    "            </tr>\n" +
+                    "            <tr>\n" +
                     "                <td colspan=\"3\" style=\"padding: 8px; font-weight: bold; text-align: right;\">Total Amount:</td>\n" +
-                    "                <td style=\"padding: 8px; font-weight: bold; color: #28a745;\">$" + String.format("%.2f", totalAmount) + "</td>\n" +
+                    "                <td style=\"padding: 8px; font-weight: bold; color: #28a745; text-align: right;\">$" + String.format("%.2f", finalAmount) + "</td>\n" +
                     "            </tr>\n" +
                     "        </tfoot>\n" +
                     "    </table>\n" +
@@ -179,7 +213,6 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService {
                     "</div>";
 
             helper.setText(emailContent, true); // Set the content as HTML
-
             javaMailSender.send(message);
 
         } catch (jakarta.mail.MessagingException e) {

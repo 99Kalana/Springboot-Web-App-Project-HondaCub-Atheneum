@@ -32,5 +32,7 @@ public class TransactionDTO {
 
     private String authorizationHeader; //Important to get user data
 
+    private int redeemedPoints; // Add this field
+
 
 }

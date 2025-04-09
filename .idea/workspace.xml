@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0212092-f5c2-45d4-8064-67a74003fc17" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hondasupercub/service/impl/CustomerRewardServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/hondasupercub/service/impl/CustomerRewardServiceImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="b0212092-f5c2-45d4-8064-67a74003fc17" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -206,6 +203,7 @@
       <workItem from="1744187780007" duration="425000" />
       <workItem from="1744192804876" duration="44000" />
       <workItem from="1744193650167" duration="27000" />
+      <workItem from="1744196105186" duration="87000" />
     </task>
     <task id="LOCAL-00001" summary="Update">
       <option name="closed" value="true" />
@@ -279,7 +277,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744188188916</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Customer Reward Service Impl Updated">
+      <option name="closed" value="true" />
+      <created>1744196145736</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1744196145736</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -293,6 +299,7 @@
     <MESSAGE value=" seller order status dropdown feature added" />
     <MESSAGE value=" seller review's search by part id feature added" />
     <MESSAGE value="Customer's Loyalty and Reward Page Frontend and Backend Implementation added!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Customer's Loyalty and Reward Page Frontend and Backend Implementation added!" />
+    <MESSAGE value="Customer Reward Service Impl Updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="Customer Reward Service Impl Updated" />
   </component>
 </project>

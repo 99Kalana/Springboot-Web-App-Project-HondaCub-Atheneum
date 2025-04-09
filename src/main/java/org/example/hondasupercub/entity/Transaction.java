@@ -41,6 +41,8 @@ public class Transaction {
 
     private String contactNumber;
 
+    private int redeemedPoints = 0;
+
     public enum PaymentMethod {
         CREDIT_CARD, DEBIT_CARD, PAYPAL
     }
