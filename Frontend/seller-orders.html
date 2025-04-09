@@ -199,6 +199,7 @@
         .order-status-select {
             width: 150px;
         }
+
     </style>
 </head>
 <body>
@@ -239,10 +240,26 @@
 
         <!--Search By Order ID-->
         <div class="mb-3">
-            <div class="input-group">
-                <input type="text" id="orderIdSearch" class="form-control" placeholder="Search by Order ID">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-5">
+                    <div class="input-group">
+                        <input type="text" id="orderIdSearch" class="form-control" placeholder="Search by Order ID">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select id="orderStatusFilter" class="form-select order-status-select">
+                        <option value="">All Statuses</option>
+                        <option value="PENDING">Pending</option>
+                        <option value="SHIPPED">Shipped</option>
+                        <option value="DELIVERED">Delivered</option>
+                        <option value="CANCELLED">Cancelled</option>
+                        <option value="RETURNED">Returned</option>
+                    </select>
+                </div>
             </div>
         </div>
+
+
 
         <!-- Orders Table -->
         <table id="ordersTable" class="table table-bordered table-hover">
@@ -294,13 +311,13 @@
 <script src="JQuery/jquery-3.7.1.min.js"></script>
 <script>
     $(document).ready(function() {
-
         // Sidebar toggle
         $('#toggleBtn').click(function() {
             $('#sidebar').toggleClass('collapsed');
         });
 
         let currentOrderId = null; // Store the current orderId globally
+        let searchTimeout; // To handle debounce for live search
 
         // Function to populate the orders table from the API
         function populateOrdersTable(orders) {
@@ -309,22 +326,36 @@
 
             orders.forEach(order => {
                 const row = `<tr>
-                            <td>${order.orderId}</td>
-                            <td>${order.userId}</td>
-                            <td>${order.orderStatus}</td>
-                            <td>${order.placedAt}</td>
-                            <td>
-                                <button class="btn btn-primary btn-sm update-status-btn" data-order-id="${order.orderId}" data-bs-toggle="modal" data-bs-target="#updateStatusModal">Update Status</button>
-                            </td>
-                         </tr>`;
+                        <td>${order.orderId}</td>
+                        <td>${order.userId}</td>
+                        <td>${order.orderStatus}</td>
+                        <td>${order.placedAt}</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm update-status-btn" data-order-id="${order.orderId}" data-bs-toggle="modal" data-bs-target="#updateStatusModal">Update Status</button>
+                        </td>
+                     </tr>`;
                 tableBody.append(row);
             });
         }
 
-        // Function to fetch all orders
-        function fetchAllOrders() {
+        // Function to fetch orders based on search and filter criteria
+        function fetchOrders(orderId = '', status = '') {
+            let url = 'http://localhost:8080/api/v1/seller/orders';
+            const params = [];
+
+            if (orderId) {
+                params.push(`orderId=${orderId}`);
+            }
+            if (status) {
+                params.push(`status=${status}`);
+            }
+
+            if (params.length > 0) {
+                url += '?' + params.join('&');
+            }
+
             $.ajax({
-                url: 'http://localhost:8080/api/v1/seller/orders',
+                url: url,
                 type: 'GET',
                 headers: { 'Authorization': 'Bearer ' + localStorage.getItem('authToken') },
                 success: function(response) {
@@ -340,6 +371,11 @@
                     alert('An error occurred while fetching orders.');
                 }
             });
+        }
+
+        // Function to fetch all orders
+        function fetchAllOrders() {
+            fetchOrders(); // Call fetchOrders with no parameters to get all orders
         }
 
         // Event listener for the update status button
@@ -360,7 +396,7 @@
                     headers: { 'Authorization': 'Bearer ' + localStorage.getItem('authToken') },
                     success: function(response) {
                         if (response.status === 200) {
-                            fetchAllOrders(); // Refresh the table
+                            fetchOrders($('#orderIdSearch').val(), $('#orderStatusFilter').val()); // Refresh the table with current filters
                             $('#updateStatusModal').modal('hide');
                         } else {
                             console.error('Failed to update status:', response.message);
@@ -378,39 +414,45 @@
             }
         });
 
+        // Event listener for the order ID search input
         $('#orderIdSearch').on('input', function() {
             const orderId = $(this).val();
-            let url = 'http://localhost:8080/api/v1/seller/orders';
+            const status = $('#orderStatusFilter').val();
 
-            if (orderId) {
-                url = `http://localhost:8080/api/v1/seller/orders?orderId=${orderId}`; // Modified API URL
+            // Clear previous timeout if any (debounce)
+            clearTimeout(searchTimeout);
+
+            // Set a new timeout to fetch after a short delay (e.g., 300ms)
+            searchTimeout = setTimeout(function() {
+                fetchOrders(orderId, status);
+            }, 300);
+
+            // If the search field is empty, immediately fetch all orders
+            if (orderId.trim() === '') {
+                fetchAllOrders();
             }
+        });
 
-            $.ajax({
-                url: url,
-                type: 'GET',
-                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('authToken') },
-                success: function(response) {
-                    if (response.status === 200) {
-                        populateOrdersTable(response.data); // Use the existing populateOrdersTable
-                    } else {
-                        console.error('Order not found:', response.message);
-                        alert('Order not found.');
-                        fetchAllOrders();
-                    }
-                },
-                error: function(error) {
-                    console.error('Error searching order:', error);
-                    alert('An error occurred while searching for the order.');
-                    fetchAllOrders();
-                }
-            });
+        // Event listener for the order ID search input when Enter key is pressed
+        $('#orderIdSearch').keypress(function(event) {
+            if (event.which === 13) { // Enter key pressed
+                clearTimeout(searchTimeout); // Clear any pending timeout
+                const orderId = $(this).val();
+                const status = $('#orderStatusFilter').val();
+                fetchOrders(orderId, status);
+            }
+        });
+
+        // Event listener for the order status filter dropdown
+        $('#orderStatusFilter').change(function() {
+            const orderId = $('#orderIdSearch').val();
+            const status = $(this).val();
+            fetchOrders(orderId, status);
         });
 
         // Initial population of the orders table
         fetchAllOrders();
     });
-
 
 
 </script>

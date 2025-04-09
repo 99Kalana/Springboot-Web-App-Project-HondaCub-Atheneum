@@ -10,7 +10,6 @@ import org.example.hondasupercub.repo.SellerOrderDetailRepo;
 import org.example.hondasupercub.repo.SellerOrderRepo;
 import org.example.hondasupercub.service.SellerOrderService;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -34,11 +33,29 @@ public class SellerOrderServiceImpl implements SellerOrderService {
     @Value("${jwt.secret}")
     private String secretKey;
 
+    private int extractSellerIdFromToken(String authorizationHeader) {
+        Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authorizationHeader.substring(7)).getBody();
+        return (Integer) claims.get("userId");
+    }
+
     @Override
     public List<OrderDTO> getOrdersBySellerId(String authorizationHeader) {
         int sellerId = extractSellerIdFromToken(authorizationHeader);
         List<Order> orders = orderRepo.findOrdersBySellerId(sellerId);
         return orders.stream().map(order -> modelMapper.map(order, OrderDTO.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderDTO> getOrdersBySellerIdAndStatus(String authorizationHeader, String status) {
+        int sellerId = extractSellerIdFromToken(authorizationHeader);
+        try {
+            Order.OrderStatus orderStatus = Order.OrderStatus.valueOf(status.toUpperCase());
+            List<Order> orders = orderRepo.findOrdersBySellerIdAndOrderStatus(sellerId, orderStatus);
+            return orders.stream().map(order -> modelMapper.map(order, OrderDTO.class)).collect(Collectors.toList());
+        } catch (IllegalArgumentException e) {
+            // Handle invalid status value (optional: log error, return empty list, etc.)
+            return List.of();
+        }
     }
 
     @Override
@@ -52,10 +69,9 @@ public class SellerOrderServiceImpl implements SellerOrderService {
     @Override
     public OrderDTO updateOrderStatus(int orderId, Order.OrderStatus newStatus, String authorizationHeader) {
         int sellerId = extractSellerIdFromToken(authorizationHeader);
-        Order order = orderRepo.findByIdWithOrderDetails(orderId).orElse(null); // Use the new method
+        Order order = orderRepo.findByIdWithOrderDetails(orderId).orElse(null);
 
         if (order != null) {
-            // Check if order belongs to the seller
             boolean orderBelongsToSeller = order.getOrderDetails().stream()
                     .anyMatch(detail -> detail.getSparePart().getSeller().getUserId() == sellerId);
 
@@ -68,26 +84,6 @@ public class SellerOrderServiceImpl implements SellerOrderService {
         }
         return null;
     }
-
-    /*@Override
-    public List<OrderDetailDTO> getOrderDetailsByOrderId(int orderId, String authorizationHeader) {
-        int sellerId = extractSellerIdFromToken(authorizationHeader);
-        Order order = orderRepo.findByIdWithOrderDetails(orderId).orElse(null); // Use the new method
-
-        if (order != null) {
-            // Check if order belongs to the seller
-            boolean orderBelongsToSeller = order.getOrderDetails().stream()
-                    .anyMatch(detail -> detail.getSparePart().getSeller().getUserId() == sellerId);
-
-            if (orderBelongsToSeller) {
-                return order.getOrderDetails().stream()
-                        .map(detail -> modelMapper.map(detail, OrderDetailDTO.class))
-                        .collect(Collectors.toList());
-            }
-            return null;
-        }
-        return null;
-    }*/
 
     @Override
     public List<OrderDetailDTO> getOrderDetailsByOrderId(int orderId, String authorizationHeader) {
@@ -108,15 +104,8 @@ public class SellerOrderServiceImpl implements SellerOrderService {
         dto.setOrderId(orderDetail.getOrder().getOrderId());
         dto.setSparePartId(orderDetail.getSparePart().getPartId());
         dto.setQuantity(orderDetail.getQuantity());
-
-        // Calculate the price based on unit price and quantity
         double unitPrice = orderDetail.getSparePart().getPrice();
         dto.setPrice(unitPrice * orderDetail.getQuantity());
-
         return dto;
-    }
-    private int extractSellerIdFromToken(String authorizationHeader) {
-        Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authorizationHeader.substring(7)).getBody();
-        return (Integer) claims.get("userId");
     }
 }

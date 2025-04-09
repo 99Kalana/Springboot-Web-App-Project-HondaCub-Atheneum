@@ -11,6 +11,8 @@ public interface SellerOrderService {
 
     List<OrderDTO> getOrdersBySellerId(String authorizationHeader);
 
+    List<OrderDTO> getOrdersBySellerIdAndStatus(String authorizationHeader, String status); // New method
+
     OrderDTO updateOrderStatus(int orderId, OrderStatus newStatus, String authorizationHeader);
 
     List<OrderDetailDTO> getOrderDetailsByOrderId(int orderId, String authorizationHeader);
