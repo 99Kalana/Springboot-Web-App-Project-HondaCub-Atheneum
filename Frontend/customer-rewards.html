@@ -57,17 +57,50 @@
             font-size: 14px;
         }
 
+
         .reward-container {
             margin-top: 30px;
+            align-items: flex-start;
+            text-align: center; /* Add text-align: center */
         }
 
-        .table th, .table td {
-            vertical-align: middle;
+        .reward-image {
+            width: 100px; /* Adjust size as needed */
+            height: 100px;
+            margin-bottom: 10px;
+        }
+
+        .reward-card {
+            display: inline-block; /* Change to inline-block */
+            width: 400px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow here */
+            border-radius: 8px; /* Optional: Add a slight border radius for the shadow to look better */
         }
 
         .reward-level {
+            font-size: 1.5rem;
             font-weight: bold;
             text-transform: uppercase;
+            margin-bottom: 10px;
+            padding: 15px; /* Add some padding to the top section */
+            background-color: #f9f9f9; /* Optional: Light background for the level */
+            border-top-left-radius: 8px; /* Match card radius */
+            border-top-right-radius: 8px; /* Match card radius */
+        }
+
+        .points-info {
+            margin-bottom: 10px;
+            padding: 15px;
+        }
+
+        .last-updated {
+            font-size: 0.9rem;
+            color: #6c757d;
+            padding: 0 15px 15px 15px; /* Add padding at the bottom */
+            border-bottom-left-radius: 8px; /* Match card radius */
+            border-bottom-right-radius: 8px; /* Match card radius */
+            background-color: #f9f9f9; /* Optional: Light background for the update */
         }
 
         .bronze { color: #cd7f32; }
@@ -78,7 +111,6 @@
 </head>
 <body>
 
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="customer-homepage.html">
@@ -105,31 +137,19 @@
     </div>
 </nav>
 
-<!-- Banner -->
 <div class="banner">
     <h1>Reward Points</h1>
 </div>
 
-<!-- Rewards Section -->
 <div class="container reward-container">
     <h3 class="text-center">Your Loyalty Rewards</h3>
     <hr>
-    <table class="table table-bordered table-hover">
-        <thead class="table-dark">
-        <tr>
-            <th>Reward Level</th>
-            <th>Total Points</th>
-            <th>Redeemed Points</th>
-            <th>Last Updated</th>
-        </tr>
-        </thead>
-        <tbody id="reward-items">
-        <!-- Reward data will be dynamically added here -->
-        </tbody>
-    </table>
+    <div id="reward-image-container">
+    </div>
+    <div id="reward-card-container">
+    </div>
 </div>
 
-<!-- Footer -->
 <footer>
     <p class="footer-text">&copy; 2025 HondaCub Atheneum | All rights reserved.</p>
 </footer>
@@ -139,6 +159,15 @@
 <script>
     $(document).ready(function () {
         const baseUrl = 'http://localhost:8080/api/v1/customer/rewards';
+        const rewardCardContainer = $("#reward-card-container");
+        const rewardImageContainer = $("#reward-image-container");
+
+        const rewardImages = {
+            bronze: 'images/bronze.png',
+            silver: 'images/silver.png',
+            gold: 'images/gold.png',
+            platinum: 'images/platinum.png'
+        };
 
         function fetchCustomerRewards() {
             $.ajax({
@@ -152,14 +181,24 @@
                         const rewardData = response.data;
                         let rewardClass = rewardData.rewardLevel ? rewardData.rewardLevel.toLowerCase() : '';
 
-                        $("#reward-items").empty().append(`
-                            <tr>
-                                <td class="reward-level ${rewardClass}">${rewardData.rewardLevel || ''}</td>
-                                <td>${rewardData.points || 0}</td>
-                                <td>${rewardData.redeemedPoints || 0}</td>
-                                <td>${rewardData.lastUpdated || ''}</td>
-                            </tr>
-                        `);
+                        // Display the reward image
+                        if (rewardImages[rewardClass]) {
+                            rewardImageContainer.html(`<img src="${rewardImages[rewardClass]}" alt="${rewardData.rewardLevel}" class="reward-image mx-auto">`);
+                        } else {
+                            rewardImageContainer.empty(); // Clear any previous image if level is not found
+                        }
+
+                        // Display the reward card
+                        rewardCardContainer.empty().append(`
+    <div class="mx-auto reward-card">
+        <div class="reward-level ${rewardClass}">${rewardData.rewardLevel || ''}</div>
+        <div class="points-info">
+            <div><strong>Total Points:</strong> ${rewardData.points || 0}</div>
+            <div><strong>Redeemed Points:</strong> ${rewardData.redeemedPoints || 0}</div>
+        </div>
+        <div class="last-updated">Last Updated: ${rewardData.lastUpdated || ''}</div>
+    </div>
+`);
                     } else {
                         console.error('Failed to fetch customer rewards:', response);
                         alert('Failed to fetch reward details.');
