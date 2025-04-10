@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0212092-f5c2-45d4-8064-67a74003fc17" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="b0212092-f5c2-45d4-8064-67a74003fc17" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -209,6 +207,7 @@
       <workItem from="1744196989533" duration="265000" />
       <workItem from="1744199241772" duration="51000" />
       <workItem from="1744223638169" duration="49000" />
+      <workItem from="1744256904417" duration="177000" />
     </task>
     <task id="LOCAL-00001" summary="Update">
       <option name="closed" value="true" />
@@ -306,7 +305,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744199273148</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Admin Category Download Report Feature Added">
+      <option name="closed" value="true" />
+      <created>1744257068966</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1744257068966</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -323,6 +330,7 @@
     <MESSAGE value="Customer Reward Service Impl Updated" />
     <MESSAGE value="Customer checkout's Loyalty redeem point feature added" />
     <MESSAGE value="Customer's reward page style added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Customer's reward page style added" />
+    <MESSAGE value="Admin Category Download Report Feature Added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Admin Category Download Report Feature Added" />
   </component>
 </project>
