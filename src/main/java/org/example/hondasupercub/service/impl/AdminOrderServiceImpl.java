@@ -2,6 +2,8 @@ package org.example.hondasupercub.service.impl;
 
 import org.example.hondasupercub.dto.OrderDTO;
 import org.example.hondasupercub.entity.Order;
+import org.example.hondasupercub.entity.OrderDetail;
+import org.example.hondasupercub.repo.AdminOrderDetailRepo;
 import org.example.hondasupercub.repo.AdminOrderRepo;
 import org.example.hondasupercub.service.AdminOrderService;
 import org.modelmapper.ModelMapper;
@@ -12,12 +14,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class AdminOrderServiceImpl implements AdminOrderService {
     @Autowired
     private AdminOrderRepo adminOrderRepo;
+
+    @Autowired
+    private AdminOrderDetailRepo adminOrderDetailRepo;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -77,11 +83,22 @@ public class AdminOrderServiceImpl implements AdminOrderService {
     private OrderDTO convertToDTO(Order order) {
         OrderDTO dto = modelMapper.map(order, OrderDTO.class);
         if (order.getUser() != null) {
-            System.out.println("User Full Name: " + order.getUser().getFullName()); // Debugging line
             dto.setFullName(order.getUser().getFullName());
-        } else {
-            System.out.println("User is null for order ID: " + order.getOrderId()); // Debugging line
+            dto.setUserId(order.getUser().getUserId());
         }
+
+        // Calculate total amount
+        List<OrderDetail> orderDetails = adminOrderDetailRepo.findByOrder_OrderId(order.getOrderId()); // Updated repository name here
+        double totalAmount = 0;
+        for (OrderDetail detail : orderDetails) {
+            totalAmount += detail.getQuantity() * detail.getPrice();
+        }
+        dto.setTotalAmount(totalAmount);
+
+        dto.setOrderDetailIds(order.getOrderDetails().stream()
+                .map(OrderDetail::getOrderDetailId)
+                .collect(Collectors.toList()));
+
         return dto;
     }
 

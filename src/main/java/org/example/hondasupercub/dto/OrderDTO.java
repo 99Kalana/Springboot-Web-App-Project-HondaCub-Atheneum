@@ -9,6 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@Data
 public class OrderDTO {
 
     private int orderId;
@@ -22,4 +23,6 @@ public class OrderDTO {
     private String placedAt;
 
     private List<Integer> orderDetailIds;  // Store only the IDs of related order details
+
+    private Double totalAmount;
 }

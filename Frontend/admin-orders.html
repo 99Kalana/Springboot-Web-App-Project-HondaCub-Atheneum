@@ -335,7 +335,7 @@
                         <td>${order.fullName}</td>
                         <td>${order.placedAt}</td>
                         <td>${order.orderStatus}</td>
-                        <td>${calculateTotalAmount(order.orderDetailIds)}</td>
+                        <td>$${order.totalAmount ? order.totalAmount.toFixed(2) : 'N/A'}</td>
                         <td>
                             <button class="btn btn-primary btn-sm view-btn" data-id="${order.orderId}" data-bs-toggle="modal" data-bs-target="#viewOrderModal"><i class="bi bi-eye"></i> View</button>
                             <button class="btn btn-warning btn-sm update-btn" data-id="${order.orderId}" data-bs-toggle="modal" data-bs-target="#updateOrderModal"><i class="bi bi-arrow-clockwise"></i> Update</button>
@@ -349,12 +349,10 @@
             }
         }
 
-        // Calculate Total Amount (Placeholder, needs actual order details)
-        function calculateTotalAmount(orderDetailIds) {
-            // In a real application, you would fetch order details and calculate the total amount.
-            // For now, return a placeholder value.
-            return "N/A";
-        }
+        // Calculate Total Amount (No longer needed on the frontend as the backend provides it)
+        // function calculateTotalAmount(orderDetailIds) {
+        //     return "N/A";
+        // }
 
         // Load Orders from Backend
         function loadOrders() {
@@ -387,10 +385,10 @@
                     if (response.status === 200 && response.data) {
                         const order = response.data;
                         $('#viewOrderId').text(order.orderId);
-                        $('#viewCustomerName').text(order.fullName); // Assuming userId is customer name for now
+                        $('#viewCustomerName').text(order.fullName);
                         $('#viewOrderDate').text(order.placedAt);
                         $('#viewOrderStatus').text(order.orderStatus);
-                        $('#viewOrderTotal').text(calculateTotalAmount(order.orderDetailIds)); // Placeholder
+                        $('#viewOrderTotal').text(order.totalAmount ? order.totalAmount.toFixed(2) : 'N/A');
                         $('#viewOrderModal').modal('show');
                     } else {
                         console.error("Failed to load order:", response);
