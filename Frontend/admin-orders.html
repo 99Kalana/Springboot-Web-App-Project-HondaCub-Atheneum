@@ -198,6 +198,7 @@
         <!-- Header with Order Management -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2><i class="bi bi-cart3"></i> Order Management</h2>
+            <button class="btn btn-success" onclick="downloadOrderReport()"><i class="bi bi-download"></i> Download Report</button>
         </div>
 
         <!-- Search & Filter -->
@@ -505,6 +506,11 @@
         // Initial Load
         loadOrders();
     });
+
+    // New JavaScript function to trigger order report download
+    function downloadOrderReport() {
+        window.location.href = "http://localhost:8080/api/v1/adminorders/report/download";
+    }
 </script>
 
 

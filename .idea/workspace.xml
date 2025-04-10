@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0212092-f5c2-45d4-8064-67a74003fc17" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/hondasupercub/repo/AdminOrderDetailRepo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="b0212092-f5c2-45d4-8064-67a74003fc17" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -214,6 +211,7 @@
       <workItem from="1744259143369" duration="99000" />
       <workItem from="1744260931154" duration="199000" />
       <workItem from="1744262550942" duration="80000" />
+      <workItem from="1744262637191" duration="178000" />
     </task>
     <task id="LOCAL-00001" summary="Update">
       <option name="closed" value="true" />
@@ -335,7 +333,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744261115383</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Admin Order total amount view issue fixed">
+      <option name="closed" value="true" />
+      <created>1744262801842</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1744262801842</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -355,6 +361,7 @@
     <MESSAGE value="Admin Category Download Report Feature Added" />
     <MESSAGE value="Admin User Download Report Feature Added" />
     <MESSAGE value="Admin Spare part Download Report Feature Added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Admin Spare part Download Report Feature Added" />
+    <MESSAGE value="Admin Order total amount view issue fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Admin Order total amount view issue fixed" />
   </component>
 </project>
