@@ -1,14 +1,20 @@
 package org.example.hondasupercub.controller;
 
 
+import com.itextpdf.text.DocumentException;
 import org.example.hondasupercub.dto.CategoryDTO;
 import org.example.hondasupercub.dto.ResponseDTO;
 import org.example.hondasupercub.service.impl.AdminCategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -69,6 +75,21 @@ public class AdminCategoryController {
         List<CategoryDTO> categories = adminCategoryService.searchCategories(term);
         ResponseDTO responseDTO = new ResponseDTO(200, "Category Search Results", categories);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/report/pdf")
+    public ResponseEntity<InputStreamResource> generateCategoryReport() throws DocumentException, IOException {
+        ByteArrayInputStream pdfReport = adminCategoryService.generateCategoryPdfReport();
+
+        HttpHeaders headers = new HttpHeaders();
+        // Change "inline" to "attachment" to force download
+        headers.add("Content-Disposition", "attachment; filename=category_report.pdf");
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(pdfReport));
     }
 
 }
