@@ -43,6 +43,15 @@ public class SellerTransactionServiceImpl implements SellerTransactionService {
         return transaction.map(value -> modelMapper.map(value, TransactionDTO.class)).orElse(null);
     }
 
+    @Override
+    public List<TransactionDTO> searchTransactionsBySellerAndOrderId(String authorizationHeader, String orderId) {
+        int sellerId = extractSellerIdFromToken(authorizationHeader);
+        List<Transaction> transactions = transactionRepo.findTransactionsBySellerIdAndOrderIdContaining(sellerId, orderId);
+        return transactions.stream()
+                .map(transaction -> modelMapper.map(transaction, TransactionDTO.class))
+                .collect(Collectors.toList());
+    }
+
     private int extractSellerIdFromToken(String authorizationHeader) {
         Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authorizationHeader.substring(7)).getBody();
         return (Integer) claims.get("userId");

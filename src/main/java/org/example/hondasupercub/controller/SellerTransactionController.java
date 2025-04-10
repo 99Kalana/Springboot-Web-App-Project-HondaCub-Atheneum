@@ -18,8 +18,15 @@ public class SellerTransactionController {
     private SellerTransactionService sellerTransactionService;
 
     @GetMapping
-    public ResponseEntity<ResponseDTO> getTransactions(@RequestHeader("Authorization") String authorizationHeader) {
-        List<TransactionDTO> transactions = sellerTransactionService.getTransactionsBySeller(authorizationHeader);
+    public ResponseEntity<ResponseDTO> getTransactions(
+            @RequestHeader("Authorization") String authorizationHeader,
+            @RequestParam(value = "orderId", required = false) String orderId) {
+        List<TransactionDTO> transactions;
+        if (orderId != null && !orderId.trim().isEmpty()) {
+            transactions = sellerTransactionService.searchTransactionsBySellerAndOrderId(authorizationHeader, orderId.trim());
+        } else {
+            transactions = sellerTransactionService.getTransactionsBySeller(authorizationHeader);
+        }
         return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(), "Transactions fetched successfully", transactions), HttpStatus.OK);
     }
 

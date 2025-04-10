@@ -18,7 +18,8 @@ public interface SellerTransactionRepo extends JpaRepository<Transaction, Intege
     @Query("SELECT t FROM Transaction t JOIN t.order o JOIN o.orderDetails od JOIN od.sparePart sp JOIN sp.seller s WHERE t.transactionId = :transactionId AND s.userId = :sellerId")
     Optional<Transaction> findTransactionByIdAndSellerId(@Param("transactionId") int transactionId, @Param("sellerId") int sellerId);
 
-
+    @Query("SELECT t FROM Transaction t JOIN t.order o JOIN o.orderDetails od JOIN od.sparePart sp JOIN sp.seller s WHERE s.userId = :sellerId AND CAST(o.orderId AS string) LIKE %:orderId%")
+    List<Transaction> findTransactionsBySellerIdAndOrderIdContaining(@Param("sellerId") int sellerId, @Param("orderId") String orderId);
 
 
     @Query("SELECT SUM(t.paidAmount) FROM Transaction t JOIN t.order o JOIN o.orderDetails od JOIN od.sparePart sp WHERE sp.seller.userId = :sellerId AND t.paymentStatus = 'COMPLETED'")
