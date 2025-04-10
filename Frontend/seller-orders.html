@@ -236,6 +236,7 @@
     <div class="content flex-grow-1">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2><i class="bi bi-cart3"></i> Order Management</h2>
+            <button class="btn btn-success" onclick="downloadSellerOrderReport()"><i class="bi bi-download"></i> Download Report</button>
         </div>
 
         <!--Search By Order ID-->
@@ -453,6 +454,36 @@
         // Initial population of the orders table
         fetchAllOrders();
     });
+
+    // New JavaScript function to trigger seller order report download
+    function downloadSellerOrderReport() {
+        const authToken = localStorage.getItem('authToken');
+        if (authToken) {
+            fetch('http://localhost:8080/api/v1/seller/orders/report/download', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + authToken
+                }
+            })
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'seller_orders_report.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                })
+                .catch(error => {
+                    console.error('Error downloading order report:', error);
+                    alert('Failed to download order report.');
+                });
+        } else {
+            alert('Authentication token not found. Please log in again.');
+        }
+    }
 
 
 </script>
