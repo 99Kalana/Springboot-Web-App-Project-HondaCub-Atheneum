@@ -234,7 +234,7 @@
         </div>
 
         <div class="mb-3">
-            <div class="row g-2 align-items-center">
+            <div class="row g-3 align-items-center">
                 <div class="col-md-6">
                     <div class="input-group">
                         <input type="text" class="form-control" id="searchPart" placeholder="Search by Part ID or Name">
@@ -245,6 +245,9 @@
                     <select class="form-select" id="categoryFilter">
                         <option value="">All Categories</option>
                     </select>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-success" onclick="downloadSellerProductsReport()"><i class="bi bi-download"></i> Download Report</button>
                 </div>
             </div>
         </div>
@@ -693,6 +696,36 @@
         fetchProducts();
         fetchCategories();
     });
+
+    // New JavaScript function to trigger seller products report download
+    function downloadSellerProductsReport() {
+        const authToken = localStorage.getItem('authToken');
+        if (authToken) {
+            fetch('http://localhost:8080/api/v1/seller/spareparts/report/download', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + authToken
+                }
+            })
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'seller_products_report.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                })
+                .catch(error => {
+                    console.error('Error downloading products report:', error);
+                    alert('Failed to download products report.');
+                });
+        } else {
+            alert('Authentication token not found. Please log in again.');
+        }
+    }
 </script>
 </body>
 </html>

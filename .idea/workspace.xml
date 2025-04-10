@@ -217,6 +217,8 @@
       <workItem from="1744267337683" duration="261000" />
       <workItem from="1744271240591" duration="280000" />
       <workItem from="1744272451367" duration="163000" />
+      <workItem from="1744274322793" duration="148000" />
+      <workItem from="1744274481710" duration="3000" />
     </task>
     <task id="LOCAL-00001" summary="Update">
       <option name="closed" value="true" />
@@ -386,7 +388,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744272595470</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Seller Order management download report feature added">
+      <option name="closed" value="true" />
+      <created>1744274451200</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1744274451200</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -412,6 +422,7 @@
     <MESSAGE value="Seller transaction management's search feature added" />
     <MESSAGE value="Seller transaction management download report feature added" />
     <MESSAGE value="Seller review and rating management download report feature added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Seller review and rating management download report feature added" />
+    <MESSAGE value="Seller Order management download report feature added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Seller Order management download report feature added" />
   </component>
 </project>
