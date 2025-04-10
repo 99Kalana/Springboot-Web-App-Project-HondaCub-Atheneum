@@ -87,6 +87,14 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
         header.setAlignment(Element.ALIGN_CENTER);
         document.add(header);
 
+        // Sub Topic
+        Font subTopicFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14);
+        Paragraph subTopic = new Paragraph("Admin Category Management Report", subTopicFont);
+        subTopic.setAlignment(Element.ALIGN_CENTER);
+        document.add(subTopic);
+
+        document.add(Chunk.NEWLINE);
+
         // Date and Time
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         Paragraph dateTime = new Paragraph("Generated on: " + dtf.format(LocalDateTime.now()), DATE_FONT);

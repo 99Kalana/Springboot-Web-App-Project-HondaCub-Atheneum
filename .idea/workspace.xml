@@ -208,6 +208,7 @@
       <workItem from="1744199241772" duration="51000" />
       <workItem from="1744223638169" duration="49000" />
       <workItem from="1744256904417" duration="177000" />
+      <workItem from="1744259143369" duration="99000" />
     </task>
     <task id="LOCAL-00001" summary="Update">
       <option name="closed" value="true" />
@@ -313,7 +314,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744257068966</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Admin User Download Report Feature Added">
+      <option name="closed" value="true" />
+      <created>1744259223720</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1744259223720</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -331,6 +340,7 @@
     <MESSAGE value="Customer checkout's Loyalty redeem point feature added" />
     <MESSAGE value="Customer's reward page style added" />
     <MESSAGE value="Admin Category Download Report Feature Added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Admin Category Download Report Feature Added" />
+    <MESSAGE value="Admin User Download Report Feature Added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Admin User Download Report Feature Added" />
   </component>
 </project>
