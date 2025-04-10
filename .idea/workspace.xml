@@ -212,6 +212,7 @@
       <workItem from="1744260931154" duration="199000" />
       <workItem from="1744262550942" duration="80000" />
       <workItem from="1744262637191" duration="178000" />
+      <workItem from="1744264174056" duration="138000" />
     </task>
     <task id="LOCAL-00001" summary="Update">
       <option name="closed" value="true" />
@@ -341,7 +342,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744262801842</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Admin Order download report feature added">
+      <option name="closed" value="true" />
+      <created>1744264302979</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1744264302979</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -362,6 +371,7 @@
     <MESSAGE value="Admin User Download Report Feature Added" />
     <MESSAGE value="Admin Spare part Download Report Feature Added" />
     <MESSAGE value="Admin Order total amount view issue fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Admin Order total amount view issue fixed" />
+    <MESSAGE value="Admin Order download report feature added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Admin Order download report feature added" />
   </component>
 </project>
