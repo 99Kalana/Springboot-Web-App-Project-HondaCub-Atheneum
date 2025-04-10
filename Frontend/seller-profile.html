@@ -306,6 +306,11 @@
 <script>
     $(document).ready(function() {
 
+        // Sidebar toggle
+        $('#toggleBtn').click(function() {
+            $('#sidebar').toggleClass('collapsed');
+        });
+
         loadSellerProfile();
 
         function loadSellerProfile() {
