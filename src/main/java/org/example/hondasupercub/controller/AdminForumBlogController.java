@@ -1,5 +1,6 @@
 package org.example.hondasupercub.controller;
 
+import jakarta.validation.Valid;
 import org.example.hondasupercub.dto.BlogDTO;
 import org.example.hondasupercub.dto.ForumDTO;
 import org.example.hondasupercub.dto.ResponseDTO;
@@ -39,13 +40,13 @@ public class AdminForumBlogController {
 
 
     @PostMapping("/forums/create")
-    public ResponseEntity<ResponseDTO> createForum(@RequestBody ForumDTO forumDTO) {
+    public ResponseEntity<ResponseDTO> createForum(@Valid @RequestBody ForumDTO forumDTO) {
         ForumDTO createdForum = forumBlogService.createForum(forumDTO);
         return new ResponseEntity<>(new ResponseDTO(201, "Forum created successfully", createdForum), HttpStatus.CREATED);
     }
 
     @PutMapping("/forums/update/{forumId}")
-    public ResponseEntity<ResponseDTO> updateForum(@PathVariable int forumId, @RequestBody ForumDTO forumDTO) {
+    public ResponseEntity<ResponseDTO> updateForum(@PathVariable int forumId, @Valid @RequestBody ForumDTO forumDTO) {
         ForumDTO updatedForum = forumBlogService.updateForum(forumId, forumDTO);
         if (updatedForum != null) {
             return new ResponseEntity<>(new ResponseDTO(200, "Forum updated successfully", updatedForum), HttpStatus.OK);

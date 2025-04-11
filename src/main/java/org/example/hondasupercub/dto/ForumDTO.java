@@ -14,10 +14,10 @@ public class ForumDTO {
 
     private int userId; // Store only the userId, not the full User entity
 
-    //@NotBlank(message = "Title cannot be empty")
+    @NotBlank(message = "Title cannot be empty")
     private String title;
 
-    //@NotBlank(message = "Content cannot be empty")
+    @NotBlank(message = "Content cannot be empty")
     private String content;
 
     private String status = "ACTIVE";
