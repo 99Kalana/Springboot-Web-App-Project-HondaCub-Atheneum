@@ -53,7 +53,7 @@ public class AdminVinController {
     }
 
     @PostMapping("/linkPart")
-    public ResponseEntity<ResponseDTO> linkVinToPart(@RequestBody VinPartsDTO vinPartsDTO) {
+    public ResponseEntity<ResponseDTO> linkVinToPart(@Valid @RequestBody VinPartsDTO vinPartsDTO) {
         VinPartsDTO linkedPart = vinService.linkVinToPart(vinPartsDTO);
         if (linkedPart != null) {
             ResponseDTO responseDTO = new ResponseDTO(201, "Part Linked to VIN", linkedPart);

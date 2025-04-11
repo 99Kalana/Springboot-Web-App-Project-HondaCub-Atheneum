@@ -229,6 +229,7 @@
       <workItem from="1744360337033" duration="85000" />
       <workItem from="1744361068812" duration="15000" />
       <workItem from="1744361089592" duration="145000" />
+      <workItem from="1744361594095" duration="203000" />
     </task>
     <task id="LOCAL-00001" summary="Update">
       <option name="closed" value="true" />
@@ -462,14 +463,21 @@
       <option name="project" value="LOCAL" />
       <updated>1744361216720</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Backend Bean Validation added to VinHistoryDTO and AdminVinController">
+      <option name="closed" value="true" />
+      <created>1744361783246</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1744361783246</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Update on seller reward logic" />
     <MESSAGE value=" seller product search feature added" />
     <MESSAGE value=" seller order status dropdown feature added" />
     <MESSAGE value=" seller review's search by part id feature added" />
@@ -494,6 +502,7 @@
     <MESSAGE value="Backend Bean Validation added to CategoryDTO and AdminCategoryController" />
     <MESSAGE value="Backend Bean Validation added to ForumDTO and AdminForumBlogController" />
     <MESSAGE value="Backend Bean Validation added to ModelArchiveDTO and AdminArchiveController" />
-    <option name="LAST_COMMIT_MESSAGE" value="Backend Bean Validation added to ModelArchiveDTO and AdminArchiveController" />
+    <MESSAGE value="Backend Bean Validation added to VinHistoryDTO and AdminVinController" />
+    <option name="LAST_COMMIT_MESSAGE" value="Backend Bean Validation added to VinHistoryDTO and AdminVinController" />
   </component>
 </project>
