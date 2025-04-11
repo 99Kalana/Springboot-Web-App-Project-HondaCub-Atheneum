@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0212092-f5c2-45d4-8064-67a74003fc17" name="Changes" comment="" />
+    <list default="true" id="b0212092-f5c2-45d4-8064-67a74003fc17" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -223,6 +225,8 @@
       <workItem from="1744305942953" duration="196000" />
       <workItem from="1744306147258" duration="128000" />
       <workItem from="1744307045865" duration="79000" />
+      <workItem from="1744345919745" duration="190000" />
+      <workItem from="1744346413963" duration="9000" />
     </task>
     <task id="LOCAL-00001" summary="Update">
       <option name="closed" value="true" />
@@ -424,7 +428,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744307095191</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Backend Bean Validation added to UserDTO, LoginDTO and AuthController">
+      <option name="closed" value="true" />
+      <created>1744346082623</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1744346082623</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -454,6 +466,7 @@
     <MESSAGE value="Seller Product management download report feature added" />
     <MESSAGE value="Database Backup Feature Added on Admin Management!" />
     <MESSAGE value="Seller profile sidebar toggle function added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Seller profile sidebar toggle function added" />
+    <MESSAGE value="Backend Bean Validation added to UserDTO, LoginDTO and AuthController" />
+    <option name="LAST_COMMIT_MESSAGE" value="Backend Bean Validation added to UserDTO, LoginDTO and AuthController" />
   </component>
 </project>

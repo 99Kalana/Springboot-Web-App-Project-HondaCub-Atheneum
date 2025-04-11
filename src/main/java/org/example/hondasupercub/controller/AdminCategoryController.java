@@ -2,6 +2,7 @@ package org.example.hondasupercub.controller;
 
 
 import com.itextpdf.text.DocumentException;
+import jakarta.validation.Valid;
 import org.example.hondasupercub.dto.CategoryDTO;
 import org.example.hondasupercub.dto.ResponseDTO;
 import org.example.hondasupercub.service.impl.AdminCategoryServiceImpl;
@@ -26,7 +27,7 @@ public class AdminCategoryController {
 
     // ✅ Add a new category
     @PostMapping("save")
-    public ResponseEntity<ResponseDTO> saveCategory(@RequestBody CategoryDTO categoryDTO) {
+    public ResponseEntity<ResponseDTO> saveCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
         adminCategoryService.addCategory(categoryDTO);
         ResponseDTO responseDTO = new ResponseDTO(201, "Category Saved", categoryDTO);
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
@@ -42,7 +43,7 @@ public class AdminCategoryController {
 
     // ✅ Update category
     @PutMapping("update")
-    public ResponseEntity<ResponseDTO> updateCategory(@RequestBody CategoryDTO categoryDTO) {
+    public ResponseEntity<ResponseDTO> updateCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
         adminCategoryService.updateCategory(categoryDTO);
         ResponseDTO responseDTO = new ResponseDTO(200, "Category Updated", categoryDTO);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
