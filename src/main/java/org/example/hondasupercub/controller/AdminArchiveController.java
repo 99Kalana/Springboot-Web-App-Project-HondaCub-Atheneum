@@ -1,5 +1,6 @@
 package org.example.hondasupercub.controller;
 
+import jakarta.validation.Valid;
 import org.example.hondasupercub.dto.ModelArchiveDTO;
 import org.example.hondasupercub.dto.ModelImageDTO;
 import org.example.hondasupercub.dto.ResponseDTO;
@@ -29,7 +30,7 @@ public class AdminArchiveController {
     private ModelMapper modelMapper;
 
     @PostMapping("/save")
-    public ResponseEntity<ResponseDTO> saveModelArchive(@RequestPart("modelArchive") ModelArchiveDTO modelArchiveDTO,
+    public ResponseEntity<ResponseDTO> saveModelArchive(@Valid @RequestPart("modelArchive") ModelArchiveDTO modelArchiveDTO,
                                                         @RequestPart(value = "images", required = false) List<MultipartFile> images) {
         ModelArchiveDTO savedModel = archiveService.saveModelArchiveDTO(modelArchiveDTO, images);
         ResponseDTO responseDTO = new ResponseDTO(201, "Model Archive Saved", savedModel);
@@ -37,7 +38,7 @@ public class AdminArchiveController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<ResponseDTO> updateModelArchive(@RequestPart("modelArchive") ModelArchiveDTO modelArchiveDTO,
+    public ResponseEntity<ResponseDTO> updateModelArchive(@Valid @RequestPart("modelArchive") ModelArchiveDTO modelArchiveDTO,
                                                           @RequestPart(value = "images", required = false) List<MultipartFile> images) {
         ModelArchiveDTO updatedModel = archiveService.updateModelArchiveDTO(modelArchiveDTO, images);
         ResponseDTO responseDTO = new ResponseDTO(200, "Model Archive Updated", updatedModel);
