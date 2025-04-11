@@ -222,6 +222,7 @@
       <workItem from="1744276020353" duration="174000" />
       <workItem from="1744305942953" duration="196000" />
       <workItem from="1744306147258" duration="128000" />
+      <workItem from="1744307045865" duration="79000" />
     </task>
     <task id="LOCAL-00001" summary="Update">
       <option name="closed" value="true" />
@@ -415,7 +416,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744306232452</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Seller profile sidebar toggle function added">
+      <option name="closed" value="true" />
+      <created>1744307095191</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1744307095191</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -444,6 +453,7 @@
     <MESSAGE value="Seller Order management download report feature added" />
     <MESSAGE value="Seller Product management download report feature added" />
     <MESSAGE value="Database Backup Feature Added on Admin Management!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Database Backup Feature Added on Admin Management!" />
+    <MESSAGE value="Seller profile sidebar toggle function added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Seller profile sidebar toggle function added" />
   </component>
 </project>

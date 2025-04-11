@@ -73,6 +73,7 @@ public class AuthController {
 */
 package org.example.hondasupercub.controller;
 
+import jakarta.validation.Valid;
 import org.example.hondasupercub.dto.AuthDTO;
 import org.example.hondasupercub.dto.LoginDTO;
 import org.example.hondasupercub.dto.ResponseDTO;
@@ -106,7 +107,7 @@ public class AuthController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<ResponseDTO> authenticate(@RequestBody LoginDTO loginDto) {
+    public ResponseEntity<ResponseDTO> authenticate(@Valid @RequestBody LoginDTO loginDto) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
