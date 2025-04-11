@@ -1,5 +1,6 @@
 package org.example.hondasupercub.controller;
 
+import jakarta.validation.Valid;
 import org.example.hondasupercub.dto.ResponseDTO;
 import org.example.hondasupercub.dto.VinHistoryDTO;
 import org.example.hondasupercub.dto.VinPartsDTO;
@@ -19,7 +20,7 @@ public class AdminVinController {
     private AdminVinService vinService;
 
     @PostMapping("/save")
-    public ResponseEntity<ResponseDTO> saveVinHistory(@RequestBody VinHistoryDTO vinHistoryDTO) {
+    public ResponseEntity<ResponseDTO> saveVinHistory(@Valid @RequestBody VinHistoryDTO vinHistoryDTO) {
         VinHistoryDTO savedVinHistory = vinService.saveVinHistory(vinHistoryDTO);
         ResponseDTO responseDTO = new ResponseDTO(201, "VIN History Saved", savedVinHistory);
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
