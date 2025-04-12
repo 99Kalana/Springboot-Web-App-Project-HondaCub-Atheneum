@@ -153,6 +153,17 @@
             overflow: hidden;
         }
 
+        .invalid-feedback {
+            display: none; /* Initially hidden */
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: 0.875em;
+            color: #dc3545;
+        }
+        .is-invalid + .invalid-feedback {
+            display: block;
+        }
+
 
     </style>
 </head>
@@ -240,31 +251,38 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="model-name">Model Name</label>
-                    <input type="text" id="model-name" class="form-control" placeholder="Model Name">
+                    <input type="text" id="model-name" class="form-control" placeholder="Model Name" required>
+                    <div class="invalid-feedback">Model name is required and must be between 2 and 100 characters.</div>
                 </div>
                 <div class="form-group">
                     <label for="model-year">Year</label>
-                    <input type="number" id="model-year" class="form-control" placeholder="Year">
+                    <input type="number" id="model-year" class="form-control" placeholder="Year" required>
+                    <div class="invalid-feedback">Model year is required and must be between 1958 and 2050.</div>
                 </div>
                 <div class="form-group">
                     <label for="engine-capacity">Engine Capacity</label>
                     <input type="text" id="engine-capacity" class="form-control" placeholder="Engine Capacity">
+                    <div class="invalid-feedback">Engine capacity cannot exceed 20 characters.</div>
                 </div>
                 <div class="form-group">
                     <label for="top-speed">Top Speed</label>
                     <input type="text" id="top-speed" class="form-control" placeholder="Top Speed">
+                    <div class="invalid-feedback">Top speed cannot exceed 20 characters.</div>
                 </div>
                 <div class="form-group">
                     <label for="fuel-consumption">Fuel Consumption</label>
                     <input type="text" id="fuel-consumption" class="form-control" placeholder="Fuel Consumption">
+                    <div class="invalid-feedback">Fuel consumption cannot exceed 20 characters.</div>
                 </div>
                 <div class="form-group">
                     <label for="production-years">Production Years</label>
                     <input type="text" id="production-years" class="form-control" placeholder="Production Years">
+                    <div class="invalid-feedback">Production years cannot exceed 100 characters.</div>
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
                     <textarea id="description" class="form-control" placeholder="Description"></textarea>
+                    <div class="invalid-feedback">Description cannot exceed 500 characters.</div>
                 </div>
                 <div class="form-group">
                     <label for="modelImage">Images (URLs)</label>
@@ -284,6 +302,30 @@
 
 <script>
     $(document).ready(function() {
+
+        const modelModal = $("#modelModal");
+        const modelForm = $("#modelForm");
+        const modelNameInput = $("#model-name");
+        const modelYearInput = $("#model-year");
+        const engineCapacityInput = $("#engine-capacity");
+        const topSpeedInput = $("#top-speed");
+        const fuelConsumptionInput = $("#fuel-consumption");
+        const productionYearsInput = $("#production-years");
+        const descriptionInput = $("#description");
+
+        // Function to display validation errors
+        function displayError(inputElement, message) {
+            inputElement.addClass("is-invalid");
+            inputElement.next(".invalid-feedback").text(message).show();
+        }
+
+        // Function to clear validation errors
+        function clearError(inputElement) {
+            inputElement.removeClass("is-invalid");
+            inputElement.next(".invalid-feedback").hide();
+        }
+
+
         let models = []; // Store models from the backend
 
         // Function to populate table with models data
@@ -434,6 +476,77 @@
 
         // Save or Update model
         $("#save-model-btn").click(function() {
+
+            let isValid = true;
+
+            // Validate Model Name
+            if (modelNameInput.val().trim() === "") {
+                displayError(modelNameInput, "Model name is required.");
+                isValid = false;
+            } else if (modelNameInput.val().trim().length < 2 || modelNameInput.val().trim().length > 100) {
+                displayError(modelNameInput, "Model name must be between 2 and 100 characters.");
+                isValid = false;
+            } else {
+                clearError(modelNameInput);
+            }
+
+            // Validate Model Year
+            const yearValue = parseInt(modelYearInput.val());
+            if (isNaN(yearValue)) {
+                displayError(modelYearInput, "Model year is required.");
+                isValid = false;
+            } else if (yearValue < 1958 || yearValue > 2050) {
+                displayError(modelYearInput, "Model year must be between 1958 and 2050.");
+                isValid = false;
+            } else {
+                clearError(modelYearInput);
+            }
+
+            // Validate Engine Capacity
+            if (engineCapacityInput.val().trim().length > 20) {
+                displayError(engineCapacityInput, "Engine capacity cannot exceed 20 characters.");
+                isValid = false;
+            } else {
+                clearError(engineCapacityInput);
+            }
+
+            // Validate Top Speed
+            if (topSpeedInput.val().trim().length > 20) {
+                displayError(topSpeedInput, "Top speed cannot exceed 20 characters.");
+                isValid = false;
+            } else {
+                clearError(topSpeedInput);
+            }
+
+            // Validate Fuel Consumption
+            if (fuelConsumptionInput.val().trim().length > 20) {
+                displayError(fuelConsumptionInput, "Fuel consumption cannot exceed 20 characters.");
+                isValid = false;
+            } else {
+                clearError(fuelConsumptionInput);
+            }
+
+            // Validate Production Years
+            if (productionYearsInput.val().trim().length > 100) {
+                displayError(productionYearsInput, "Production years cannot exceed 100 characters.");
+                isValid = false;
+            } else {
+                clearError(productionYearsInput);
+            }
+
+            // Validate Description
+            if (descriptionInput.val().trim().length > 500) {
+                displayError(descriptionInput, "Description cannot exceed 500 characters.");
+                isValid = false;
+            } else {
+                clearError(descriptionInput);
+            }
+
+            if (!isValid) {
+                return; // Stop the function if validation fails
+            }
+
+
             const modelId = $(this).data("id");
             const formData = new FormData();
             formData.append("modelArchive", new Blob([JSON.stringify({

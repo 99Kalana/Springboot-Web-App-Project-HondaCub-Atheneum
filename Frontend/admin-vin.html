@@ -152,6 +152,16 @@
             overflow: hidden;
         }
 
+        .invalid-feedback {
+            display: none; /* Initially hidden */
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: 0.875em;
+            color: #dc3545;
+        }
+        .is-invalid + .invalid-feedback {
+            display: block;
+        }
 
     </style>
 </head>
@@ -194,13 +204,13 @@
     <!-- Dashboard Content -->
     <div class="flex-grow-1 content">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2><i class="bi bi-tools"></i> VIN Lookup for Parts</h2>
+            <h2><i class="bi bi-tools"></i> VIN Lookup for Model Compatibility </h2>
         </div>
 
         <!-- VIN Lookup Form -->
         <div class="card mb-4">
             <div class="card-header">
-                <h5>Add VIN to Parts Compatibility</h5>
+                <h5>Add VIN to Models Compatibility</h5>
             </div>
             <div class="card-body">
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addVinModal">Add VIN</button>
@@ -224,22 +234,6 @@
             </tbody>
         </table>
 
-        <!-- Parts Table -->
-        <!--<h4>Parts Linked to VIN</h4>
-        <table class="table table-hover" id="linked-parts-table">
-            <thead class="table-dark">
-            <tr>
-                <th>Part ID</th>
-                <th>Part Name</th>
-                <th>VIN Number</th>
-                <th>Model</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            &lt;!&ndash; Data will be populated here using JavaScript &ndash;&gt;
-            </tbody>
-        </table>-->
     </div>
 </div>
 
@@ -252,21 +246,23 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="vin-form">
+                <form id="vin-form" novalidate>
                     <div class="mb-3">
                         <label for="vin_number" class="form-label">VIN Number</label>
                         <input type="text" class="form-control" id="vin_number" required>
+                        <div class="invalid-feedback">VIN number is required and must start with C50, C65, C70, C90, C100, or C125 and be between 3 and 10 characters.</div>
                     </div>
                     <div class="mb-3">
                         <label for="model_id" class="form-label">Model</label>
                         <select class="form-select" id="model_id" required>
                             <option value="" disabled selected>Select a Model</option>
-                            <!-- Options will be populated here via JavaScript -->
                         </select>
+                        <div class="invalid-feedback">Please select a model.</div>
                     </div>
                     <div class="mb-3">
                         <label for="compatibility_notes" class="form-label">Compatibility Notes</label>
                         <textarea class="form-control" id="compatibility_notes" rows="3"></textarea>
+                        <div class="invalid-feedback">Compatibility notes cannot exceed 500 characters.</div>
                     </div>
                     <button type="submit" class="btn btn-primary">Add VIN</button>
                 </form>
@@ -275,41 +271,28 @@
     </div>
 </div>
 
-<!-- Modal for Linking VIN to Part -->
-<!--<div class="modal fade" id="linkVinPartModal" tabindex="-1" aria-labelledby="linkVinPartModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="linkVinPartModalLabel">Link VIN to Part</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="link-vin-part-form">
-                    <div class="mb-3">
-                        <label for="vin_number_link" class="form-label">VIN Number</label>
-                        <select class="form-select" id="vin_number_link" required>
-                            <option value="" disabled selected>Select a VIN Number</option>
-                            &lt;!&ndash; Options will be populated here via JavaScript &ndash;&gt;
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="part_id" class="form-label">Part ID</label>
-                        <select class="form-select" id="part_id" required>
-                            <option value="" disabled selected>Select a Part</option>
-                            &lt;!&ndash; Options will be populated here via JavaScript &ndash;&gt;
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Link Part</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>-->
-
 <script src="JQuery/jquery-3.7.1.min.js"></script>
 <script src="js/bootstrap.bundle.js"></script>
 <script>
     $(document).ready(function() {
+
+        const vinForm = $("#vin-form");
+        const vinNumberInput = $("#vin_number");
+        const modelIdSelect = $("#model_id");
+        const compatibilityNotesInput = $("#compatibility_notes");
+
+        // Function to display validation errors
+        function displayError(inputElement, message) {
+            inputElement.addClass("is-invalid");
+            inputElement.next(".invalid-feedback").text(message).show();
+        }
+
+        // Function to clear validation errors
+        function clearError(inputElement) {
+            inputElement.removeClass("is-invalid");
+            inputElement.next(".invalid-feedback").hide();
+        }
+
         let models = [];
         let parts = [];
         let vinHistories = [];
@@ -398,6 +381,45 @@
 
         $('#vin-form').submit(function(e) {
             e.preventDefault();
+
+            let isValid = true;
+
+            // Validate VIN Number
+            const vinNumber = vinNumberInput.val().trim();
+            const vinRegex = /^(C(50|65|70|90|100|125))[A-HJ-NPR-Z0-9]{0,7}$/;
+            if (vinNumber === "") {
+                displayError(vinNumberInput, "VIN number is required.");
+                isValid = false;
+            } else if (!vinRegex.test(vinNumber) || vinNumber.length < 3 || vinNumber.length > 10) {
+                displayError(vinNumberInput, "VIN number must start with C50, C65, C70, C90, C100, or C125 and be between 3 and 10 characters.");
+                isValid = false;
+            } else {
+                clearError(vinNumberInput);
+            }
+
+            // Validate Model Selection
+            if (modelIdSelect.val() === "") {
+                displayError(modelIdSelect, "Please select a model.");
+                isValid = false;
+            } else {
+                clearError(modelIdSelect);
+            }
+
+            // Validate Compatibility Notes
+            if (compatibilityNotesInput.val().trim().length > 500) {
+                displayError(compatibilityNotesInput, "Compatibility notes cannot exceed 500 characters.");
+                isValid = false;
+            } else {
+                clearError(compatibilityNotesInput);
+            }
+
+            if (!isValid) {
+                e.preventDefault(); // Prevent form submission if validation fails
+                return;
+            }
+
+
+
             const vinData = {
                 vinNumber: $('#vin_number').val(),
                 modelId: parseInt($('#model_id').val()),

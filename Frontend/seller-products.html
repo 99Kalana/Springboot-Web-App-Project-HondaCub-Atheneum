@@ -194,6 +194,19 @@
             border-radius: 5px;
             border: 1px solid #ddd;
         }
+
+
+        .invalid-feedback {
+            display: none; /* Initially hidden */
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: 0.875em;
+            color: #dc3545;
+        }
+        .is-invalid + .invalid-feedback {
+            display: block;
+        }
+
     </style>
 </head>
 <body>
@@ -282,29 +295,33 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="productForm">
+                <form id="productForm" novalidate>
                     <div class="form-group">
                         <label for="partName">Part Name</label>
                         <input type="text" id="partName" class="form-control" required>
+                        <div class="invalid-feedback">Part name is required and must be between 2 and 255 characters.</div>
                     </div>
                     <div class="form-group">
                         <label for="category">Category</label>
                         <select id="category" class="form-control" required>
                             <option value="">Select Category</option>
-                            <!-- Categories will be populated by JS -->
                         </select>
+                        <div class="invalid-feedback">Please select a category.</div>
                     </div>
                     <div class="form-group">
                         <label for="price">Price</label>
-                        <input type="number" id="price" class="form-control" required>
+                        <input type="number" id="price" class="form-control" required min="0.01">
+                        <div class="invalid-feedback">Price is required and must be greater than 0.</div>
                     </div>
                     <div class="form-group">
                         <label for="stock">Stock</label>
-                        <input type="number" id="stock" class="form-control" required>
+                        <input type="number" id="stock" class="form-control" required min="0">
+                        <div class="invalid-feedback">Stock is required and cannot be negative.</div>
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <textarea id="description" class="form-control" required></textarea>
+                        <textarea id="description" class="form-control"></textarea>
+                        <div class="invalid-feedback">Description cannot exceed 1000 characters.</div>
                     </div>
                     <div class="form-group">
                         <label for="images">Images</label>
@@ -326,29 +343,33 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editProductForm">
+                <form id="editProductForm" novalidate>
                     <div class="form-group">
                         <label for="editPartName">Part Name</label>
                         <input type="text" id="editPartName" class="form-control" required>
+                        <div class="invalid-feedback">Part name is required and must be between 2 and 255 characters.</div>
                     </div>
                     <div class="form-group">
                         <label for="editCategory">Category</label>
                         <select id="editCategory" class="form-control" required>
                             <option value="">Select Category</option>
-                            <!-- Categories will be populated by JS -->
                         </select>
+                        <div class="invalid-feedback">Please select a category.</div>
                     </div>
                     <div class="form-group">
                         <label for="editPrice">Price</label>
-                        <input type="number" id="editPrice" class="form-control" required>
+                        <input type="number" id="editPrice" class="form-control" required min="0.01">
+                        <div class="invalid-feedback">Price is required and must be greater than 0.</div>
                     </div>
                     <div class="form-group">
                         <label for="editStock">Stock</label>
-                        <input type="number" id="editStock" class="form-control" required>
+                        <input type="number" id="editStock" class="form-control" required min="0">
+                        <div class="invalid-feedback">Stock is required and cannot be negative.</div>
                     </div>
                     <div class="form-group">
                         <label for="editDescription">Description</label>
-                        <textarea id="editDescription" class="form-control" required></textarea>
+                        <textarea id="editDescription" class="form-control"></textarea>
+                        <div class="invalid-feedback">Description cannot exceed 1000 characters.</div>
                     </div>
                     <div class="form-group">
                         <label for="editImages">Images</label>
@@ -366,6 +387,33 @@
 <script src="JQuery/jquery-3.7.1.min.js"></script>
 <script>
     $(document).ready(function() {
+
+        const productForm = $("#productForm");
+        const partNameInput = $("#partName");
+        const categorySelect = $("#category");
+        const priceInput = $("#price");
+        const stockInput = $("#stock");
+        const descriptionInput = $("#description");
+
+        const editProductForm = $("#editProductForm");
+        const editPartNameInput = $("#editPartName");
+        const editCategorySelect = $("#editCategory");
+        const editPriceInput = $("#editPrice");
+        const editStockInput = $("#editStock");
+        const editDescriptionInput = $("#editDescription");
+
+        // Function to display validation errors
+        function displayError(inputElement, message) {
+            inputElement.addClass("is-invalid");
+            inputElement.next(".invalid-feedback").text(message).show();
+        }
+
+        // Function to clear validation errors
+        function clearError(inputElement) {
+            inputElement.removeClass("is-invalid");
+            inputElement.next(".invalid-feedback").hide();
+        }
+
         let categoriesCache = []; // Cache categories
 
         // Sidebar toggle
@@ -624,12 +672,120 @@
 
         // Event listeners
         $('#productForm').submit(function(e) {
+
+            let isValid = true;
+
+            // Validate Part Name
+            if (partNameInput.val().trim() === "") {
+                displayError(partNameInput, "Part name is required.");
+                isValid = false;
+            } else if (partNameInput.val().trim().length < 2 || partNameInput.val().trim().length > 255) {
+                displayError(partNameInput, "Part name must be between 2 and 255 characters.");
+                isValid = false;
+            } else {
+                clearError(partNameInput);
+            }
+
+            // Validate Category
+            if (categorySelect.val() === "") {
+                displayError(categorySelect, "Please select a category.");
+                isValid = false;
+            } else {
+                clearError(categorySelect);
+            }
+
+            // Validate Price
+            const priceValue = parseFloat(priceInput.val());
+            if (isNaN(priceValue) || priceValue <= 0) {
+                displayError(priceInput, "Price is required and must be greater than 0.");
+                isValid = false;
+            } else {
+                clearError(priceInput);
+            }
+
+            // Validate Stock
+            const stockValue = parseInt(stockInput.val());
+            if (isNaN(stockValue) || stockValue < 0) {
+                displayError(stockInput, "Stock is required and cannot be negative.");
+                isValid = false;
+            } else {
+                clearError(stockInput);
+            }
+
+            // Validate Description
+            if (descriptionInput.val().trim().length > 1000) {
+                displayError(descriptionInput, "Description cannot exceed 1000 characters.");
+                isValid = false;
+            } else {
+                clearError(descriptionInput);
+            }
+
+            if (!isValid) {
+                e.preventDefault(); // Prevent form submission if validation fails
+                return;
+            }
+
+
             e.preventDefault();
             const formData = new FormData(this);
             addProduct(formData);
         });
 
         $('#editProductForm').submit(function(e) {
+
+            let isValid = true;
+
+            // Validate Edit Part Name
+            if (editPartNameInput.val().trim() === "") {
+                displayError(editPartNameInput, "Part name is required.");
+                isValid = false;
+            } else if (editPartNameInput.val().trim().length < 2 || editPartNameInput.val().trim().length > 255) {
+                displayError(editPartNameInput, "Part name must be between 2 and 255 characters.");
+                isValid = false;
+            } else {
+                clearError(editPartNameInput);
+            }
+
+            // Validate Edit Category
+            if (editCategorySelect.val() === "") {
+                displayError(editCategorySelect, "Please select a category.");
+                isValid = false;
+            } else {
+                clearError(editCategorySelect);
+            }
+
+            // Validate Edit Price
+            const priceValue = parseFloat(editPriceInput.val());
+            if (isNaN(priceValue) || priceValue <= 0) {
+                displayError(editPriceInput, "Price is required and must be greater than 0.");
+                isValid = false;
+            } else {
+                clearError(editPriceInput);
+            }
+
+            // Validate Edit Stock
+            const stockValue = parseInt(editStockInput.val());
+            if (isNaN(stockValue) || stockValue < 0) {
+                displayError(editStockInput, "Stock is required and cannot be negative.");
+                isValid = false;
+            } else {
+                clearError(editStockInput);
+            }
+
+            // Validate Edit Description
+            if (editDescriptionInput.val().trim().length > 1000) {
+                displayError(editDescriptionInput, "Description cannot exceed 1000 characters.");
+                isValid = false;
+            } else {
+                clearError(editDescriptionInput);
+            }
+
+            if (!isValid) {
+                e.preventDefault(); // Prevent form submission if validation fails
+                return;
+            }
+
+
             e.preventDefault();
             const partId = $('#editProductForm').data('partId');
             const formData = new FormData(this);

@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b0212092-f5c2-45d4-8064-67a74003fc17" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/admin-categories.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/admin-categories.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/signup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/admin-archive.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/admin-archive.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/admin-vin.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/admin-vin.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -242,6 +241,8 @@
       <workItem from="1744439879562" duration="30000" />
       <workItem from="1744440051478" duration="32000" />
       <workItem from="1744441608236" duration="106000" />
+      <workItem from="1744442025160" duration="130000" />
+      <workItem from="1744444228581" duration="57000" />
     </task>
     <task id="LOCAL-00001" summary="Update">
       <option name="closed" value="true" />
@@ -499,14 +500,21 @@
       <option name="project" value="LOCAL" />
       <updated>1744431996385</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Frontend Validation added to login.html, signup.html, admin-categories.html, AdminForumBlogController">
+      <option name="closed" value="true" />
+      <created>1744442121394</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1744442121394</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value=" seller order status dropdown feature added" />
     <MESSAGE value=" seller review's search by part id feature added" />
     <MESSAGE value="Customer's Loyalty and Reward Page Frontend and Backend Implementation added!" />
     <MESSAGE value="Customer Reward Service Impl Updated" />
@@ -531,6 +539,7 @@
     <MESSAGE value="Backend Bean Validation added to ModelArchiveDTO and AdminArchiveController" />
     <MESSAGE value="Backend Bean Validation added to VinHistoryDTO and AdminVinController" />
     <MESSAGE value="Backend Bean Validation added to SparePartDTO,TransactionDTO and SellerProductsController, CustomerCheckoutController" />
-    <option name="LAST_COMMIT_MESSAGE" value="Backend Bean Validation added to SparePartDTO,TransactionDTO and SellerProductsController, CustomerCheckoutController" />
+    <MESSAGE value="Frontend Validation added to login.html, signup.html, admin-categories.html, AdminForumBlogController" />
+    <option name="LAST_COMMIT_MESSAGE" value="Frontend Validation added to login.html, signup.html, admin-categories.html, AdminForumBlogController" />
   </component>
 </project>
