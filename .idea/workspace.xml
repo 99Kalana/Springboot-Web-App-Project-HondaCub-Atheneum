@@ -240,6 +240,7 @@
       <workItem from="1744442025160" duration="130000" />
       <workItem from="1744444228581" duration="57000" />
       <workItem from="1744445253414" duration="161000" />
+      <workItem from="1744453510574" duration="269000" />
     </task>
     <task id="LOCAL-00001" summary="Update">
       <option name="closed" value="true" />
@@ -513,14 +514,21 @@
       <option name="project" value="LOCAL" />
       <updated>1744445361369</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Frontend Validation added to customer-checkout-payment.html">
+      <option name="closed" value="true" />
+      <created>1744453755242</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1744453755242</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Customer's Loyalty and Reward Page Frontend and Backend Implementation added!" />
     <MESSAGE value="Customer Reward Service Impl Updated" />
     <MESSAGE value="Customer checkout's Loyalty redeem point feature added" />
     <MESSAGE value="Customer's reward page style added" />
@@ -545,6 +553,7 @@
     <MESSAGE value="Backend Bean Validation added to SparePartDTO,TransactionDTO and SellerProductsController, CustomerCheckoutController" />
     <MESSAGE value="Frontend Validation added to login.html, signup.html, admin-categories.html, AdminForumBlogController" />
     <MESSAGE value="Frontend Validation added to admin-categories.html, admin-archive.html, admin-vin.html and seller-products.html" />
-    <option name="LAST_COMMIT_MESSAGE" value="Frontend Validation added to admin-categories.html, admin-archive.html, admin-vin.html and seller-products.html" />
+    <MESSAGE value="Frontend Validation added to customer-checkout-payment.html" />
+    <option name="LAST_COMMIT_MESSAGE" value="Frontend Validation added to customer-checkout-payment.html" />
   </component>
 </project>

@@ -105,6 +105,16 @@
             margin-right: 10px;
         }
 
+        .invalid-feedback {
+            display: none; /* Initially hidden */
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: 0.875em;
+            color: #dc3545;
+        }
+        .is-invalid + .invalid-feedback {
+            display: block;
+        }
 
     </style>
 </head>
@@ -151,18 +161,21 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Profile Details</h5>
-                <form id="customerProfileForm">
+                <form id="customerProfileForm" novalidate>
                     <div class="mb-3">
                         <label for="customerName" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="customerName" value="Customer Name">
+                        <input type="text" class="form-control" id="customerName" value="Customer Name" required>
+                        <div class="invalid-feedback">Full name is required and must be between 3 and 100 characters.</div>
                     </div>
                     <div class="mb-3">
                         <label for="customerEmail" class="form-label">Email</label>
                         <input type="email" class="form-control" id="customerEmail" value="customer@example.com" disabled>
+                        <div class="invalid-feedback">Invalid email format.</div>
                     </div>
                     <div class="mb-3">
                         <label for="customerPhone" class="form-label">Phone</label>
-                        <input type="text" class="form-control" id="customerPhone" value="123-456-7890">
+                        <input type="text" class="form-control" id="customerPhone" value="123-456-7890" required>
+                        <div class="invalid-feedback">Phone number is required and must be a 10-digit number.</div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Role</label>
@@ -171,27 +184,27 @@
 
                     <hr>
 
-                    <!-- Change Password Section -->
                     <h5>Change Password</h5>
                     <div class="mb-3">
                         <label for="currentPassword" class="form-label">Current Password</label>
                         <input type="password" class="form-control" id="currentPassword">
+                        <div class="invalid-feedback">Current password is required to change the password.</div>
                     </div>
                     <div class="mb-3">
                         <label for="newPassword" class="form-label">New Password</label>
                         <input type="password" class="form-control" id="newPassword">
+                        <div class="invalid-feedback">New password must be at least 6 characters long.</div>
                     </div>
                     <div class="mb-3">
                         <label for="confirmPassword" class="form-label">Confirm New Password</label>
                         <input type="password" class="form-control" id="confirmPassword">
+                        <div class="invalid-feedback">Confirm new password does not match the new password.</div>
                     </div>
-                    <!-- Checkbox to toggle visibility of passwords -->
                     <div class="mb-3">
                         <input type="checkbox" id="showPassword" class="form-check-input">
                         <label for="showPassword" class="form-check-label">Show Password</label>
                     </div>
 
-                    <!-- Save & Cancel Buttons -->
                     <button type="button" class="btn btn-primary" id="saveProfileBtn"><i class="bi bi-save"></i> Save Changes</button>
                     <button type="button" class="btn btn-secondary" onclick="window.location.href='customer-homepage.html'"><i class="bi bi-arrow-left"></i> Cancel</button>
                 </form>
@@ -234,6 +247,31 @@
 <script>
     $(document).ready(function() {
 
+        const customerProfileForm = $("#customerProfileForm");
+        const customerNameInput = $("#customerName");
+        const customerPhoneInput = $("#customerPhone");
+        const currentPasswordInput = $("#currentPassword");
+        const newPasswordInput = $("#newPassword");
+        const confirmPasswordInput = $("#confirmPassword");
+
+        // Function to display validation errors
+        function displayError(inputElement, message) {
+            inputElement.addClass("is-invalid");
+            inputElement.next(".invalid-feedback").text(message).show();
+        }
+
+        // Function to clear validation errors
+        function clearError(inputElement) {
+            inputElement.removeClass("is-invalid");
+            inputElement.next(".invalid-feedback").hide();
+        }
+
+        customerNameInput.on('focus', function() { clearError(customerNameInput); });
+        customerPhoneInput.on('focus', function() { clearError(customerPhoneInput); });
+        currentPasswordInput.on('focus', function() { clearError(currentPasswordInput); });
+        newPasswordInput.on('focus', function() { clearError(newPasswordInput); });
+        confirmPasswordInput.on('focus', function() { clearError(confirmPasswordInput); });
+
         loadCustomerProfile();
 
         function loadCustomerProfile() {
@@ -263,6 +301,70 @@
         }
 
         $('#saveProfileBtn').click(function () {
+
+            let isValid = true;
+
+            // Validate Full Name
+            if (customerNameInput.val().trim() === "") {
+                displayError(customerNameInput, "Full name is required.");
+                isValid = false;
+            } else if (customerNameInput.val().trim().length < 3 || customerNameInput.val().trim().length > 100) {
+                displayError(customerNameInput, "Full name must be between 3 and 100 characters.");
+                isValid = false;
+            } else {
+                clearError(customerNameInput);
+            }
+
+            // Validate Phone Number
+            const phoneRegex = /^\d{10}$/;
+            if (customerPhoneInput.val().trim() === "") {
+                displayError(customerPhoneInput, "Phone number is required.");
+                isValid = false;
+            } else if (!phoneRegex.test(customerPhoneInput.val().trim())) {
+                displayError(customerPhoneInput, "Phone number must be a 10-digit number.");
+                isValid = false;
+            } else {
+                clearError(customerPhoneInput);
+            }
+
+            // Validate New Password (only if it's being changed)
+            if (newPasswordInput.val().trim() !== "") {
+                if (newPasswordInput.val().trim().length < 6) {
+                    displayError(newPasswordInput, "New password must be at least 6 characters long.");
+                    isValid = false;
+                } else {
+                    clearError(newPasswordInput);
+                }
+
+                // Validate Confirm New Password (only if new password is entered)
+                if (confirmPasswordInput.val().trim() === "") {
+                    displayError(confirmPasswordInput, "Please confirm the new password.");
+                    isValid = false;
+                } else if (confirmPasswordInput.val() !== newPasswordInput.val()) {
+                    displayError(confirmPasswordInput, "Confirm new password does not match the new password.");
+                    isValid = false;
+                } else {
+                    clearError(confirmPasswordInput);
+                }
+
+                // If a new password is being set, current password is also required
+                if (currentPasswordInput.val().trim() === "") {
+                    displayError(currentPasswordInput, "Current password is required to change the password.");
+                    isValid = false;
+                } else {
+                    clearError(currentPasswordInput);
+                }
+            } else {
+                // If new password is not being changed, clear error for confirm password
+                clearError(confirmPasswordInput);
+                clearError(currentPasswordInput);
+            }
+
+            if (!isValid) {
+                return; // Stop the function if validation fails
+            }
+
+
             const token = localStorage.getItem('authToken');
             const newPassword = $('#newPassword').val();
             const confirmPassword = $('#confirmPassword').val();
