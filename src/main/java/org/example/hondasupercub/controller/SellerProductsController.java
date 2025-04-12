@@ -1,6 +1,7 @@
 package org.example.hondasupercub.controller;
 
 import com.itextpdf.text.DocumentException;
+import jakarta.validation.Valid;
 import org.example.hondasupercub.dto.ResponseDTO;
 import org.example.hondasupercub.dto.SparePartDTO;
 import org.example.hondasupercub.dto.SparePartImageDTO;
@@ -66,7 +67,7 @@ public class SellerProductsController {
 
     @PostMapping("/save")
     public ResponseEntity<ResponseDTO> saveSparePart(
-            @RequestParam("sparePart") String sparePartJson,
+            @Valid @RequestParam("sparePart") String sparePartJson,
             @RequestParam("images") MultipartFile[] files,
             @RequestParam("sellerId") int sellerId,
             @RequestHeader("Authorization") String authorizationHeader) {
@@ -84,7 +85,7 @@ public class SellerProductsController {
     @PutMapping("/update/{partId}")
     public ResponseEntity<ResponseDTO> updateSparePart(
             @PathVariable int partId,
-            @RequestParam("sparePart") String sparePartJson,
+            @Valid @RequestParam("sparePart") String sparePartJson,
             @RequestParam(value = "images", required = false) MultipartFile[] files,
             @RequestParam("sellerId") int sellerId,
             @RequestHeader("Authorization") String authorizationHeader) {

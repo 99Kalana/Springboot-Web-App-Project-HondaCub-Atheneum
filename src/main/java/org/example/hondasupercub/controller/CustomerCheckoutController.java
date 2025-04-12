@@ -1,6 +1,7 @@
 // CustomerCheckoutController.java
 package org.example.hondasupercub.controller;
 
+import jakarta.validation.Valid;
 import org.example.hondasupercub.dto.TransactionDTO;
 import org.example.hondasupercub.service.CustomerCheckoutService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class CustomerCheckoutController {
     private CustomerCheckoutService checkoutService;
 
     @PostMapping
-    public ResponseEntity<String> processCheckout(@RequestBody TransactionDTO transactionDTO) {
+    public ResponseEntity<String> processCheckout(@Valid @RequestBody TransactionDTO transactionDTO) {
         try {
             checkoutService.processCheckout(transactionDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body("Transaction processed successfully");
