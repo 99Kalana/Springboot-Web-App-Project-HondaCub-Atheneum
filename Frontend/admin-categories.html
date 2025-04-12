@@ -202,12 +202,14 @@
         <!-- Add New Category -->
         <div class="mb-4">
             <h5>Add New Category</h5>
-            <form id="categoryForm" class="row g-3">
+            <form id="categoryForm" class="row g-3" novalidate>
                 <div class="col-md-4">
                     <input type="text" class="form-control" id="categoryName" placeholder="Category Name" required>
+                    <div class="invalid-feedback">Category name is required and must be between 2 and 100 characters.</div>
                 </div>
                 <div class="col-md-4">
                     <textarea class="form-control" id="categoryDescription" placeholder="Category Description" required></textarea>
+                    <div class="invalid-feedback">Description cannot exceed 500 characters.</div>
                 </div>
                 <div class="col-md-2">
                     <button type="submit" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Add Category</button>
@@ -250,15 +252,17 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editCategoryForm">
+                <form id="editCategoryForm" novalidate>
                     <input type="hidden" id="editCategoryId">
                     <div class="mb-3">
                         <label for="editCategoryName" class="form-label">Category Name</label>
                         <input type="text" class="form-control" id="editCategoryName" required>
+                        <div class="invalid-feedback">Category name is required and must be between 2 and 100 characters.</div>
                     </div>
                     <div class="mb-3">
                         <label for="editCategoryDescription" class="form-label">Category Description</label>
                         <textarea class="form-control" id="editCategoryDescription" required></textarea>
+                        <div class="invalid-feedback">Description cannot exceed 500 characters.</div>
                     </div>
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                 </form>
@@ -272,6 +276,25 @@
 <script>
     $(document).ready(function() {
 
+        const categoryForm = $("#categoryForm");
+        const categoryNameInput = $("#categoryName");
+        const categoryDescriptionInput = $("#categoryDescription");
+
+        const editCategoryForm = $("#editCategoryForm");
+        const editCategoryNameInput = $("#editCategoryName");
+        const editCategoryDescriptionInput = $("#editCategoryDescription");
+
+        // Function to display validation errors
+        function displayError(inputElement, message) {
+            inputElement.addClass("is-invalid");
+            inputElement.next(".invalid-feedback").text(message).show();
+        }
+
+        // Function to clear validation errors
+        function clearError(inputElement) {
+            inputElement.removeClass("is-invalid");
+            inputElement.next(".invalid-feedback").hide();
+        }
 
         // Toggle Sidebar Functionality
         $("#toggleBtn").click(function () {
@@ -323,6 +346,32 @@
         // Add a new category
         $("#categoryForm").on("submit", function(e) {
             e.preventDefault();
+
+            let isValid = true;
+
+            // Validate Category Name
+            if (categoryNameInput.val().trim() === "") {
+                displayError(categoryNameInput, "Category name is required.");
+                isValid = false;
+            } else if (categoryNameInput.val().trim().length < 2 || categoryNameInput.val().trim().length > 100) {
+                displayError(categoryNameInput, "Category name must be between 2 and 100 characters.");
+                isValid = false;
+            } else {
+                clearError(categoryNameInput);
+            }
+
+            // Validate Category Description
+            if (categoryDescriptionInput.val().trim().length > 500) {
+                displayError(categoryDescriptionInput, "Description cannot exceed 500 characters.");
+                isValid = false;
+            } else {
+                clearError(categoryDescriptionInput);
+            }
+
+            if (!isValid) {
+                e.preventDefault(); // Prevent form submission if validation fails
+                return;
+            }
 
             const categoryName = $("#categoryName").val().trim();
             const categoryDescription = $("#categoryDescription").val().trim();
@@ -396,6 +445,32 @@
         // Handle the save changes functionality
         $("#editCategoryForm").on("submit", function(e) {
             e.preventDefault();
+
+            let isValid = true;
+
+            // Validate Edit Category Name
+            if (editCategoryNameInput.val().trim() === "") {
+                displayError(editCategoryNameInput, "Category name is required.");
+                isValid = false;
+            } else if (editCategoryNameInput.val().trim().length < 2 || editCategoryNameInput.val().trim().length > 100) {
+                displayError(editCategoryNameInput, "Category name must be between 2 and 100 characters.");
+                isValid = false;
+            } else {
+                clearError(editCategoryNameInput);
+            }
+
+            // Validate Edit Category Description
+            if (editCategoryDescriptionInput.val().trim().length > 500) {
+                displayError(editCategoryDescriptionInput, "Description cannot exceed 500 characters.");
+                isValid = false;
+            } else {
+                clearError(editCategoryDescriptionInput);
+            }
+
+            if (!isValid) {
+                e.preventDefault(); // Prevent form submission if validation fails
+                return;
+            }
 
             const categoryId = $("#editCategoryId").val();
             const categoryName = $("#editCategoryName").val().trim();

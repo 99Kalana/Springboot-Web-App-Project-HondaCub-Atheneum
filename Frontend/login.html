@@ -108,11 +108,20 @@
             filter: blur(5px);
             pointer-events: none;
         }
+        .invalid-feedback {
+            display: none; /* Initially hidden */
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: 0.875em;
+            color: #dc3545;
+        }
+        .is-invalid + .invalid-feedback {
+            display: block;
+        }
     </style>
 </head>
 <body>
 
-<!-- Role Selection Popup -->
 <div class="role-selection" id="roleSelection">
     <h2>Select Your Role</h2>
     <div class="d-flex">
@@ -124,7 +133,6 @@
 
 <div class="container-fluid">
     <div class="row h-100">
-        <!-- Left Side (Image Section) -->
         <div class="col-md-6 left-side">
             <div class="left-content">
                 <h2>Welcome Back!</h2>
@@ -132,24 +140,22 @@
             </div>
         </div>
 
-        <!-- Right Side (Login Form) -->
         <div class="col-md-6 right-side">
             <div class="login-box blur" id="loginContainer">
                 <h3 class="text-center">Login</h3>
-                <form id="loginForm">
+                <form id="loginForm" novalidate>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email Address</label>
                         <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                        <div class="invalid-feedback" id="email-error"></div>
                     </div>
                     <div class="mb-3 password-container">
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
                         <i class="bi bi-eye-slash" id="togglePassword"></i>
+                        <div class="invalid-feedback" id="password-error"></div>
                     </div>
-                    <!--<div class="forgot-password">
-                        <a href="forgot-password.html">Forgot Password?</a> // option removed
-                    </div>-->
-                    <button type="submit" onclick="loginUser()" class="btn btn-primary w-100 mt-3">Login</button>
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Login</button>
                 </form>
                 <p class="text-center mt-3">Don't have an account? <a href="signup.html">Sign up</a></p>
                 <p class="text-center mt-3"><button class="btn btn-outline-danger"><a href="index.html" style="text-decoration: none; color: red;">Back</a></button></p>
@@ -162,7 +168,6 @@
     </div>
 </div>
 
-<!-- QR Code Upload Modal -->
 <div id="qrScannerModal" class="modal fade" tabindex="-1" >
     <div class="modal-dialog">
         <div class="modal-content">
@@ -203,36 +208,63 @@
         $("#loginContainer").removeClass("blur");
     }
 
-    /*// Validate Email Format
+    // Function to validate email format
     function validateEmail(email) {
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
         return emailRegex.test(email);
     }
 
-    // Validate Password Strength
-    function validatePassword(password) {
-        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
-        return passwordRegex.test(password);
+    // Function to validate password
+    /*function validatePassword(password) {
+        if (!password.trim()) {
+            return "Password cannot be blank.";
+        }
+        if (password.length < 6) {
+            return "Password must be at least 6 characters long.";
+        }
+        return ""; // Returns an empty string if the password is valid
     }*/
 
     $("#loginForm").on("submit", function (e) {
         e.preventDefault();
 
-        let role = sessionStorage.getItem("userRole");  // Role selected by the user
+        let role = sessionStorage.getItem("userRole");
         let email = $("#email").val();
         let password = $("#password").val();
 
-        /*// Validate email format
-        if (!validateEmail(email)) {
-            alert("Please enter a valid email address.");
-            return;
+        let isValid = true;
+        let emailError = "";
+        //let passwordError = validatePassword(password); // Call the password validation function
+
+        // Validate email
+        if (!email.trim()) {
+            emailError = "Email cannot be blank.";
+            isValid = false;
+        } else if (!validateEmail(email)) {
+            emailError = "Please enter a valid email address.";
+            isValid = false;
         }
 
-        // Validate password strength
-        if (!validatePassword(password)) {
-            alert("Password must be at least 8 characters long, containing at least one letter and one number.");
-            return;
+        // Update isValid based on password validation
+        /*if (passwordError) {
+            isValid = false;
         }*/
+
+        // Display errors if any
+        $("#email").removeClass("is-invalid");
+        $("#password").removeClass("is-invalid");
+        $("#email-error").text(emailError);
+        //$("#password-error").text(passwordError);
+
+        if (!isValid) {
+            if (emailError) {
+                $("#email").addClass("is-invalid");
+            }
+            /*if (passwordError) {
+                $("#password").addClass("is-invalid");
+            }*/
+            return; // Stop form submission if validation fails
+        }
 
         // Create the login object
         let loginUser = {
@@ -254,15 +286,13 @@
                     localStorage.setItem("authToken", response.data.token);
 
                     let userRole = response.data.role;
-                    let userStatus = response.data.status;  // Get Status
+                    let userStatus = response.data.status;
 
-                    // Check if the user account is active
                     if (userStatus !== "ACTIVE") {
                         alert("Your account is inactive. Please contact support.");
                         return;
                     }
 
-                    // Check if the selected role matches backend role
                     if (userRole === role) {
                         if (userRole === "ADMIN") {
                             window.location.href = "admin-dashboard.html";
@@ -281,7 +311,7 @@
                 }
             },
             error: function (xhr, status, error) {
-                alert("An error occurred during login: " + error);
+                alert("An error occurred during login: Check you Password or Email! " + error);
             }
         });
     });
