@@ -1,67 +1,149 @@
 $(document).ready(function () {
-    // Sample cart data simulating the "cart" table structure
-    const cartData = [
-        { part_id: 101, part_name: 'Engine Oil', unit_price: 15.99, quantity: 2 },
-        { part_id: 102, part_name: 'Brake Pads', unit_price: 25.49, quantity: 1 },
-        { part_id: 103, part_name: 'Spark Plug', unit_price: 5.99, quantity: 4 }
-    ];
+    const authToken = localStorage.getItem('authToken');
 
-    // Load cart data into the table
+    // Function to load cart data from the backend
     function loadCart() {
-        let cartItems = "";
-        let totalAmount = 0;
+        $.ajax({
+            url: `http://localhost:8080/api/v1/customer/cart`,
+            type: 'GET',
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            },
+            success: function (response) {
+                if (response.status === 200 && response.data) {
+                    const cartItems = response.data;
+                    let cartTableRows = "";
+                    let totalAmount = 0;
 
-        cartData.forEach(item => {
-            const totalPrice = item.unit_price * item.quantity;
-            totalAmount += totalPrice;
+                    cartItems.forEach(item => {
+                        const totalPrice = item.sparePart.price * item.quantity;
+                        totalAmount += totalPrice;
 
-            cartItems += `
-                <tr>
-                    <td>${item.part_id}</td>
-                    <td>${item.part_name}</td>
-                    <td>$${item.unit_price.toFixed(2)}</td>
-                    <td>
-                        <input type="number" class="quantity-input" min="1" value="${item.quantity}" data-id="${item.part_id}">
-                    </td>
-                    <td>$${totalPrice.toFixed(2)}</td>
-                    <td>
-                        <button class="btn btn-info btn-sm btn-update" data-id="${item.part_id}">Update</button>
-                        <button class="btn btn-danger btn-sm btn-remove" data-id="${item.part_id}">Remove</button>
-                    </td>
-                </tr>
-            `;
-        });
+                        cartTableRows += `
+                            <tr>
+                                <td>${item.sparePart.partId}</td>
+                                <td>${item.sparePart.partName}</td>
+                                <td>$${item.sparePart.price.toFixed(2)}</td>
+                                <td>
+                                    <input type="number" class="quantity-input" min="1" value="${item.quantity}" data-cart-id="${item.cartId}">
+                                </td>
+                                <td>$${totalPrice.toFixed(2)}</td>
+                                <td>
+                                    <button class="btn btn-info btn-sm btn-update" data-cart-id="${item.cartId}">Update</button>
+                                    <button class="btn btn-danger btn-sm btn-remove" data-cart-id="${item.cartId}">Remove</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
 
-        $("#cart-items").html(cartItems);
-        $("#total-amount").text(`Total: $${totalAmount.toFixed(2)}`);
-    }
-
-    // Update item quantity
-    $(document).on("click", ".btn-update", function () {
-        const partId = $(this).data("id");
-        const newQuantity = $(`input[data-id=${partId}]`).val();
-
-        cartData.forEach(item => {
-            if (item.part_id === partId) {
-                item.quantity = parseInt(newQuantity);
+                    $("#cart-items").html(cartTableRows);
+                    $("#total-amount").text(`Total: $${totalAmount.toFixed(2)}`);
+                } else {
+                    console.error("Failed to load cart:", response);
+                    $("#cart-items").html("<tr><td colspan='6' class='text-center'>Your cart is empty.</td></tr>");
+                    $("#total-amount").text("Total: $0.00");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error loading cart:", error);
+                $("#cart-items").html("<tr><td colspan='6' class='text-center'>Failed to load cart.</td></tr>");
+                $("#total-amount").text("Total: $0.00");
             }
         });
+    }
 
-        loadCart();
+    // Update item quantity in the backend
+    $(document).on("click", ".btn-update", function () {
+        const cartId = $(this).data("cart-id");
+        const newQuantity = $(`input[data-cart-id=${cartId}]`).val();
+
+        $.ajax({
+            url: `http://localhost:8080/api/v1/customer/cart/${cartId}`,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                quantity: parseInt(newQuantity)
+            }),
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            },
+            success: function (response) {
+                if (response.status === 200) {
+                    loadCart(); // Reload cart after update
+                } else {
+                    alert("Failed to update cart item.");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error updating cart item:", error);
+                alert("An error occurred while updating the cart item.");
+            }
+        });
     });
 
-    // Remove item from cart
+    // Remove item from cart in the backend
     $(document).on("click", ".btn-remove", function () {
-        const partId = $(this).data("id");
-        const itemIndex = cartData.findIndex(item => item.part_id === partId);
+        const cartId = $(this).data("cart-id");
 
-        if (itemIndex !== -1) {
-            cartData.splice(itemIndex, 1);
+        $.ajax({
+            url: `http://localhost:8080/api/v1/customer/cart/${cartId}`,
+            type: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            },
+            success: function (response) {
+                if (response.status === 200) {
+                    loadCart(); // Reload cart after removal
+                    currentCartCount();
+                } else {
+                    alert("Failed to remove cart item.");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error removing cart item:", error);
+                alert("An error occurred while removing the cart item.");
+            }
+        });
+    });
+
+    //Current Cart Count
+    function currentCartCount() {
+        $.ajax({
+            url: `http://localhost:8080/api/v1/customer/cart/count`,
+            type: 'GET',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+            },
+            success: function (response) {
+                if (response) {
+                    const cartCount = response; // Directly use the response as the count
+                    $('#cart-count').text(cartCount);
+                    if (cartCount > 0) {
+                        $('#cart-count').show();
+                    } else {
+                        $('#cart-count').hide();
+                    }
+                } else {
+                    console.error("Failed to get cart count:", response);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error getting cart count:", error);
+            }
+        });
+    }
+
+    // Proceed to Checkout button click handler
+    $(".btn-success").click(function () {
+        if ($("#cart-items tr").length === 0 || ($("#cart-items tr").text().trim() === 'Your cart is empty.')) {
+            alert("Your cart is empty.");
+        } else {
+            window.location.href = "customer-checkout-payment.html";
         }
-
-        loadCart();
     });
 
     // Initial load
+    currentCartCount();
     loadCart();
+
 });
