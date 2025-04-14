@@ -1,120 +1,196 @@
+// admin-orders.js
+
 $(document).ready(function() {
-    // Example data (Replace with actual data from your database)
-    const orders = [
-        { id: 'O001', customerName: 'John Doe', date: '2025-02-15', status: 'Pending', total: '150.00' },
-        { id: 'O002', customerName: 'Jane Smith', date: '2025-02-14', status: 'Shipped', total: '120.00' },
-        { id: 'O003', customerName: 'Mike Johnson', date: '2025-02-10', status: 'Cancelled', total: '0.00' },
-        { id: 'O004', customerName: 'Emily Davis', date: '2025-02-08', status: 'Completed', total: '200.00' }
-    ];
 
     // Toggle Sidebar Functionality
-    $("#toggleBtn").click(function () {
+    $("#toggleBtn").click(function() {
         $(".sidebar").toggleClass("collapsed");
     });
 
-    // Function to show order details in the View modal
-    function viewOrder(order) {
-        $('#viewOrderId').text(order.id);
-        $('#viewCustomerName').text(order.customerName);
-        $('#viewOrderDate').text(order.date);
-        $('#viewOrderStatus').text(order.status);
-        $('#viewOrderTotal').text(order.total);
-        $('#viewOrderModal').modal('show');
-    }
-
-    // Function to show the Update modal and populate with order data
-    function showUpdateModal(order) {
-        $('#updateOrderId').val(order.id);
-        $('#updateOrderStatus').val(order.status);
-        $('#updateOrderModal').modal('show');
-    }
-
-    // Function to show the Cancel modal and set the order ID
-    function showCancelModal(order) {
-        $('#cancelOrderId').text(order.id);
-        $('#cancelOrderModal').modal('show');
-
-        // Handle the cancel confirmation
-        $('#cancelOrderButton').off('click').on('click', function() {
-            order.status = 'Cancelled';
-            populateTable(orders);  // Refresh table after cancellation
-            $('#cancelOrderModal').modal('hide');
-            alert(`Order ${order.id} has been cancelled.`);
-        });
-    }
-
-    // Populate the orders table
-    function populateTable(filteredOrders) {
+    // Populate Table
+    function populateTable(orders) {
         const tableBody = $('#orderTable');
-        tableBody.empty(); // Clear existing rows
-        filteredOrders.forEach(order => {
-            const row = `
-                <tr>
-                    <td>${order.id}</td>
-                    <td>${order.customerName}</td>
-                    <td>${order.date}</td>
-                    <td>${order.status}</td>
-                    <td>${order.total}</td>
-                    <td>
-                        <button class="btn btn-info btn-sm view-order-btn" data-order='${JSON.stringify(order)}'>View</button>
-                        <button class="btn btn-warning btn-sm update-order-btn" data-order='${JSON.stringify(order)}'>Update</button>
-                        <button class="btn btn-danger btn-sm cancel-order-btn" data-order='${JSON.stringify(order)}'>Cancel</button>
-                    </td>
-                </tr>`;
-            tableBody.append(row);
-        });
+        tableBody.empty();
+        if (orders && orders.length > 0) {
+            orders.forEach(order => {
+                const row = `
+                    <tr>
+                        <td>${order.orderId}</td>
+                        <td>${order.fullName}</td>
+                        <td>${order.placedAt}</td>
+                        <td>${order.orderStatus}</td>
+                        <td>$${order.totalAmount ? order.totalAmount.toFixed(2) : 'N/A'}</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm view-btn" data-id="${order.orderId}" data-bs-toggle="modal" data-bs-target="#viewOrderModal"><i class="bi bi-eye"></i> View</button>
+                            <button class="btn btn-warning btn-sm update-btn" data-id="${order.orderId}" data-bs-toggle="modal" data-bs-target="#updateOrderModal"><i class="bi bi-arrow-clockwise"></i> Update</button>
+                            <button class="btn btn-danger btn-sm cancel-btn" data-id="${order.orderId}" data-bs-toggle="modal" data-bs-target="#cancelOrderModal"><i class="bi bi-x-circle"></i> Cancel</button>
+                        </td>
+                    </tr>`;
+                tableBody.append(row);
+            });
+        } else {
+            tableBody.append('<tr><td colspan="6" class="text-center">No orders found.</td></tr>');
+        }
+    }
 
-        // Bind click event for the View button
-        $('.view-order-btn').off('click').on('click', function() {
-            const orderData = $(this).data('order');
-            viewOrder(orderData);
-        });
+    // Calculate Total Amount (No longer needed on the frontend as the backend provides it)
+    // function calculateTotalAmount(orderDetailIds) {
+    //     return "N/A";
+    // }
 
-        // Bind click event for the Update button
-        $('.update-order-btn').off('click').on('click', function() {
-            const orderData = $(this).data('order');
-            showUpdateModal(orderData);
-        });
-
-        // Bind click event for the Cancel button
-        $('.cancel-order-btn').off('click').on('click', function() {
-            const orderData = $(this).data('order');
-            showCancelModal(orderData);
+    // Load Orders from Backend
+    function loadOrders() {
+        $.ajax({
+            url: "http://localhost:8080/api/v1/adminorders/getAll",
+            method: "GET",
+            dataType: "json",
+            success: function(response) {
+                if (response.status === 200 && response.data) {
+                    populateTable(response.data);
+                } else {
+                    console.error("Failed to load orders:", response);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error fetching orders:", error);
+                console.log("Response:", xhr.responseText);
+            }
         });
     }
 
-    // Handle Update Order button click
-    $('#updateOrderButton').on('click', function() {
-        const orderId = $('#updateOrderId').val();
-        const newStatus = $('#updateOrderStatus').val();
-
-        // Update the order status in the data array
-        const order = orders.find(o => o.id === orderId);
-        if (order) {
-            order.status = newStatus;
-            populateTable(orders);  // Refresh table after update
-            $('#updateOrderModal').modal('hide');
-            alert(`Order ${orderId} status updated to ${newStatus}.`);
-        }
+    // View Order
+    $(document).on("click", ".view-btn", function() {
+        const orderId = $(this).data("id");
+        $.ajax({
+            url: `http://localhost:8080/api/v1/adminorders/get/${orderId}`,
+            method: "GET",
+            dataType: "json",
+            success: function(response) {
+                if (response.status === 200 && response.data) {
+                    const order = response.data;
+                    $('#viewOrderId').text(order.orderId);
+                    $('#viewCustomerName').text(order.fullName);
+                    $('#viewOrderDate').text(order.placedAt);
+                    $('#viewOrderStatus').text(order.orderStatus);
+                    $('#viewOrderTotal').text(order.totalAmount ? order.totalAmount.toFixed(2) : 'N/A');
+                    $('#viewOrderModal').modal('show');
+                } else {
+                    console.error("Failed to load order:", response);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error fetching order:", error);
+                console.log("Response:", xhr.responseText);
+            }
+        });
     });
 
-    // Filter orders by status
+    // Update Order Status
+    $(document).on("click", ".update-btn", function() {
+        const orderId = $(this).data("id");
+        $('#updateOrderId').val(orderId);
+        $('#updateOrderModal').modal('show');
+    });
+
+    $("#updateOrderButton").click(function() {
+        const orderId = $('#updateOrderId').val();
+        const status = $('#updateOrderStatus').val();
+        $.ajax({
+            url: `http://localhost:8080/api/v1/adminorders/update/${orderId}`,
+            method: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify({ orderStatus: status }),
+            success: function(response) {
+                if (response.status === 200) {
+                    loadOrders();
+                    $('#updateOrderModal').modal('hide');
+                } else {
+                    alert("Failed to update order status.");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error updating order status:", error);
+                console.log("Response:", xhr.responseText);
+                alert("Error updating order status.");
+            }
+        });
+    });
+
+    // Cancel Order
+    $(document).on("click", ".cancel-btn", function() {
+        const orderId = $(this).data("id");
+        $('#cancelOrderId').text(orderId);
+        $('#cancelOrderModal').modal('show');
+    });
+
+    $("#cancelOrderButton").click(function() {
+        const orderId = $('#cancelOrderId').text();
+        $.ajax({
+            url: `http://localhost:8080/api/v1/adminorders/cancel/${orderId}`,
+            method: "DELETE",
+            success: function(response) {
+                if (response.status === 200) {
+                    loadOrders();
+                    $('#cancelOrderModal').modal('hide');
+                } else {
+                    alert("Failed to cancel order.");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error cancelling order:", error);
+                console.log("Response:", xhr.responseText);
+                alert("Error cancelling order.");
+            }
+        });
+    });
+
+    // Filter Orders by Status
     $('#filterStatus').change(function() {
         const status = $(this).val();
-        const filteredOrders = status === 'all' ? orders : orders.filter(order => order.status.toLowerCase() === status.toLowerCase());
-        populateTable(filteredOrders);
+        let url = "http://localhost:8080/api/v1/adminorders/getAll";
+        if (status !== "all") {
+            url = `http://localhost:8080/api/v1/adminorders/filter?status=${status}`;
+        }
+        $.ajax({
+            url: url,
+            method: "GET",
+            dataType: "json",
+            success: function(response) {
+                if (response.status === 200 && response.data) {
+                    populateTable(response.data);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error filtering orders:", error);
+                console.log("Response:", xhr.responseText);
+            }
+        });
     });
 
-    // Search orders by order ID or customer name
+    // Search Orders by Customer Name
     $('#searchOrder').keyup(function() {
-        const query = $(this).val().toLowerCase();
-        const filteredOrders = orders.filter(order =>
-            order.id.toLowerCase().includes(query) ||
-            order.customerName.toLowerCase().includes(query)
-        );
-        populateTable(filteredOrders);
+        const query = $(this).val();
+        $.ajax({
+            url: `http://localhost:8080/api/v1/adminorders/search?query=${query}`,
+            method: "GET",
+            dataType: "json",
+            success: function(response) {
+                if (response.status === 200 && response.data) {
+                    populateTable(response.data);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error searching orders:", error);
+                console.log("Response:", xhr.responseText);
+            }
+        });
     });
 
-    // Initial population of the table
-    populateTable(orders);
+    // Initial Load
+    loadOrders();
 });
+
+// New JavaScript function to trigger order report download
+function downloadOrderReport() {
+    window.location.href = "http://localhost:8080/api/v1/adminorders/report/download";
+}
