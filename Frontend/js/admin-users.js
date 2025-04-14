@@ -126,3 +126,8 @@ $(document).ready(function () {
     // Initial Load
     loadUsers();
 });
+
+// New JavaScript function to trigger user report download
+function downloadUserReport() {
+    window.location.href = "http://localhost:8080/api/v1/adminuser/report/pdf";
+}
