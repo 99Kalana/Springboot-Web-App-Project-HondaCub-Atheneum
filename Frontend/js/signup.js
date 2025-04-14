@@ -1,6 +1,26 @@
 $(document).ready(function () {
     const developerAdminPassword = "123";
 
+    const signupForm = $("#signupForm");
+    const fullNameInput = $("#fullName");
+    const emailInput = $("#email");
+    const phoneInput = $("#phone");
+    const roleSelect = $("#role");
+    const passwordInput = $("#password");
+    const confirmPasswordInput = $("#confirmPassword");
+
+    // Function to display validation errors
+    function displayError(inputElement, message) {
+        inputElement.addClass("is-invalid");
+        inputElement.next(".invalid-feedback").text(message).show();
+    }
+
+    // Function to clear validation errors
+    function clearError(inputElement) {
+        inputElement.removeClass("is-invalid");
+        inputElement.next(".invalid-feedback").hide();
+    }
+
     // Show Admin Verification Modal
     $("#adminSignupBtn").click(function () {
         $("#adminModal").css("display", "flex").hide().fadeIn();
@@ -50,6 +70,78 @@ $(document).ready(function () {
     // Handle sign-up form submission (for both normal and admin)
     $("#signupForm").submit(function (e) {
         e.preventDefault(); // Prevent the default form submission
+
+        let isValid = true;
+
+        // Validate Full Name
+        if (fullNameInput.val().trim() === "") {
+            displayError(fullNameInput, "Please enter your full name.");
+            isValid = false;
+        } else if (fullNameInput.val().trim().length < 3 || fullNameInput.val().trim().length > 100) {
+            displayError(fullNameInput, "Full name must be between 3 and 100 characters.");
+            isValid = false;
+        } else {
+            clearError(fullNameInput);
+        }
+
+        // Validate Email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (emailInput.val().trim() === "") {
+            displayError(emailInput, "Please enter your email address.");
+            isValid = false;
+        } else if (!emailRegex.test(emailInput.val().trim())) {
+            displayError(emailInput, "Please enter a valid email address.");
+            isValid = false;
+        } else {
+            clearError(emailInput);
+        }
+
+        // Validate Phone Number
+        const phoneRegex = /^\d{10}$/;
+        if (phoneInput.val().trim() === "") {
+            displayError(phoneInput, "Please enter your phone number.");
+            isValid = false;
+        } else if (!phoneRegex.test(phoneInput.val().trim())) {
+            displayError(phoneInput, "Phone number must be a 10-digit number.");
+            isValid = false;
+        } else {
+            clearError(phoneInput);
+        }
+
+        // Validate Role
+        if (roleSelect.val() === "") {
+            displayError(roleSelect, "Please select a role.");
+            isValid = false;
+        } else {
+            clearError(roleSelect);
+        }
+
+        // Validate Password
+        if (passwordInput.val().trim() === "") {
+            displayError(passwordInput, "Please enter your password.");
+            isValid = false;
+        } else if (passwordInput.val().trim().length < 6) {
+            displayError(passwordInput, "Password must be at least 6 characters long.");
+            isValid = false;
+        } else {
+            clearError(passwordInput);
+        }
+
+        // Validate Confirm Password
+        if (confirmPasswordInput.val().trim() === "") {
+            displayError(confirmPasswordInput, "Please confirm your password.");
+            isValid = false;
+        } else if (confirmPasswordInput.val().trim() !== passwordInput.val().trim()) {
+            displayError(confirmPasswordInput, "Passwords do not match.");
+            isValid = false;
+        } else {
+            clearError(confirmPasswordInput);
+        }
+
+        if (!isValid) {
+            e.preventDefault(); // Prevent form submission if validation fails
+            return;
+        }
 
         let role = $("#role").val();
         let name = $("#fullName").val();
