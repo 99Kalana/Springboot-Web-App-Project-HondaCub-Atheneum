@@ -1,77 +1,107 @@
 $(document).ready(function () {
-    // Sidebar Toggle Button
-    $('#toggleBtn').click(function () {
-        $('#sidebar').toggleClass('collapsed');
-        $('.content').toggleClass('collapsed');
-    });
+    const baseUrl = 'http://localhost:8080/api/v1';
 
-    // Sample Reward Data (for illustration purposes, replace this with actual data)
-    const rewardsData = [
-        { rewardLevel: 'Silver', pointsEarned: 1000, pointsRedeemed: 300, availablePoints: 700, lastUpdated: '2025-03-01' },
-        { rewardLevel: 'Gold', pointsEarned: 2000, pointsRedeemed: 500, availablePoints: 1500, lastUpdated: '2025-02-25' },
-        { rewardLevel: 'Platinum', pointsEarned: 5000, pointsRedeemed: 1000, availablePoints: 4000, lastUpdated: '2025-02-15' }
-    ];
-
-    // Function to Populate Rewards Table
-    function populateRewardsTable() {
-        const tableBody = $('#rewardsTable tbody');
-        tableBody.empty(); // Clear any existing rows
-
-        rewardsData.forEach((reward) => {
-            const row = `
-                <tr>
-                    <td>${reward.rewardLevel}</td>
-                    <td>${reward.pointsEarned}</td>
-                    <td>${reward.pointsRedeemed}</td>
-                    <td>${reward.availablePoints}</td>
-                    <td>${reward.lastUpdated}</td>
-                </tr>
-            `;
-            tableBody.append(row);
+    function loadRewards() {
+        $.ajax({
+            url: `${baseUrl}/seller/rewards`,
+            type: 'GET',
+            headers: { 'Authorization': 'Bearer ' + localStorage.getItem('authToken') },
+            success: function (response) {
+                if (response.status === 200 && response.data) {
+                    let rows = '';
+                    response.data.forEach(reward => {
+                        rows += `
+                            <tr data-reward-id="${reward.rewardId}">
+                                <td>${reward.rewardLevel}</td>
+                                <td>${reward.points}</td>
+                                <td>${reward.redeemedPoints}</td>
+                                <td>${reward.points - reward.redeemedPoints}</td>
+                                <td>${reward.lastUpdated}</td>
+                            </tr>
+                        `;
+                    });
+                    $('#rewardsTable tbody').html(rows);
+                } else {
+                    console.error('Failed to load rewards:', response);
+                    alert('Failed to load rewards.');
+                }
+            },
+            error: function (error) {
+                console.error('Error fetching rewards:', error);
+                alert('An error occurred while fetching rewards.');
+            }
         });
     }
 
-    // Call the function to populate the rewards table on page load
-    populateRewardsTable();
-
-    // Show Reward Details in Modal
     $('#rewardsTable').on('click', 'tr', function () {
-        const rewardLevel = $(this).find('td').eq(0).text();
-        const pointsEarned = $(this).find('td').eq(1).text();
-        const pointsRedeemed = $(this).find('td').eq(2).text();
-        const availablePoints = $(this).find('td').eq(3).text();
-        const lastUpdated = $(this).find('td').eq(4).text();
 
-        // Populate modal with data
-        $('#modalRewardLevel').text(rewardLevel);
-        $('#modalPointsEarned').text(pointsEarned);
-        $('#modalPointsRedeemed').text(pointsRedeemed);
-        $('#modalAvailablePoints').text(availablePoints);
-        $('#modalLastUpdated').text(lastUpdated);
+        $('#rewardsTable tr').removeClass('selected'); // Remove selected class from all rows
+        $(this).addClass('selected'); // Add selected class to the clicked row
+        const rewardId = $(this).data('rewardId');
 
-        // Show the modal
-        $('#rewardModal').modal('show');
+        $.ajax({
+            url: `${baseUrl}/seller/rewards/${rewardId}`,
+            type: "GET",
+            headers: { 'Authorization': 'Bearer ' + localStorage.getItem('authToken') },
+            success: function (response) {
+                if (response.status === 200 && response.data) {
+                    const reward = response.data;
+                    $('#modalRewardLevel').text(reward.rewardLevel);
+                    $('#modalPointsEarned').text(reward.points);
+                    $('#modalPointsRedeemed').text(reward.redeemedPoints);
+                    $('#modalAvailablePoints').text(reward.points - reward.redeemedPoints);
+                    $('#modalLastUpdated').text(reward.lastUpdated);
+
+                    $('#rewardModal').modal('show');
+                } else {
+                    console.error('Failed to load reward details:', response);
+                    alert('Failed to load reward details.');
+                }
+            },
+            error: function (error) {
+                console.error('Error fetching reward details:', error);
+                alert('An error occurred while fetching reward details.');
+            }
+        });
     });
 
     // Handle Reward Redemption
     function redeemPoints() {
         const pointsToRedeem = parseInt($('#redeemPoints').val());
+        const rewardId = $('#rewardsTable tr.selected').data('rewardId');
 
         if (isNaN(pointsToRedeem) || pointsToRedeem <= 0) {
             alert('Please enter a valid number of points to redeem.');
             return;
         }
 
-        // Update rewards data (for demo purposes, we'll just subtract the points)
-        rewardsData[0].availablePoints -= pointsToRedeem;
-
-        // Update the table with the new available points
-        populateRewardsTable();
-
-        // Clear the input field
-        $('#redeemPoints').val('');
+        $.ajax({
+            url: `${baseUrl}/seller/rewards/${rewardId}/redeem?pointsToRedeem=${pointsToRedeem}`,
+            type: 'PUT',
+            headers: { 'Authorization': 'Bearer ' + localStorage.getItem('authToken') },
+            success: function (response) {
+                if (response.status === 200) {
+                    alert('Points redeemed successfully!');
+                    loadRewards();
+                    $('#redeemPoints').val('');
+                } else {
+                    alert('Failed to redeem points. Insufficient points or reward not found.');
+                }
+            },
+            error: function (error) {
+                console.error('Error redeeming points:', error);
+                alert('An error occurred while redeeming points.');
+            }
+        });
     }
 
-    // Bind the redeem function to the button
+    loadRewards();
+
+    $('#toggleBtn').click(function () {
+        $('#sidebar').toggleClass('collapsed');
+        $('.content').toggleClass('collapsed');
+    });
+
+    // Bind the redeem function to the button using jQuery
     $('.btn-primary').click(redeemPoints);
 });
