@@ -1,52 +1,74 @@
 $(document).ready(function () {
-    // Sample data for dashboard cards
-    const totalProducts = 50;
-    const pendingOrders = 12;
-    const salesRevenue = 8500;
+    const baseUrl = 'http://localhost:8080/api/v1';
 
-    // Update dashboard cards
-    $(".card.bg-info h3").text(totalProducts);
-    $(".card.bg-warning h3").text(pendingOrders);
-    $(".card.bg-success h3").text(`$${salesRevenue}`);
+    function loadDashboardData() {
+        $.ajax({
+            url: `${baseUrl}/seller/dashboard`,
+            type: 'GET',
+            headers: { 'Authorization': 'Bearer ' + localStorage.getItem('authToken') },
+            success: function (response) {
+                if (response.status === 200 && response.data) {
+                    const dashboardData = response.data;
 
-    // Sample data for recent orders
-    const recentOrders = [
-        { orderId: "ORD201", customer: "Mark Wilson", date: "2025-03-17", status: "Completed", total: "$200.00" },
-        { orderId: "ORD202", customer: "Lisa Brown", date: "2025-03-16", status: "Pending", total: "$150.00" },
-        { orderId: "ORD203", customer: "David Clark", date: "2025-03-15", status: "Cancelled", total: "$0.00" }
-    ];
+                    $(".card.bg-info h3").text(dashboardData.totalProducts);
+                    $(".card.bg-warning h3").text(dashboardData.pendingOrders);
+                    $(".card.bg-success h3").text(`$${dashboardData.totalSales}`);
 
-    // Populate recent orders table
-    const $orderTableBody = $("table tbody");
-    $orderTableBody.empty();
+                    const $orderTableBody = $("table tbody");
+                    $orderTableBody.empty();
 
-    recentOrders.forEach(order => {
-        let statusBadge;
-        switch (order.status) {
-            case "Completed":
-                statusBadge = '<span class="badge bg-success">Completed</span>';
-                break;
-            case "Pending":
-                statusBadge = '<span class="badge bg-warning">Pending</span>';
-                break;
-            case "Cancelled":
-                statusBadge = '<span class="badge bg-danger">Cancelled</span>';
-                break;
-        }
+                    dashboardData.orders.forEach(order => {
+                        let statusBadge;
+                        switch (order.orderStatus) {
+                            case "DELIVERED":
+                                statusBadge = '<span class="badge bg-success">Delivered</span>';
+                                break;
+                            case "PENDING":
+                                statusBadge = '<span class="badge bg-warning">Pending</span>';
+                                break;
+                            case "CANCELLED":
+                                statusBadge = '<span class="badge bg-danger">Cancelled</span>';
+                                break;
+                            case "SHIPPED":
+                                statusBadge = '<span class="badge bg-info">Shipped</span>';
+                                break;
+                            default:
+                                statusBadge = `<span class="badge bg-secondary">${order.orderStatus}</span>`;
+                        }
 
-        const row = `
-            <tr>
-                <td>${order.orderId}</td>
-                <td>${order.customer}</td>
-                <td>${order.date}</td>
-                <td>${statusBadge}</td>
-                <td>${order.total}</td>
-            </tr>
-        `;
-        $orderTableBody.append(row);
-    });
+                        // Null check for orderDetails
+                        const orderTotal = (order.orderDetails && order.orderDetails.length > 0)
+                            ? order.orderDetails.reduce((total, detail) => total + (detail.quantity * detail.price), 0)
+                            : 0;
 
-    // Sidebar toggle functionality (Keep only one)
+                        // Null check for fullName
+                        const customerName = order.fullName ? order.fullName : "Unknown";
+
+                        const row = `
+                            <tr>
+                                <td>${order.orderId}</td>
+                                <td>${customerName}</td>
+                                <td>${order.placedAt}</td>
+                                <td>${statusBadge}</td>
+
+                            </tr>
+                        `;
+                        $orderTableBody.append(row);
+                    });
+                } else {
+                    console.error('Failed to load dashboard data:', response);
+                    alert('Failed to load dashboard data.');
+                }
+            },
+            error: function (error) {
+                console.error('Error fetching dashboard data:', error);
+                alert('An error occurred while fetching dashboard data.');
+            }
+        });
+    }
+
+    loadDashboardData();
+
     $("#toggleBtn").click(function () {
         $(".sidebar").toggleClass("collapsed");
         $(".content").toggleClass("expanded");
