@@ -1,82 +1,153 @@
-$(document).ready(function() {
-    const userId = 1; // Assuming the user is logged in and their ID is 1
-    const partId = 101; // Assuming we're viewing the product with ID 101
-
-    // Sample product data (mocking a real product API)
-    const product = {
-        product_id: 101,
-        product_name: "Honda Super Cub Part",
-        description: "High-quality replacement part for the Honda Super Cub.",
-        price: "$49.99",
-        stock: 20,
-        image: "images/16.jpg" // Sample product image
-    };
+$(document).ready(function () {
+    const authToken = localStorage.getItem('authToken');
+    let currentPartId = null;
 
     // Function to display product details
-    function loadProductDetails() {
-        const productHtml = `
-            <div class="product">
-                <h2>${product.product_name}</h2>
-                <img src="${product.image}" alt="${product.product_name}" class="img-fluid">
-                <p><strong>Description:</strong> ${product.description}</p>
-                <p><strong>Price:</strong> ${product.price}</p>
-                <p><strong>Stock:</strong> ${product.stock} available</p>
-            </div>
-        `;
-        $('#product-details').html(productHtml);
+    function loadProductDetails(partId) {
+        $.ajax({
+            url: `http://localhost:8080/api/v1/customer/reviews/${partId}/details`,
+            type: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + authToken
+            },
+            success: function (response) {
+                if (response.status === 200 && response.data) {
+                    const product = response.data;
+                    let images = product.images;
+
+                    if (images && images.length > 0) {
+                        $('#modalImages').show();
+                        let carouselItems = '';
+                        images.forEach((image, index) => {
+                            carouselItems += `
+                                <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                                    <img src="${image.imageUrl}" class="d-block w-100" alt="Product Image" style="max-height: 300px; object-fit: contain;">
+                                </div>
+                            `;
+                        });
+                        $('#carouselImages').html(carouselItems);
+
+                    } else {
+                        $('#modalImages').hide();
+                    }
+
+                    const productHtml = `
+                        <div class="product">
+                            <h2>${product.partName}</h2>
+                            <p><strong>Description:</strong> ${product.description}</p>
+                            <p><strong>Price:</strong> $${product.price}</p>
+                            <p><strong>Stock:</strong> ${product.stock} available</p>
+                        </div>
+                    `;
+                    $('#product-details').append(productHtml);
+                } else {
+                    $('#product-details').html('<p>Product details not found.</p>');
+                }
+            },
+            error: function () {
+                $('#product-details').html('<p>Failed to load product details.</p>');
+            }
+        });
     }
 
     // Fetch existing reviews for the product
-    function loadReviews() {
-        // Mock data for reviews
-        const reviews = [
-            { user_id: 1, rating: 5, comment: "Great part! It fits perfectly.", review_date: "2025-03-19" },
-            { user_id: 2, rating: 4, comment: "Good quality but a bit pricey.", review_date: "2025-03-18" }
-        ];
-
-        let reviewsHtml = '';
-        reviews.forEach(review => {
-            reviewsHtml += `
-                <div class="review-item">
-                    <h5>User ${review.user_id}</h5>
-                    <div class="rating">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
-                    <p>${review.comment}</p>
-                    <small>Reviewed on: ${review.review_date}</small>
-                </div>
-            `;
+    function loadReviews(partId) {
+        $.ajax({
+            url: `http://localhost:8080/api/v1/customer/reviews/${partId}/reviews`,
+            type: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + authToken
+            },
+            success: function (response) {
+                if (response.status === 200 && response.data) {
+                    let reviewsHtml = '';
+                    response.data.forEach(review => {
+                        reviewsHtml += `
+                            <div class="review-item">
+                                <h5>User ${review.userId}</h5>
+                                <div class="rating">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
+                                <p>${review.comment}</p>
+                                <small>Reviewed on: ${review.reviewDate}</small>
+                            </div>
+                        `;
+                    });
+                    $('#reviews-list').html(reviewsHtml);
+                } else {
+                    $('#reviews-list').html('<p>No reviews found.</p>');
+                }
+            },
+            error: function () {
+                $('#reviews-list').html('<p>Failed to load reviews.</p>');
+            }
         });
-        $('#reviews-list').html(reviewsHtml);
     }
 
-    loadProductDetails(); // Load product details when the page loads
-    loadReviews(); // Load reviews when the page loads
-
     // Submit new review
-    $('#submit-review').click(function() {
+    $('#submit-review').click(function () {
         const rating = $('#rating').val();
         const comment = $('#comment').val();
 
-        if (rating && comment) {
-            // In a real scenario, you would send this data to a backend (e.g., via AJAX)
-            alert('Review submitted successfully!');
-            loadReviews(); // Reload the reviews after submission
+        if (rating && comment && currentPartId) {
+            $.ajax({
+                url: 'http://localhost:8080/api/v1/customer/reviews',
+                type: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + authToken,
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify({
+                    sparePartId: currentPartId,
+                    rating: parseFloat(rating),
+                    comment: comment
+                }),
+                success: function (response) {
+                    if (response.status === 201) {
+                        alert('Review submitted successfully!');
+                        loadReviews(currentPartId);
+                        $('#comment').val(''); // Clear the comment input
+                    } else {
+                        alert('Failed to submit review.');
+                    }
+                },
+                error: function () {
+                    alert('Failed to submit review.');
+                }
+            });
         } else {
-            alert('Please fill in all fields.');
+            alert('Please fill in all fields and search for a product.');
         }
     });
 
-
-    // Placeholder function for searching parts by name
-    $('#search-part').on('click', function() {
-        var partName = $('#part-name').val().trim();
-        if (partName) {
-            // Here, you could make an AJAX request to fetch the product details and reviews based on the part name
-            console.log("Searching for part: " + partName);
-            // Simulate product and reviews loading (you can replace this with real data)
-            $('#product-details').html(`<h5>Product Name: ${partName}</h5><p>Product description and details...</p>`);
-            $('#reviews-list').html(`<div class="review-item"><h5>Review 1</h5><p>Great product!</p><div class="rating">★★★★★</div></div>`);
-        } else {
-            alert("Please enter a part name.");
+    // Search parts by name
+    $('#part-name').on('keypress', function (event) {
+        if (event.which === 13) { // 13 is the Enter key code
+            const partName = $(this).val().trim();
+            if (partName) {
+                $.ajax({
+                    url: `http://localhost:8080/api/v1/customer/reviews/search?partName=${partName}`,
+                    type: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + authToken
+                    },
+                    success: function (response) {
+                        if (response.status === 200 && response.data && response.data.length > 0) {
+                            const firstPart = response.data[0];
+                            currentPartId = firstPart.partId;
+                            loadProductDetails(currentPartId);
+                            loadReviews(currentPartId);
+                        } else {
+                            $('#product-details').html('<p>No products found.</p>');
+                            $('#reviews-list').html('');
+                        }
+                    },
+                    error: function () {
+                        $('#product-details').html('<p>Failed to search products.</p>');
+                        $('#reviews-list').html('');
+                    }
+                });
+            } else {
+                alert('Please enter a part name.');
+            }
         }
     });
 });
