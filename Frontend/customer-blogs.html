@@ -88,6 +88,17 @@
             height: auto; /* Maintain aspect ratio */
         }
 
+        .invalid-feedback {
+            display: none; /* Initially hidden */
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: 0.875em;
+            color: #dc3545;
+        }
+        .is-invalid + .invalid-feedback {
+            display: block;
+        }
+
     </style>
 </head>
 <body>
@@ -170,14 +181,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="createBlogForm">
+                <form id="createBlogForm" novalidate>
                     <div class="mb-3">
                         <label for="blogTitle" class="form-label">Blog Title</label>
                         <input type="text" class="form-control" id="blogTitle" required>
+                        <div class="invalid-feedback">Blog title cannot be empty.</div>
                     </div>
                     <div class="mb-3">
                         <label for="blogContent" class="form-label">Blog Content</label>
                         <textarea class="form-control" id="blogContents" rows="5" required></textarea>
+                        <div class="invalid-feedback">Blog content cannot be empty.</div>
                     </div>
                     <div class="mb-3">
                         <label for="blogImage" class="form-label">Blog Image (optional)</label>
@@ -204,6 +217,34 @@
 <script>
 
     $(document).ready(function () {
+
+        const createBlogForm = $("#createBlogForm");
+        const blogTitleInput = $("#blogTitle");
+        const blogContentInput = $("#blogContents");
+
+        // Function to display validation errors
+        function displayError(inputElement, message) {
+            inputElement.addClass("is-invalid");
+            inputElement.next(".invalid-feedback").text(message).show();
+        }
+
+        // Function to clear validation errors
+        function clearError(inputElement) {
+            inputElement.removeClass("is-invalid");
+            inputElement.next(".invalid-feedback").hide();
+        }
+
+        $('#createBlogModal').on('shown.bs.modal', function () {
+            blogTitleInput.on('focus', function() { clearError(blogTitleInput); });
+            blogContentInput.on('focus', function() { clearError(blogContentInput); });
+        });
+
+        // Ensure to remove the focus event listeners when the modal is hidden
+        $('#createBlogModal').on('hidden.bs.modal', function () {
+            blogTitleInput.off('focus');
+            blogContentInput.off('focus');
+        });
+
         const authToken = localStorage.getItem('authToken');
         const baseUrl = 'http://localhost:8080/api/v1/customer/blogs';
 
@@ -264,6 +305,28 @@
         // Create blog form submission
         $('#createBlogForm').on('submit', function (e) {
             e.preventDefault();
+
+            let isValid = true;
+
+            // Validate Blog Title
+            if (blogTitleInput.val().trim() === "") {
+                displayError(blogTitleInput, "Blog title cannot be empty.");
+                isValid = false;
+            } else {
+                clearError(blogTitleInput);
+            }
+
+            // Validate Blog Content
+            if (blogContentInput.val().trim() === "") {
+                displayError(blogContentInput, "Blog content cannot be empty.");
+                isValid = false;
+            } else {
+                clearError(blogContentInput);
+            }
+
+            if (!isValid) {
+                return; // Stop the form submission if validation fails
+            }
 
             const formData = new FormData();
             formData.append('title', $('#blogTitle').val());

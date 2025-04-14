@@ -57,6 +57,19 @@
             margin: 0;
             font-size: 14px;
         }
+
+
+        .invalid-feedback {
+            display: none; /* Initially hidden */
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: 0.875em;
+            color: #dc3545;
+        }
+        .is-invalid + .invalid-feedback {
+            display: block;
+        }
+
     </style>
 </head>
 
@@ -121,14 +134,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="newDiscussionForm">
+                <form id="newDiscussionForm" novalidate>
                     <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
                         <input type="text" class="form-control" id="title" required>
+                        <div class="invalid-feedback">Title cannot be empty.</div>
                     </div>
                     <div class="mb-3">
                         <label for="content" class="form-label">Content</label>
                         <textarea class="form-control" id="content" rows="4" required></textarea>
+                        <div class="invalid-feedback">Content cannot be empty.</div>
                     </div>
                     <button type="submit" class="btn btn-primary">Post Discussion</button>
                 </form>
@@ -168,6 +183,33 @@
 <script src="js/bootstrap.js"></script>
 <script>
     $(document).ready(function () {
+
+        const newDiscussionForm = $("#newDiscussionForm");
+        const discussionTitleInput = $("#title");
+        const discussionContentInput = $("#content");
+
+        // Function to display validation errors
+        function displayError(inputElement, message) {
+            inputElement.addClass("is-invalid");
+            inputElement.next(".invalid-feedback").text(message).show();
+        }
+
+        // Function to clear validation errors
+        function clearError(inputElement) {
+            inputElement.removeClass("is-invalid");
+            inputElement.next(".invalid-feedback").hide();
+        }
+
+        $('#newDiscussionModal').on('shown.bs.modal', function () {
+            discussionTitleInput.on('focus', function() { clearError(discussionTitleInput); });
+            discussionContentInput.on('focus', function() { clearError(discussionContentInput); });
+        });
+
+        $('#newDiscussionModal').on('hidden.bs.modal', function () {
+            discussionTitleInput.off('focus');
+            discussionContentInput.off('focus');
+        });
+
         const authToken = localStorage.getItem('authToken'); // Retrieve auth token from localStorage
         let currentForumId; // Global variable to store the current forum ID
 
@@ -224,6 +266,30 @@
         // Handle the form submission to add a new discussion
         $('#newDiscussionForm').submit(function (event) {
             event.preventDefault();
+
+            let isValid = true;
+
+            // Validate Title
+            if (discussionTitleInput.val().trim() === "") {
+                displayError(discussionTitleInput, "Title cannot be empty.");
+                isValid = false;
+            } else {
+                clearError(discussionTitleInput);
+            }
+
+            // Validate Content
+            if (discussionContentInput.val().trim() === "") {
+                displayError(discussionContentInput, "Content cannot be empty.");
+                isValid = false;
+            } else {
+                clearError(discussionContentInput);
+            }
+
+            if (!isValid) {
+                return; // Stop the form submission if validation fails
+            }
+
+
             const newTitle = $('#title').val();
             const newContent = $('#content').val();
 
