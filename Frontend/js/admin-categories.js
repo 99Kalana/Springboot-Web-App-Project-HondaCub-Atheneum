@@ -1,5 +1,24 @@
 $(document).ready(function() {
 
+    const categoryForm = $("#categoryForm");
+    const categoryNameInput = $("#categoryName");
+    const categoryDescriptionInput = $("#categoryDescription");
+
+    const editCategoryForm = $("#editCategoryForm");
+    const editCategoryNameInput = $("#editCategoryName");
+    const editCategoryDescriptionInput = $("#editCategoryDescription");
+
+    // Function to display validation errors
+    function displayError(inputElement, message) {
+        inputElement.addClass("is-invalid");
+        inputElement.next(".invalid-feedback").text(message).show();
+    }
+
+    // Function to clear validation errors
+    function clearError(inputElement) {
+        inputElement.removeClass("is-invalid");
+        inputElement.next(".invalid-feedback").hide();
+    }
 
     // Toggle Sidebar Functionality
     $("#toggleBtn").click(function () {
@@ -51,6 +70,32 @@ $(document).ready(function() {
     // Add a new category
     $("#categoryForm").on("submit", function(e) {
         e.preventDefault();
+
+        let isValid = true;
+
+        // Validate Category Name
+        if (categoryNameInput.val().trim() === "") {
+            displayError(categoryNameInput, "Category name is required.");
+            isValid = false;
+        } else if (categoryNameInput.val().trim().length < 2 || categoryNameInput.val().trim().length > 100) {
+            displayError(categoryNameInput, "Category name must be between 2 and 100 characters.");
+            isValid = false;
+        } else {
+            clearError(categoryNameInput);
+        }
+
+        // Validate Category Description
+        if (categoryDescriptionInput.val().trim().length > 500) {
+            displayError(categoryDescriptionInput, "Description cannot exceed 500 characters.");
+            isValid = false;
+        } else {
+            clearError(categoryDescriptionInput);
+        }
+
+        if (!isValid) {
+            e.preventDefault(); // Prevent form submission if validation fails
+            return;
+        }
 
         const categoryName = $("#categoryName").val().trim();
         const categoryDescription = $("#categoryDescription").val().trim();
@@ -124,6 +169,32 @@ $(document).ready(function() {
     // Handle the save changes functionality
     $("#editCategoryForm").on("submit", function(e) {
         e.preventDefault();
+
+        let isValid = true;
+
+        // Validate Edit Category Name
+        if (editCategoryNameInput.val().trim() === "") {
+            displayError(editCategoryNameInput, "Category name is required.");
+            isValid = false;
+        } else if (editCategoryNameInput.val().trim().length < 2 || editCategoryNameInput.val().trim().length > 100) {
+            displayError(editCategoryNameInput, "Category name must be between 2 and 100 characters.");
+            isValid = false;
+        } else {
+            clearError(editCategoryNameInput);
+        }
+
+        // Validate Edit Category Description
+        if (editCategoryDescriptionInput.val().trim().length > 500) {
+            displayError(editCategoryDescriptionInput, "Description cannot exceed 500 characters.");
+            isValid = false;
+        } else {
+            clearError(editCategoryDescriptionInput);
+        }
+
+        if (!isValid) {
+            e.preventDefault(); // Prevent form submission if validation fails
+            return;
+        }
 
         const categoryId = $("#editCategoryId").val();
         const categoryName = $("#editCategoryName").val().trim();
@@ -204,3 +275,8 @@ $("#searchCategory").on("input", function() {
         }
     });
 });
+
+// New JavaScript function to trigger report download
+function downloadCategoryReport() {
+    window.location.href = "http://localhost:8080/api/v1/admincategories/report/pdf";
+}

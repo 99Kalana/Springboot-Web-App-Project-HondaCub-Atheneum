@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0212092-f5c2-45d4-8064-67a74003fc17" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="b0212092-f5c2-45d4-8064-67a74003fc17" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -248,6 +246,7 @@
       <workItem from="1744603799893" duration="100000" />
       <workItem from="1744604060769" duration="70000" />
       <workItem from="1744604138358" duration="4000" />
+      <workItem from="1744606626927" duration="164000" />
     </task>
     <task id="LOCAL-00001" summary="Update">
       <option name="closed" value="true" />
@@ -553,14 +552,21 @@
       <option name="project" value="LOCAL" />
       <updated>1744604114869</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="Html linked with Javascript">
+      <option name="closed" value="true" />
+      <created>1744606775941</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1744606775941</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Customer's reward page style added" />
     <MESSAGE value="Admin Category Download Report Feature Added" />
     <MESSAGE value="Admin User Download Report Feature Added" />
     <MESSAGE value="Admin Spare part Download Report Feature Added" />
@@ -585,6 +591,7 @@
     <MESSAGE value="Frontend Validation added to customer-checkout-payment.html" />
     <MESSAGE value="Frontend Validation added to admin-profile.html, seller-profile.html, customer-profile.html" />
     <MESSAGE value="Frontend Validation added to customer-blogs.html, customer-forum.html" />
-    <option name="LAST_COMMIT_MESSAGE" value="Frontend Validation added to customer-blogs.html, customer-forum.html" />
+    <MESSAGE value="Html linked with Javascript" />
+    <option name="LAST_COMMIT_MESSAGE" value="Html linked with Javascript" />
   </component>
 </project>
