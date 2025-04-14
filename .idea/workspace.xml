@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0212092-f5c2-45d4-8064-67a74003fc17" name="Changes" comment="" />
+    <list default="true" id="b0212092-f5c2-45d4-8064-67a74003fc17" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Frontend/js/customer-homepage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/customer-forum.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/customer-forum.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/customer-homepage.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/customer-homepage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/customer-order-history.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/customer-order-history.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/js/customer-forum.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/js/customer-forum.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/js/customer-order-history.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/js/customer-order-history.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -253,6 +261,8 @@
       <workItem from="1744610962741" duration="232000" />
       <workItem from="1744611547398" duration="191000" />
       <workItem from="1744611888592" duration="133000" />
+      <workItem from="1744612789814" duration="161000" />
+      <workItem from="1744613919113" duration="496000" />
     </task>
     <task id="LOCAL-00001" summary="Update">
       <option name="closed" value="true" />
@@ -614,7 +624,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744611976114</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="Html linked with Javascript">
+      <option name="closed" value="true" />
+      <created>1744612936590</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1744612936590</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
