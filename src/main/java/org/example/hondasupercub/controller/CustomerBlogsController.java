@@ -1,5 +1,6 @@
 package org.example.hondasupercub.controller;
 
+import jakarta.validation.Valid;
 import org.example.hondasupercub.dto.BlogDTO;
 import org.example.hondasupercub.dto.ResponseDTO;
 import org.example.hondasupercub.service.CustomerBlogsService;
@@ -28,8 +29,8 @@ public class CustomerBlogsController {
 
     @PostMapping
     public ResponseEntity<ResponseDTO> createBlog(
-            @RequestParam("title") String title,
-            @RequestParam("content") String content,
+            @Valid @RequestParam("title") String title,
+            @Valid @RequestParam("content") String content,
             @RequestParam(value = "image", required = false) MultipartFile image, // Single image
             @RequestParam("userId") int userId) {
 

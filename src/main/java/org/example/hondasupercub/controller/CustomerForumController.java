@@ -1,5 +1,6 @@
 package org.example.hondasupercub.controller;
 
+import jakarta.validation.Valid;
 import org.example.hondasupercub.dto.ForumDTO;
 import org.example.hondasupercub.dto.ResponseDTO;
 import org.example.hondasupercub.service.CustomerForumService;
@@ -26,7 +27,7 @@ public class CustomerForumController {
 
     @PostMapping
     public ResponseEntity<ResponseDTO> createForum(
-            @RequestBody ForumDTO forumDTO,
+            @Valid @RequestBody ForumDTO forumDTO,
             @RequestHeader("Authorization") String authorizationHeader) { // Add Authorization header
         ForumDTO createdForum = forumService.createForum(forumDTO, authorizationHeader);
         ResponseDTO responseDTO = new ResponseDTO(201, "Forum created successfully.", createdForum);

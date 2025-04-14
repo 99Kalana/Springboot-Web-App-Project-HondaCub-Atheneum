@@ -243,6 +243,7 @@
       <workItem from="1744453510574" duration="269000" />
       <workItem from="1744455397719" duration="132000" />
       <workItem from="1744455540345" duration="1000" />
+      <workItem from="1744603799893" duration="100000" />
     </task>
     <task id="LOCAL-00001" summary="Update">
       <option name="closed" value="true" />
@@ -532,14 +533,21 @@
       <option name="project" value="LOCAL" />
       <updated>1744455507629</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="Frontend Validation added to customer-blogs.html, customer-forum.html">
+      <option name="closed" value="true" />
+      <created>1744603889205</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1744603889205</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Customer checkout's Loyalty redeem point feature added" />
     <MESSAGE value="Customer's reward page style added" />
     <MESSAGE value="Admin Category Download Report Feature Added" />
     <MESSAGE value="Admin User Download Report Feature Added" />
@@ -564,6 +572,7 @@
     <MESSAGE value="Frontend Validation added to admin-categories.html, admin-archive.html, admin-vin.html and seller-products.html" />
     <MESSAGE value="Frontend Validation added to customer-checkout-payment.html" />
     <MESSAGE value="Frontend Validation added to admin-profile.html, seller-profile.html, customer-profile.html" />
-    <option name="LAST_COMMIT_MESSAGE" value="Frontend Validation added to admin-profile.html, seller-profile.html, customer-profile.html" />
+    <MESSAGE value="Frontend Validation added to customer-blogs.html, customer-forum.html" />
+    <option name="LAST_COMMIT_MESSAGE" value="Frontend Validation added to customer-blogs.html, customer-forum.html" />
   </component>
 </project>
