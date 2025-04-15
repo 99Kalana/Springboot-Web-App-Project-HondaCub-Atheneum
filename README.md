@@ -82,31 +82,54 @@ After following these steps, your backend application should be running, and you
 
 ## Screenshots
 
-Here are some key features of the Honda Cub Atheneum platform:
+Here are some key features of the Honda Cub Atheneum platform based on the User's Role:
+
+### User: Customer
 
 ### Customer's Homepage
-![Custoer Homepage](Frontend/screenshots/Customer_Homepage.png)
+![Custoer Homepage](Frontend/Project_Screenshots/Customer_Homepage.png)
 
 ### Customer's Product Browsing
-![Product Listing](Frontend/screenshots/Customer_Products_Page.png)
+![Product Listing](Frontend/Project_Screenshots/Customer_Products_Page.png)
 
 
 ### Customer's Shopping Cart 
-![Shopping Cart](Frontend/screenshots/Customer_Cart_Page.png)
+![Shopping Cart](Frontend/Project_Screenshots/Customer_Cart_Page.png)
 
 ### Customer's Checkout Page
-![Customer Checkout](Frontend/screenshots/Customer_Checkout_Page.png)
+![Customer Checkout](Frontend/Project_Screenshots/Customer_Checkout_Page.png)
 
 ### Customer's Order Tracking including Order History
-![User Profile](Frontend/screenshots/Customer_Order_History.png)
+![Customer Order Tracking](Frontend/Project_Screenshots/Customer_Order_History.png)
+
+### User: Seller
+
+### Seller's Dashboard
+![Seller Dashboard](Frontend/Project_Screenshots/Seller_Dashboard.png)
+
+### Seller's Product Management Page
+![Seller Products](Frontend/Project_Screenshots/Seller_Product_Page.png)
 
 
-### Create New Blog Form
-![Create New Blog Form](images/create_blog_form.png)
-*Form for users to create and share their blog posts.*
+### Seller's Order Management Page
+![Seller Orders](Frontend/Project_Screenshots/Seller_Order_Page.png)
 
-### Community Forum
-![Community Forum](images/community_forum.png)
-*The main page of the discussion forum.*
 
-**(Continue adding screenshots for other key features)**
+### User: Admin
+
+### Admin's Dashboard
+![Admin Dashboard](Frontend/Project_Screenshots/Admin_Dashboard.png)
+
+### Admin's User Management
+![Admin User Manage](Frontend/Project_Screenshots/Admin_User_Manage_Page.png)
+
+### Admin's Category Management
+![Admin Category Manage](Frontend/Project_Screenshots/Admin_Category_Management.png)
+
+### Admin's Products Management
+![Admin Products Manage](Frontend/Project_Screenshots/Admin_Sparepart_Management.png)
+
+
+
+
+
