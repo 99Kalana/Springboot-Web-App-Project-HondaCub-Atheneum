@@ -84,25 +84,22 @@ After following these steps, your backend application should be running, and you
 
 Here are some key features of the Honda Cub Atheneum platform:
 
-### Homepage
-![Homepage](src/main/resources/images/Customer Homepage.png)
-*The main landing page showcases the platform's dual purpose.*
+### Customer's Homepage
+![Custoer Homepage](Frontend/screenshots/Customer_Homepage.png)
 
-### Product Listing
-![Product Listing](images/product_listing.png)
-*Users can browse spare parts by category and model.*
+### Customer's Product Browsing
+![Product Listing](Frontend/screenshots/Customer_Products_Page.png)
 
-### Product Detail
-![Product Detail](images/product_detail.png)
-*Detailed information about a specific spare part.*
 
-### Shopping Cart
-![Shopping Cart](images/shopping_cart.png)
-*Items added to the user's cart before checkout.*
+### Customer's Shopping Cart 
+![Shopping Cart](Frontend/screenshots/Customer_Cart_Page.png)
 
-### User Profile
-![User Profile](images/user_profile.png)
-*A user's profile page with order history and garage management.*
+### Customer's Checkout Page
+![Customer Checkout](Frontend/screenshots/Customer_Checkout_Page.png)
+
+### Customer's Order Tracking including Order History
+![User Profile](Frontend/screenshots/Customer_Order_History.png)
+
 
 ### Create New Blog Form
 ![Create New Blog Form](images/create_blog_form.png)
