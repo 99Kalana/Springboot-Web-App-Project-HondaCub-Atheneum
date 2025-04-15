@@ -6,12 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b0212092-f5c2-45d4-8064-67a74003fc17" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/Customer Cart Page.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/Customer Checkout Page.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/Customer Homepage.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/Customer Order History.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/Customer Products Page.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +62,7 @@
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "17",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Karl/Documents/AAD/AAD - Spring/Honda-Super-Cub/src/main/resources/images",
+    "last_opened_file_path": "C:/Users/Karl/Documents/AAD/AAD - Spring/Honda-Super-Cub/Frontend/screenshots",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -86,11 +80,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Karl\Documents\AAD\AAD - Spring\Honda-Super-Cub\Frontend\screenshots" />
       <recent name="C:\Users\Karl\Documents\AAD\AAD - Spring\Honda-Super-Cub\src\main\resources\images" />
       <recent name="C:\Users\Karl\Documents\AAD\AAD - Spring\Honda-Super-Cub\Frontend\js" />
       <recent name="C:\Users\Karl\Documents\AAD\AAD - Spring\Honda-Super-Cub\Frontend\images" />
       <recent name="C:\Users\Karl\Documents\AAD\AAD - Spring\Honda-Super-Cub\src\main\java\org\example\hondasupercub\dto" />
-      <recent name="C:\Users\Karl\Documents\AAD\AAD - Spring\Honda-Super-Cub\Frontend" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="org.example.hondasupercub.service" />
@@ -265,31 +259,7 @@
       <workItem from="1744613919113" duration="546000" />
       <workItem from="1744614987363" duration="120000" />
       <workItem from="1744615389983" duration="137000" />
-      <workItem from="1744700470945" duration="682000" />
-    </task>
-    <task id="LOCAL-00002" summary="Update">
-      <option name="closed" value="true" />
-      <created>1744099348224</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1744099348224</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Email Order Confirmation Bill Feature Added">
-      <option name="closed" value="true" />
-      <created>1744109003363</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1744109003363</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Update on seller reward logic">
-      <option name="closed" value="true" />
-      <created>1744170996504</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1744170996504</updated>
+      <workItem from="1744700470945" duration="1693000" />
     </task>
     <task id="LOCAL-00005" summary="Update on seller reward logic">
       <option name="closed" value="true" />
@@ -659,7 +629,31 @@
       <option name="project" value="LOCAL" />
       <updated>1744700611582</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="Update">
+      <option name="closed" value="true" />
+      <created>1744701182029</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1744701182029</updated>
+    </task>
+    <task id="LOCAL-00052" summary="Update">
+      <option name="closed" value="true" />
+      <created>1744701301310</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1744701301311</updated>
+    </task>
+    <task id="LOCAL-00053" summary="Added the Screenshots of project">
+      <option name="closed" value="true" />
+      <created>1744701560552</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1744701560552</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -677,8 +671,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Admin User Download Report Feature Added" />
-    <MESSAGE value="Admin Spare part Download Report Feature Added" />
     <MESSAGE value="Admin Order total amount view issue fixed" />
     <MESSAGE value="Admin Order download report feature added" />
     <MESSAGE value="Admin Transaction management download report feature added" />
@@ -702,6 +694,8 @@
     <MESSAGE value="Frontend Validation added to customer-blogs.html, customer-forum.html" />
     <MESSAGE value="Html linked with Javascript" />
     <MESSAGE value="Project's Screenshots applied in images file in resource" />
-    <option name="LAST_COMMIT_MESSAGE" value="Project's Screenshots applied in images file in resource" />
+    <MESSAGE value="Update" />
+    <MESSAGE value="Added the Screenshots of project" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added the Screenshots of project" />
   </component>
 </project>
