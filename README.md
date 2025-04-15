@@ -79,3 +79,37 @@ Before you begin, ensure you have the following installed on your system:
     **Note:** If you used any JavaScript frameworks or libraries that require a build process (like React, Angular, Vue.js), the setup steps would be different (involving `npm install` and `npm start` or similar commands). Based on your technology stack description, it seems like a standard HTML/CSS/JS setup. If this is incorrect, please let me know, and I can adjust the instructions.
 
 After following these steps, your backend application should be running, and you should be able to open the `index.html` file in your browser to interact with the frontend. Ensure that your browser's developer console is open to check for any errors related to API calls or JavaScript.
+
+## Screenshots
+
+Here are some key features of the Honda Cub Atheneum platform:
+
+### Homepage
+![Homepage](images/Customer Homepage.png)
+*The main landing page showcases the platform's dual purpose.*
+
+### Product Listing
+![Product Listing](images/product_listing.png)
+*Users can browse spare parts by category and model.*
+
+### Product Detail
+![Product Detail](images/product_detail.png)
+*Detailed information about a specific spare part.*
+
+### Shopping Cart
+![Shopping Cart](images/shopping_cart.png)
+*Items added to the user's cart before checkout.*
+
+### User Profile
+![User Profile](images/user_profile.png)
+*A user's profile page with order history and garage management.*
+
+### Create New Blog Form
+![Create New Blog Form](images/create_blog_form.png)
+*Form for users to create and share their blog posts.*
+
+### Community Forum
+![Community Forum](images/community_forum.png)
+*The main page of the discussion forum.*
+
+**(Continue adding screenshots for other key features)**
