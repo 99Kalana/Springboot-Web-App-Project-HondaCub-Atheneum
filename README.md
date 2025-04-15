@@ -85,7 +85,7 @@ After following these steps, your backend application should be running, and you
 Here are some key features of the Honda Cub Atheneum platform:
 
 ### Homepage
-![Homepage](images/Customer Homepage.png)
+![Homepage](src/main/resources/images/Customer Homepage.png)
 *The main landing page showcases the platform's dual purpose.*
 
 ### Product Listing
