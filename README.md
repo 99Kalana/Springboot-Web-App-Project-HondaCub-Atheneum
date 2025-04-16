@@ -132,7 +132,7 @@ Here are some key features of the Honda Cub Atheneum platform based on the User'
 
 ## Demo Video
 
-[![Watch the demo video on YouTube]]([https://www.youtube.com/watch?v=YOUR_YOUTUBE_VIDEO_ID](https://youtu.be/yyYzYcrJMrY?si=d9Ow-Qz5mWJB5hKj))
+[![Watch the demo video on YouTube]]([https://youtu.be/yyYzYcrJMrY?si=d9Ow-Qz5mWJB5hKj](https://youtu.be/yyYzYcrJMrY?si=d9Ow-Qz5mWJB5hKj))
 
 You can watch the demonstration of the Honda Cub Atheneum project on YouTube by clicking the link above or navigating to:
 
