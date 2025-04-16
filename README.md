@@ -132,11 +132,26 @@ Here are some key features of the Honda Cub Atheneum platform based on the User'
 
 ## Demo Video
 
-[![Watch the demo video on YouTube]]([https://youtu.be/yyYzYcrJMrY?si=d9Ow-Qz5mWJB5hKj](https://youtu.be/yyYzYcrJMrY?si=d9Ow-Qz5mWJB5hKj))
+[![Watch the demo video on YouTube](http://img.youtube.com/vi/YOUR_YOUTUBE_VIDEO_ID/0.jpg)](https://youtu.be/yyYzYcrJMrY?si=d9Ow-Qz5mWJB5hKj)
 
-You can watch the demonstration of the Honda Cub Atheneum project on YouTube by clicking the link above or navigating to:
+You can watch the demonstration of the Honda Cub Atheneum project on YouTube by clicking the image above or navigating to:
 
-[https://www.youtube.com/watch?v=YOUR_YOUTUBE_VIDEO_ID]([https://www.youtube.com/watch?v=YOUR_YOUTUBE_VIDEO_ID](https://youtu.be/yyYzYcrJMrY?si=d9Ow-Qz5mWJB5hKj))
+[https://youtu.be/yyYzYcrJMrY?si=d9Ow-Qz5mWJB5hKj](https://youtu.be/yyYzYcrJMrY?si=d9Ow-Qz5mWJB5hKj)
+
+**Note:** Replace `YOUR_YOUTUBE_VIDEO_ID` in the image link with the actual video ID from your YouTube link. For example, if your full link is `https://www.youtube.com/watch?v=abcdef123`, the video ID is `abcdef123`. This will display a thumbnail of your video (the `0.jpg` usually shows the default thumbnail). If you prefer, you can use `1.jpg`, `2.jpg`, or `3.jpg` for different automatically generated thumbnails, or `maxresdefault.jpg` for the highest resolution thumbnail if available.
+
+**Example using a placeholder video ID:**
+
+If your YouTube link was, for instance, `https://www.youtube.com/watch?v=abcdef123`, you would modify the `README.md` like this:
+
+```markdown
+## Demo Video
+
+[![Watch the demo video on YouTube](http://img.youtube.com/vi/abcdef123/0.jpg)](https://youtu.be/yyYzYcrJMrY?si=d9Ow-Qz5mWJB5hKj)
+
+You can watch the demonstration of the Honda Cub Atheneum project on YouTube by clicking the image above or navigating to:
+
+[https://youtu.be/yyYzYcrJMrY?si=d9Ow-Qz5mWJB5hKj](https://youtu.be/yyYzYcrJMrY?si=d9Ow-Qz5mWJB5hKj)
 
 
 
