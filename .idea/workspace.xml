@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0212092-f5c2-45d4-8064-67a74003fc17" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="b0212092-f5c2-45d4-8064-67a74003fc17" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,7 +60,7 @@
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "17",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Karl/Documents/AAD/AAD - Spring/Honda-Super-Cub/Frontend/Screenshots",
+    "last_opened_file_path": "C:/Users/Karl/Documents/AAD/AAD - Spring/Honda-Super-Cub/Frontend",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -80,11 +78,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Karl\Documents\AAD\AAD - Spring\Honda-Super-Cub\Frontend" />
       <recent name="C:\Users\Karl\Documents\AAD\AAD - Spring\Honda-Super-Cub\Frontend\Screenshots" />
       <recent name="C:\Users\Karl\Documents\AAD\AAD - Spring\Honda-Super-Cub\Frontend\screenshots" />
       <recent name="C:\Users\Karl\Documents\AAD\AAD - Spring\Honda-Super-Cub\src\main\resources\images" />
       <recent name="C:\Users\Karl\Documents\AAD\AAD - Spring\Honda-Super-Cub\Frontend\js" />
-      <recent name="C:\Users\Karl\Documents\AAD\AAD - Spring\Honda-Super-Cub\Frontend\images" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="org.example.hondasupercub.service" />
@@ -260,14 +258,7 @@
       <workItem from="1744614987363" duration="120000" />
       <workItem from="1744615389983" duration="137000" />
       <workItem from="1744700470945" duration="2378000" />
-    </task>
-    <task id="LOCAL-00008" summary=" seller review's search by part id feature added">
-      <option name="closed" value="true" />
-      <created>1744180164385</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1744180164385</updated>
+      <workItem from="1744711015617" duration="61000" />
     </task>
     <task id="LOCAL-00009" summary="Customer's Loyalty and Reward Page Frontend and Backend Implementation added!">
       <option name="closed" value="true" />
@@ -653,7 +644,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744710529467</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="Images of screenshots">
+      <option name="closed" value="true" />
+      <created>1744711055137</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1744711055138</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -671,7 +670,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Admin Order total amount view issue fixed" />
     <MESSAGE value="Admin Order download report feature added" />
     <MESSAGE value="Admin Transaction management download report feature added" />
     <MESSAGE value="Seller transaction management's search feature added" />
@@ -696,6 +694,7 @@
     <MESSAGE value="Project's Screenshots applied in images file in resource" />
     <MESSAGE value="Update" />
     <MESSAGE value="Added the Screenshots of project" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added the Screenshots of project" />
+    <MESSAGE value="Images of screenshots" />
+    <option name="LAST_COMMIT_MESSAGE" value="Images of screenshots" />
   </component>
 </project>

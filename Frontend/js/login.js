@@ -24,7 +24,7 @@ function validateEmail(email) {
 }
 
 // Function to validate password
-/*function validatePassword(password) {
+function validatePassword(password) {
     if (!password.trim()) {
         return "Password cannot be blank.";
     }
@@ -32,7 +32,7 @@ function validateEmail(email) {
         return "Password must be at least 6 characters long.";
     }
     return ""; // Returns an empty string if the password is valid
-}*/
+}
 
 $("#loginForm").on("submit", function (e) {
     e.preventDefault();
@@ -43,7 +43,7 @@ $("#loginForm").on("submit", function (e) {
 
     let isValid = true;
     let emailError = "";
-    //let passwordError = validatePassword(password); // Call the password validation function
+    let passwordError = validatePassword(password); // Call the password validation function
 
     // Validate email
     if (!email.trim()) {
@@ -55,9 +55,9 @@ $("#loginForm").on("submit", function (e) {
     }
 
     // Update isValid based on password validation
-    /*if (passwordError) {
+    if (passwordError) {
         isValid = false;
-    }*/
+    }
 
     // Display errors if any
     $("#email").removeClass("is-invalid");
@@ -69,9 +69,9 @@ $("#loginForm").on("submit", function (e) {
         if (emailError) {
             $("#email").addClass("is-invalid");
         }
-        /*if (passwordError) {
+        if (passwordError) {
             $("#password").addClass("is-invalid");
-        }*/
+        }
         return; // Stop form submission if validation fails
     }
 
